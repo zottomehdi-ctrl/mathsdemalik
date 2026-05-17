@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ch.2 — Limites de fonctions</title>
+<link rel="stylesheet" href="assets/style.css">
+<script>
+MathJax = {
+  tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="assets/mathjax/tex-svg.js" id="MathJax-script" async></script>
+</head>
+<body>
+
+<header class="topbar">
+  <a class="brand" href="index.html">Bac <span>Mathématiques</span> · Terminale</a>
+  <nav><a href="index.html">Sommaire</a></nav>
+</header>
+
+<main class="wrap reading" data-theme="analyse">
+
+  <div class="chapter-head">
+    <div class="kicker">Thème 1 · Analyse — Chapitre 2</div>
+    <h1>Limites de fonctions</h1>
+  </div>
+
+  <nav class="tabs">
+    <button class="tab active" data-target="cours">Cours complet</button>
+    <button class="tab" data-target="fiche">Fiche résumé</button>
+    <button class="tab" data-target="exos">Exercices</button>
+  </nav>
+
+  <!-- ================= COURS ================= -->
+  <section id="cours" class="panel active">
+
+    <div class="toc">
+      <b>Plan du cours</b>
+      <ol>
+        <li><a href="#c1">Introduction</a></li>
+        <li><a href="#c2">Limite en l'infini</a></li>
+        <li><a href="#c3">Limite infinie en un point</a></li>
+        <li><a href="#c4">Limite finie en un point</a></li>
+        <li><a href="#c5">Limites des fonctions de référence</a></li>
+        <li><a href="#c6">Opérations sur les limites</a></li>
+        <li><a href="#c7">Formes indéterminées</a></li>
+        <li><a href="#c8">Limites et comparaison</a></li>
+        <li><a href="#c9">Asymptotes</a></li>
+        <li><a href="#c10">Croissances comparées</a></li>
+        <li><a href="#c11">Erreurs fréquentes</a></li>
+        <li><a href="#c12">Compléments et démonstrations</a></li>
+      </ol>
+    </div>
+
+    <h2 id="c1">1. Introduction</h2>
+    <p>Étudier la <strong>limite</strong> d'une fonction \(f\), c'est décrire le comportement de
+    \(f(x)\) lorsque \(x\) s'approche d'une valeur particulière : soit \(x \to +\infty\) ou
+    \(x \to -\infty\) (comportement « au loin »), soit \(x \to a\) où \(a\) est un réel (comportement
+    « au voisinage » d'un point). C'est l'outil de base pour tracer une courbe, détecter une
+    asymptote, ou prolonger l'étude des suites au cas continu.</p>
+
+    <h2 id="c2">2. Limite en l'infini</h2>
+    <div class="box def">
+      <span class="box-t">Limite finie en \(+\infty\)</span>
+      \(f\) a pour limite \(\ell\) en \(+\infty\) si \(f(x)\) peut être rendu aussi proche que voulu
+      de \(\ell\) en prenant \(x\) suffisamment grand. On note
+      \(\displaystyle\lim_{x\to+\infty} f(x) = \ell\). La droite d'équation \(y = \ell\) est alors
+      <strong>asymptote horizontale</strong> à la courbe en \(+\infty\).
+    </div>
+    <div class="box def">
+      <span class="box-t">Limite infinie en \(+\infty\)</span>
+      \(\displaystyle\lim_{x\to+\infty} f(x) = +\infty\) si \(f(x)\) dépasse tout seuil \(A\) dès que
+      \(x\) est assez grand. Définitions analogues pour les limites en \(-\infty\).
+    </div>
+    <p>Ces deux situations ont une lecture graphique très parlante. Une limite <em>finie</em> en
+    l'infini signifie que la courbe finit par « longer » la droite horizontale \(y = \ell\) sans
+    jamais s'en écarter durablement : elle l'admet pour asymptote. Une limite <em>infinie</em>
+    signifie au contraire que la courbe s'élève — ou plonge — sans aucune borne, aussi loin qu'on
+    regarde.</p>
+
+    <h2 id="c3">3. Limite infinie en un point</h2>
+    <div class="box def">
+      <span class="box-t">Limite infinie en \(a\)</span>
+      \(\displaystyle\lim_{x\to a} f(x) = +\infty\) si \(f(x)\) dépasse tout seuil dès que \(x\) est
+      assez proche de \(a\). La droite verticale d'équation \(x = a\) est alors
+      <strong>asymptote verticale</strong> à la courbe.
+    </div>
+    <p>Près d'une valeur interdite, il faut souvent distinguer la limite <strong>à gauche</strong>
+    (\(x \to a^-\), \(x < a\)) et <strong>à droite</strong> (\(x \to a^+\), \(x > a\)), car elles
+    peuvent différer. Exemple : \(\displaystyle\lim_{x\to 0^-}\frac1x = -\infty\) et
+    \(\displaystyle\lim_{x\to 0^+}\frac1x = +\infty\).</p>
+    <p>Distinguer les deux côtés n'est pas un détail : une même fonction peut « partir » vers
+    \(+\infty\) d'un côté d'une valeur interdite et vers \(-\infty\) de l'autre. Le réflexe à avoir
+    est de dresser le <strong>tableau de signes</strong> de ce qui s'annule (le dénominateur, le plus
+    souvent) au voisinage de \(a\) : c'est lui qui donne le signe de l'infini de chaque côté.</p>
+
+    <h2 id="c4">4. Limite finie en un point</h2>
+    <p>Si \(f\) est définie en \(a\) et « sans saut », alors \(\displaystyle\lim_{x\to a} f(x) = f(a)\)
+    : on dit que \(f\) est <em>continue</em> en \(a\) (chapitre 3). Pour toutes les fonctions usuelles
+    (polynômes, racine, fonctions rationnelles…), sur leur ensemble de définition, la limite en un
+    point se calcule simplement <strong>en remplaçant \(x\) par \(a\)</strong>.</p>
+
+    <h2 id="c5">5. Limites des fonctions de référence</h2>
+    <table>
+      <caption>Limites à connaître</caption>
+      <tr><th>Fonction</th><th>en \(-\infty\)</th><th>en \(+\infty\)</th><th>en \(0\)</th></tr>
+      <tr><td>\(x \mapsto x^2\)</td><td>\(+\infty\)</td><td>\(+\infty\)</td><td>\(0\)</td></tr>
+      <tr><td>\(x \mapsto x^3\)</td><td>\(-\infty\)</td><td>\(+\infty\)</td><td>\(0\)</td></tr>
+      <tr><td>\(x \mapsto \sqrt{x}\)</td><td>—</td><td>\(+\infty\)</td><td>\(0\)</td></tr>
+      <tr><td>\(x \mapsto \dfrac1x\)</td><td>\(0\)</td><td>\(0\)</td><td>\(\pm\infty\) (selon le côté)</td></tr>
+      <tr><td>\(x \mapsto \dfrac{1}{x^2}\)</td><td>\(0\)</td><td>\(0\)</td><td>\(+\infty\)</td></tr>
+    </table>
+    <p>Ces limites ne sont pas à redémontrer à chaque fois : ce sont des <strong>briques de
+    base</strong> que l'on connaît par cœur. Combinées aux règles d'opérations de la section
+    suivante, elles permettent de calculer la quasi-totalité des limites du programme.</p>
+
+    <h2 id="c6">6. Opérations sur les limites</h2>
+    <p>Les règles sont <strong>identiques à celles vues pour les suites</strong> : la limite d'une
+    somme est la somme des limites, celle d'un produit le produit des limites, celle d'un quotient le
+    quotient des limites — sauf en présence d'une forme indéterminée.</p>
+    <div class="box prop">
+      <span class="box-t">Cas du quotient avec dénominateur nul</span>
+      Si \(\lim f(x) = \ell \ne 0\) et \(\lim g(x) = 0\), alors \(\lim \dfrac{f(x)}{g(x)} = \pm\infty\),
+      le signe étant donné par la <strong>règle des signes</strong> appliquée au signe de \(f\) et au
+      signe de \(g\) au voisinage du point.
+    </div>
+
+    <h2 id="c7">7. Formes indéterminées</h2>
+    <div class="box danger">
+      <span class="box-t">Les quatre formes indéterminées</span>
+      \[ \infty - \infty \qquad 0 \times \infty \qquad \dfrac{\infty}{\infty} \qquad \dfrac{0}{0} \]
+    </div>
+    <p>Une forme indéterminée n'est pas une limite « qui n'existe pas » : c'est une situation où la
+    règle générale ne permet <em>pas de trancher</em>. Selon les fonctions en présence, le résultat
+    peut être fini, infini, ou ne pas exister du tout. Il faut alors transformer l'écriture de
+    l'expression pour lever le doute.</p>
+    <div class="box prop">
+      <span class="box-t">Limite d'un polynôme / d'une fonction rationnelle en l'infini</span>
+      • La limite en \(\pm\infty\) d'un <strong>polynôme</strong> est celle de son <strong>terme de
+      plus haut degré</strong>.<br>
+      • La limite en \(\pm\infty\) d'une <strong>fonction rationnelle</strong> est celle du
+      <strong>quotient des termes de plus haut degré</strong> du numérateur et du dénominateur.
+    </div>
+    <p>L'idée derrière ces règles est intuitive : en \(\pm\infty\), le terme de plus haut degré
+    <em>écrase</em> tous les autres. Dans \(-2x^3 + 5x^2 - 1\), pour \(x = 1000\), le terme
+    \(-2x^3\) vaut \(-2\) milliards quand \(5x^2\) n'atteint que 5 millions : le premier impose seul
+    le comportement. Factoriser par le terme dominant rend cette domination visible et lève
+    l'indétermination.</p>
+    <div class="box method">
+      <span class="box-t">Application</span>
+      \(\displaystyle\lim_{x\to+\infty} (-2x^3 + 5x^2 - 1) = \lim_{x\to+\infty} -2x^3 = -\infty\).<br>
+      \(\displaystyle\lim_{x\to+\infty} \frac{3x^2 - x}{x^2 + 4} = \lim_{x\to+\infty}\frac{3x^2}{x^2}
+      = 3\).
+    </div>
+    <p>Pour les autres indéterminations, on factorise par le terme dominant, on simplifie, ou on
+    multiplie par l'expression conjuguée (cas des racines carrées).</p>
+
+    <h2 id="c8">8. Limites et comparaison</h2>
+    <div class="box prop">
+      <span class="box-t">Théorèmes de comparaison</span>
+      Au voisinage de \(+\infty\) :<br>
+      • si \(f(x) \le g(x)\) et \(\lim f = +\infty\), alors \(\lim g = +\infty\) ;<br>
+      • si \(f(x) \le g(x)\) et \(\lim g = -\infty\), alors \(\lim f = -\infty\) ;<br>
+      • <strong>Théorème des gendarmes</strong> : si \(u(x) \le f(x) \le v(x)\) avec
+      \(\lim u = \lim v = \ell\), alors \(\lim f = \ell\).
+    </div>
+    <p>Le nom « théorème des gendarmes » est imagé : la fonction \(f\) est encadrée par deux
+    fonctions \(u\) et \(v\) qui la « tiennent » de part et d'autre. Si ces deux gendarmes se dirigent
+    vers la même valeur \(\ell\), le prisonnier \(f\), coincé entre eux, n'a pas d'autre choix que
+    de les suivre. Ce théorème est précieux dès qu'une fonction contient un \(\sin\) ou un \(\cos\)
+    « gênant », que l'on encadre alors entre \(-1\) et \(1\).</p>
+
+    <h2 id="c9">9. Asymptotes</h2>
+    <div class="box def">
+      <span class="box-t">Asymptotes à une courbe \(\mathcal C_f\)</span>
+      • <strong>Asymptote horizontale</strong> \(y = \ell\) : si \(\lim_{x\to\pm\infty} f(x) = \ell\).<br>
+      • <strong>Asymptote verticale</strong> \(x = a\) : si \(\lim_{x\to a} f(x) = \pm\infty\).<br>
+      • <strong>Asymptote oblique</strong> \(y = ax + b\) : si
+      \(\lim_{x\to\pm\infty} \big[f(x) - (ax+b)\big] = 0\).
+    </div>
+    <p>Pour montrer qu'une droite \(y = ax+b\) est asymptote oblique, on étudie la limite de la
+    différence \(f(x) - (ax+b)\) : si elle tend vers 0, la courbe « colle » à la droite à l'infini.
+    Le signe de cette différence indique en outre la position de la courbe par rapport à la droite.</p>
+
+    <h2 id="c10">10. Croissances comparées</h2>
+    <p>Ces résultats — démontrés dans les chapitres exponentielle et logarithme — règlent des FI
+    \(\frac{\infty}{\infty}\) et \(0 \times \infty\) où interviennent \(e^x\) et \(\ln x\). Idée
+    centrale : <strong>l'exponentielle l'emporte sur toute puissance, qui l'emporte sur le
+    logarithme</strong>.</p>
+    <div class="box prop">
+      <span class="box-t">Croissances comparées</span>
+      \[ \lim_{x\to+\infty}\frac{e^x}{x^n} = +\infty, \qquad \lim_{x\to+\infty}\frac{\ln x}{x^n} = 0,
+      \qquad \lim_{x\to-\infty} x^n e^x = 0, \qquad \lim_{x\to 0^+} x^n \ln x = 0. \]
+    </div>
+
+    <h2 id="c11">11. Erreurs fréquentes</h2>
+    <div class="box danger">
+      <span class="box-t">À éviter</span>
+      • Écrire \(\frac{1}{0} = \infty\) sans préciser le signe : il faut étudier le côté.<br>
+      • Oublier de distinguer limite à gauche et limite à droite près d'une valeur interdite.<br>
+      • Traiter une FI comme un calcul ordinaire : il faut transformer l'expression.<br>
+      • Confondre asymptote horizontale (limite finie en l'infini) et verticale (limite infinie en un
+      point).<br>
+      • Pour un polynôme en l'infini, garder tous les termes au lieu du terme dominant.
+    </div>
+
+    <h2 id="c12">12. Compléments et démonstrations</h2>
+
+    <h3>Définition formelle des limites</h3>
+    <div class="box def">
+      <span class="box-t">Définitions rigoureuses</span>
+      • \(\displaystyle\lim_{x\to+\infty} f(x) = \ell\) : pour tout \(\varepsilon > 0\), il existe
+      \(A\) tel que \(x > A \Rightarrow |f(x) - \ell| < \varepsilon\).<br>
+      • \(\displaystyle\lim_{x\to a} f(x) = +\infty\) : pour tout réel \(B\), il existe
+      \(\eta > 0\) tel que \(0 < |x - a| < \eta \Rightarrow f(x) > B\).
+    </div>
+
+    <div class="box prop">
+      <span class="box-t">Théorème — composition des limites</span>
+      Si \(\displaystyle\lim_{x\to a} u(x) = b\) et \(\displaystyle\lim_{X\to b} g(X) = c\), alors
+      \[ \lim_{x\to a} g\big(u(x)\big) = c. \]
+      \(a\), \(b\), \(c\) pouvant être finis ou infinis. C'est l'outil pour les limites de
+      fonctions composées (ex : \(\lim e^{-x^2}\), \(\lim \sqrt{f(x)}\)).
+    </div>
+
+    <div class="box method">
+      <span class="box-t">Application — limite composée</span>
+      \(\displaystyle\lim_{x\to+\infty} e^{-x}\) : on pose \(u(x) = -x \to -\infty\), puis
+      \(\lim_{X\to-\infty} e^{X} = 0\). Donc \(\lim_{x\to+\infty} e^{-x} = 0\).
+    </div>
+
+    <h3>Recherche d'une asymptote oblique</h3>
+    <div class="box method">
+      <span class="box-t">Méthode</span>
+      Pour chercher une asymptote oblique \(y = ax + b\) à \(\mathcal C_f\) en \(+\infty\) :<br>
+      1. calculer \(a = \displaystyle\lim_{x\to+\infty}\frac{f(x)}{x}\) (s'il est fini non nul) ;<br>
+      2. calculer \(b = \displaystyle\lim_{x\to+\infty}\big(f(x) - ax\big)\) (s'il est fini) ;<br>
+      3. la droite \(y = ax + b\) est alors asymptote oblique.
+    </div>
+
+    <div class="box prop">
+      <span class="box-t">Démonstration — limite d'une somme (cas fini)</span>
+      Si \(\lim f = \ell\) et \(\lim g = \ell'\) : pour \(\varepsilon > 0\), on a
+      \(|f - \ell| < \tfrac\varepsilon2\) et \(|g - \ell'| < \tfrac\varepsilon2\) au voisinage
+      considéré. Par l'inégalité triangulaire,
+      \(|(f+g) - (\ell+\ell')| \le |f-\ell| + |g-\ell'| < \varepsilon\). Donc
+      \(\lim(f+g) = \ell + \ell'\).
+    </div>
+
+    <h3>Limites usuelles supplémentaires</h3>
+    <div class="box note">
+      <span class="box-t">À garder en mémoire</span>
+      \[ \lim_{x\to0^+}\ln x = -\infty,\quad \lim_{x\to+\infty}\ln x = +\infty,\quad
+      \lim_{x\to-\infty} e^x = 0,\quad \lim_{x\to+\infty} e^x = +\infty \]
+      \[ \lim_{x\to0}\frac{\sin x}{x} = 1,\qquad \lim_{x\to0}\frac{e^x-1}{x} = 1,\qquad
+      \lim_{x\to0}\frac{\ln(1+x)}{x} = 1 \]
+    </div>
+
+    <h3>Théorème des gendarmes — version locale</h3>
+    <div class="box prop">
+      <span class="box-t">Encadrement en un point</span>
+      Si, au voisinage de \(a\), \(u(x) \le f(x) \le v(x)\) avec
+      \(\lim_{x\to a} u = \lim_{x\to a} v = \ell\), alors \(\lim_{x\to a} f = \ell\). Le résultat
+      vaut aussi pour les limites en \(\pm\infty\).
+    </div>
+
+  </section>
+
+  <!-- ================= FICHE ================= -->
+  <section id="fiche" class="panel">
+    <div class="fiche">
+      <h2>Fiche résumé — Limites de fonctions</h2>
+      <ul class="keypoints">
+        <li><strong>Asymptote horizontale</strong> \(y=\ell\) : \(\lim_{\pm\infty} f = \ell\).</li>
+        <li><strong>Asymptote verticale</strong> \(x=a\) : \(\lim_{a} f = \pm\infty\).</li>
+        <li><strong>Asymptote oblique</strong> \(y=ax+b\) : \(\lim [f(x)-(ax+b)] = 0\).</li>
+        <li><strong>Polynôme</strong> en \(\pm\infty\) : limite du terme de plus haut degré.</li>
+        <li><strong>Fonction rationnelle</strong> en \(\pm\infty\) : quotient des termes dominants.</li>
+        <li><strong>4 FI</strong> : \(\infty-\infty\), \(0\times\infty\), \(\frac{\infty}{\infty}\),
+        \(\frac{0}{0}\) → factoriser / conjuguer.</li>
+        <li><strong>Gendarmes</strong> : \(u \le f \le v\), \(\lim u = \lim v = \ell\) ⇒
+        \(\lim f = \ell\).</li>
+        <li><strong>Croissances comparées</strong> : \(\frac{e^x}{x^n}\to+\infty\),
+        \(\frac{\ln x}{x^n}\to 0\).</li>
+      </ul>
+      <div class="formule">
+        \[ \lim_{x\to+\infty}\frac{e^x}{x^n}=+\infty \qquad \lim_{x\to+\infty}\frac{\ln x}{x}=0 \]
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= EXERCICES ================= -->
+  <section id="exos" class="panel">
+
+    <div class="exo">
+      <div class="exo-tag">Exercice 1 · Calculs de limites</div>
+      <h3>Limites en l'infini</h3>
+      <p>Calculer : 1. \(\displaystyle\lim_{x\to+\infty}(x^3 - 4x^2 + 7)\) — 2.
+      \(\displaystyle\lim_{x\to+\infty}\frac{4x^2 - 1}{2x^2 + x}\) — 3.
+      \(\displaystyle\lim_{x\to+\infty}\big(\sqrt{x^2+x} - x\big)\).</p>
+      <details class="corrige">
+        <summary>Voir le corrigé</summary>
+        <div class="sol">
+          <p><strong>1.</strong> Limite du terme dominant : \(\lim x^3 = +\infty\).</p>
+          <p><strong>2.</strong> Quotient des termes dominants :
+          \(\lim \dfrac{4x^2}{2x^2} = \dfrac{4}{2} = 2\).</p>
+          <p><strong>3.</strong> Forme \(\infty - \infty\). Expression conjuguée :
+          \[ \sqrt{x^2+x}-x = \frac{(x^2+x)-x^2}{\sqrt{x^2+x}+x} = \frac{x}{\sqrt{x^2+x}+x}. \]
+          On factorise par \(x\) (avec \(x>0\), \(\sqrt{x^2+x}=x\sqrt{1+\frac1x}\)) :
+          \(\dfrac{x}{x\sqrt{1+\frac1x}+x} = \dfrac{1}{\sqrt{1+\frac1x}+1}\to\dfrac{1}{2}\).</p>
+        </div>
+      </details>
+    </div>
+
+    <div class="exo">
+      <div class="exo-tag">Exercice 2 · Asymptote verticale</div>
+      <h3>Étude près d'une valeur interdite</h3>
+      <p>Soit \(f(x) = \dfrac{2x+1}{x-3}\), définie sur \(\mathbb R \setminus\{3\}\).</p>
+      <p>1. Déterminer \(\lim_{x\to 3^-} f(x)\) et \(\lim_{x\to 3^+} f(x)\).<br>
+      2. Déterminer \(\lim_{x\to\pm\infty} f(x)\). En déduire les asymptotes de \(\mathcal C_f\).</p>
+      <details class="corrige">
+        <summary>Voir le corrigé</summary>
+        <div class="sol">
+          <p><strong>1.</strong> En 3, le numérateur tend vers \(2\times3+1 = 7 > 0\), le dénominateur
+          vers 0. Signe de \(x-3\) : négatif pour \(x<3\), positif pour \(x>3\).</p>
+          <p>\(\lim_{x\to3^-} f(x) = \dfrac{7}{0^-} = -\infty\) ; \(\lim_{x\to3^+} f(x) =
+          \dfrac{7}{0^+} = +\infty\).</p>
+          <p><strong>2.</strong> Quotient des termes dominants : \(\lim_{\pm\infty} f = \dfrac{2x}{x}
+          = 2\).</p>
+          <p>Asymptotes : la droite \(x = 3\) est <strong>asymptote verticale</strong> ; la droite
+          \(y = 2\) est <strong>asymptote horizontale</strong> en \(+\infty\) et en \(-\infty\).</p>
+        </div>
+      </details>
+    </div>
+
+    <div class="exo">
+      <div class="exo-tag">Exercice 3 · Asymptote oblique</div>
+      <h3>Position d'une courbe</h3>
+      <p>Soit \(f(x) = x + 2 + \dfrac{1}{x-1}\) sur \(\mathbb R\setminus\{1\}\). On note \(\mathcal C_f\)
+      sa courbe et \(D\) la droite d'équation \(y = x + 2\).</p>
+      <p>1. Montrer que \(D\) est asymptote oblique à \(\mathcal C_f\) en \(\pm\infty\).<br>
+      2. Étudier la position relative de \(\mathcal C_f\) et de \(D\).</p>
+      <details class="corrige">
+        <summary>Voir le corrigé</summary>
+        <div class="sol">
+          <p><strong>1.</strong> \(f(x) - (x+2) = \dfrac{1}{x-1}\). Or
+          \(\lim_{x\to\pm\infty}\dfrac{1}{x-1} = 0\), donc
+          \(\lim_{x\to\pm\infty}\big[f(x)-(x+2)\big] = 0\) : \(D\) est <strong>asymptote
+          oblique</strong> à \(\mathcal C_f\).</p>
+          <p><strong>2.</strong> La position dépend du signe de \(f(x)-(x+2) = \dfrac{1}{x-1}\), donc
+          du signe de \(x-1\).</p>
+          <p>• Si \(x > 1\) : \(\dfrac{1}{x-1} > 0\), \(\mathcal C_f\) est <strong>au-dessus</strong>
+          de \(D\).<br>
+          • Si \(x < 1\) : \(\dfrac{1}{x-1} < 0\), \(\mathcal C_f\) est <strong>en dessous</strong>
+          de \(D\).</p>
+        </div>
+      </details>
+    </div>
+
+  </section>
+
+  <nav class="chap-nav">
+    <a href="ch01.html">← Chapitre 1 — Suites</a>
+    <a href="ch03.html">Chapitre 3 — Continuité →</a>
+  </nav>
+
+</main>
+
+<footer>Bac Mathématiques · Terminale spécialité — Chapitre 2</footer>
+<script src="assets/script.js"></script>
+</body>
+</html>

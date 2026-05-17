@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ch.14 — Probabilités conditionnelles et indépendance</title>
+<link rel="stylesheet" href="assets/style.css">
+<script>
+MathJax = {
+  tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="assets/mathjax/tex-svg.js" id="MathJax-script" async></script>
+</head>
+<body>
+
+<header class="topbar">
+  <a class="brand" href="index.html">Bac <span>Mathématiques</span> · Terminale</a>
+  <nav><a href="index.html">Sommaire</a></nav>
+</header>
+
+<main class="wrap reading" data-theme="proba">
+
+  <div class="chapter-head">
+    <div class="kicker">Thème 3 · Probabilités — Chapitre 14</div>
+    <h1>Probabilités conditionnelles et indépendance</h1>
+  </div>
+
+  <nav class="tabs">
+    <button class="tab active" data-target="cours">Cours complet</button>
+    <button class="tab" data-target="fiche">Fiche résumé</button>
+    <button class="tab" data-target="exos">Exercices</button>
+  </nav>
+
+  <!-- ================= COURS ================= -->
+  <section id="cours" class="panel active">
+
+    <div class="toc">
+      <b>Plan du cours</b>
+      <ol>
+        <li><a href="#c1">Rappels de probabilités</a></li>
+        <li><a href="#c2">Probabilité conditionnelle</a></li>
+        <li><a href="#c3">Arbres pondérés</a></li>
+        <li><a href="#c4">Partition et probabilités totales</a></li>
+        <li><a href="#c5">Probabilités « inverses »</a></li>
+        <li><a href="#c6">Indépendance de deux événements</a></li>
+        <li><a href="#c7">Succession d'épreuves indépendantes</a></li>
+        <li><a href="#c8">Erreurs fréquentes</a></li>
+        <li><a href="#c9">Compléments et démonstrations</a></li>
+      </ol>
+    </div>
+
+    <h2 id="c1">1. Rappels de probabilités</h2>
+    <p>Une <strong>expérience aléatoire</strong> a un ensemble de résultats possibles, l'univers
+    \(\Omega\). Un <strong>événement</strong> est une partie de \(\Omega\). La probabilité \(P\)
+    vérifie : \(0 \le P(A) \le 1\), \(P(\Omega) = 1\), \(P(\bar A) = 1 - P(A)\) et
+    \(P(A\cup B) = P(A) + P(B) - P(A\cap B)\).</p>
+
+    <h2 id="c2">2. Probabilité conditionnelle</h2>
+    <p>On dispose souvent d'une information partielle : « sachant qu'un événement est réalisé… ».
+    Cela modifie les probabilités.</p>
+    <div class="box def">
+      <span class="box-t">Définition</span>
+      Soit \(A\) un événement de probabilité non nulle. La <strong>probabilité conditionnelle</strong>
+      de \(B\) <em>sachant \(A\)</em> est
+      \[ P_A(B) = \frac{P(A\cap B)}{P(A)}. \]
+    </div>
+    <p>L'idée : savoir que \(A\) est réalisé <em>réduit l'univers</em>. On ne raisonne plus sur tout
+    \(\Omega\), mais uniquement « à l'intérieur de \(A\) ». La probabilité de \(B\) est alors la
+    part de \(B\) qui se trouve dans \(A\) — d'où le quotient \(\dfrac{P(A\cap B)}{P(A)}\) :
+    l'intersection rapportée à la nouvelle « taille de référence » \(P(A)\). C'est pour cela que la
+    définition exige \(P(A)\ne0\) : on ne peut pas se placer dans un événement impossible.</p>
+    <div class="box prop">
+      <span class="box-t">Probabilité d'une intersection</span>
+      En réorganisant la définition :
+      \[ P(A\cap B) = P(A)\times P_A(B) = P(B)\times P_B(A). \]
+    </div>
+    <div class="box method">
+      <span class="box-t">Application</span>
+      Dans une classe, \(P(\text{fille}) = 0{,}6\) et \(P(\text{fille}\cap\text{interne})
+      = 0{,}24\). La probabilité qu'un élève soit interne sachant que c'est une fille est
+      \(P_{\text{fille}}(\text{interne}) = \dfrac{0{,}24}{0{,}6} = 0{,}4\).
+    </div>
+
+    <h2 id="c3">3. Arbres pondérés</h2>
+    <p>L'<strong>arbre pondéré</strong> est l'outil de représentation privilégié. Chaque branche
+    porte une probabilité.</p>
+    <div class="box prop">
+      <span class="box-t">Règles de l'arbre</span>
+      • La somme des probabilités des branches <strong>issues d'un même nœud</strong> vaut
+      <strong>1</strong>.<br>
+      • La probabilité d'un <strong>chemin</strong> est le <strong>produit</strong> des
+      probabilités des branches qui le composent.<br>
+      • La probabilité d'un événement est la <strong>somme</strong> des probabilités des chemins
+      qui y mènent.<br>
+      Les branches du second niveau portent des probabilités <strong>conditionnelles</strong>.
+    </div>
+    <p>L'arbre est bien plus qu'un schéma : c'est une <em>machine à calculer</em> qui encode toutes
+    les formules du chapitre. Multiplier le long d'un chemin, c'est appliquer
+    \(P(A\cap B) = P(A)\,P_A(B)\) ; additionner les chemins menant à un même événement, c'est la
+    formule des probabilités totales. Bien construire l'arbre, c'est avoir résolu la moitié de
+    l'exercice — d'où l'importance de bien repérer ce qui se place au premier niveau.</p>
+
+    <h2 id="c4">4. Partition et probabilités totales</h2>
+    <div class="box def">
+      <span class="box-t">Partition de l'univers</span>
+      Des événements \(A_1, A_2, \ldots, A_n\) forment une <strong>partition</strong> de \(\Omega\)
+      s'ils sont deux à deux <strong>incompatibles</strong> et si leur réunion est \(\Omega\) tout
+      entier. (Le cas le plus simple : \(A\) et \(\bar A\).)
+    </div>
+    <div class="box prop">
+      <span class="box-t">Formule des probabilités totales</span>
+      Si \(A_1, \ldots, A_n\) forment une partition de \(\Omega\) (de probabilités non nulles),
+      alors pour tout événement \(B\) :
+      \[ P(B) = \sum_{i=1}^{n} P(A_i\cap B) = \sum_{i=1}^{n} P(A_i)\times P_{A_i}(B). \]
+    </div>
+    <div class="box method">
+      <span class="box-t">Application — cas de deux issues</span>
+      Avec la partition \(\{A,\bar A\}\) :
+      \[ P(B) = P(A)\,P_A(B) + P(\bar A)\,P_{\bar A}(B). \]
+      C'est exactement la « somme des chemins menant à \(B\) » dans l'arbre.
+    </div>
+    <p>L'idée de cette formule : pour calculer la probabilité de \(B\), on découpe l'univers en cas
+    qui couvrent <em>toutes</em> les possibilités sans se chevaucher (la partition). On calcule la
+    probabilité de \(B\) <em>dans chaque cas</em>, puis on rassemble. C'est utile quand \(B\) est
+    difficile à atteindre directement, mais facile à évaluer une fois qu'on sait « dans quel cas »
+    on se trouve.</p>
+
+    <h2 id="c5">5. Probabilités « inverses »</h2>
+    <p>Il arrive qu'on connaisse \(P_A(B)\) et qu'on cherche \(P_B(A)\) : on « remonte » l'arbre.</p>
+    <div class="box method">
+      <span class="box-t">Méthode</span>
+      Pour calculer \(P_B(A)\), on applique la définition :
+      \[ P_B(A) = \frac{P(A\cap B)}{P(B)}, \]
+      où \(P(A\cap B)\) se lit sur un chemin de l'arbre et \(P(B)\) se calcule par la formule des
+      probabilités totales.
+    </div>
+    <div class="box note">
+      <span class="box-t">Attention au sens du conditionnement</span>
+      \(P_A(B)\) et \(P_B(A)\) sont en général <strong>différentes</strong>. C'est une source
+      classique d'erreur (typique des tests de dépistage : « positif sachant malade » ≠ « malade
+      sachant positif »).
+    </div>
+
+    <h2 id="c6">6. Indépendance de deux événements</h2>
+    <div class="box def">
+      <span class="box-t">Définition</span>
+      Deux événements \(A\) et \(B\) sont <strong>indépendants</strong> si
+      \[ P(A\cap B) = P(A)\times P(B). \]
+      De façon équivalente (si \(P(A)\ne0\)) : \(P_A(B) = P(B)\) — savoir que \(A\) est réalisé ne
+      change pas la probabilité de \(B\).
+    </div>
+    <p>C'est la traduction mathématique de l'intuition « les deux événements n'ont rien à voir ».
+    Le résultat d'un dé n'influence pas le résultat d'une pièce : apprendre l'un ne renseigne en
+    rien sur l'autre, d'où \(P_A(B) = P(B)\). Attention : l'indépendance se <strong>vérifie par le
+    calcul</strong> (\(P(A\cap B) = P(A)P(B)\) ?) et ne se devine pas — l'intuition se trompe
+    parfois.</p>
+    <div class="box prop">
+      <span class="box-t">Propriété</span>
+      Si \(A\) et \(B\) sont indépendants, alors \(A\) et \(\bar B\) le sont aussi, de même que
+      \(\bar A\) et \(B\), et \(\bar A\) et \(\bar B\).
+    </div>
+    <div class="box danger">
+      <span class="box-t">Ne pas confondre</span>
+      <strong>Indépendants</strong> et <strong>incompatibles</strong> sont des notions
+      <em>différentes</em>. Incompatibles : \(A\cap B = \varnothing\), donc \(P(A\cap B) = 0\).
+      Deux événements de probabilité non nulle qui sont incompatibles ne sont
+      <strong>jamais</strong> indépendants.
+    </div>
+
+    <h2 id="c7">7. Succession d'épreuves indépendantes</h2>
+    <p>Lorsqu'on répète une expérience dans les <strong>mêmes conditions</strong>, les résultats
+    successifs sont indépendants. La probabilité d'une <strong>liste de résultats</strong> est le
+    <strong>produit</strong> des probabilités de chaque résultat.</p>
+    <div class="box method">
+      <span class="box-t">Application</span>
+      On lance 3 fois une pièce équilibrée. La probabilité d'obtenir « pile, pile, face » dans cet
+      ordre est \(\dfrac12\times\dfrac12\times\dfrac12 = \dfrac18\). C'est le point de départ du
+      schéma de Bernoulli, étudié au chapitre suivant.
+    </div>
+
+    <h2 id="c8">8. Erreurs fréquentes</h2>
+    <div class="box danger">
+      <span class="box-t">À éviter</span>
+      • Confondre \(P_A(B)\) et \(P(A\cap B)\) : la conditionnelle est <em>divisée</em> par
+      \(P(A)\).<br>
+      • Confondre \(P_A(B)\) et \(P_B(A)\) : le conditionnement a un sens.<br>
+      • Confondre <strong>indépendants</strong> et <strong>incompatibles</strong>.<br>
+      • Oublier de vérifier que les \(A_i\) forment bien une <strong>partition</strong> avant
+      d'appliquer les probabilités totales.<br>
+      • Dans un arbre, oublier que la somme des branches issues d'un nœud vaut 1.
+    </div>
+
+    <h2 id="c9">9. Compléments et démonstrations</h2>
+
+    <h3>La formule de Bayes</h3>
+    <div class="box prop">
+      <span class="box-t">Formule de Bayes</span>
+      Pour deux événements de probabilités non nulles :
+      \[ P_B(A) = \frac{P(A)\times P_A(B)}{P(B)}. \]
+      Avec la partition \(\{A,\bar A\}\), le dénominateur se développe :
+      \[ P_B(A) = \frac{P(A)\,P_A(B)}{P(A)\,P_A(B) + P(\bar A)\,P_{\bar A}(B)}. \]
+      C'est l'écriture explicite du « calcul de probabilité inverse ».
+    </div>
+
+    <div class="box method">
+      <span class="box-t">Application — test de dépistage</span>
+      Une maladie touche 1 % de la population. Un test détecte 99 % des malades (sensibilité) mais
+      donne 2 % de faux positifs. Probabilité d'être malade sachant le test positif :
+      \[ P_+(M) = \frac{0{,}01\times0{,}99}{0{,}01\times0{,}99 + 0{,}99\times0{,}02}
+      = \frac{0{,}0099}{0{,}0297} \approx 0{,}33. \]
+      Seulement 33 % — un résultat contre-intuitif, lié à la rareté de la maladie.
+    </div>
+
+    <div class="box prop">
+      <span class="box-t">Démonstration — indépendance de \(A\) et \(\bar B\)</span>
+      Si \(A\) et \(B\) sont indépendants : \(P(A\cap\bar B) = P(A) - P(A\cap B)
+      = P(A) - P(A)P(B) = P(A)\big(1 - P(B)\big) = P(A)\,P(\bar B)\). Donc \(A\) et \(\bar B\)
+      sont indépendants.
+    </div>
+
+    <h3>Indépendance de plusieurs événements</h3>
+    <div class="box note">
+      <span class="box-t">Indépendance mutuelle</span>
+      Trois événements \(A\), \(B\), \(C\) sont <strong>mutuellement indépendants</strong> si
+      \(P(A\cap B\cap C) = P(A)P(B)P(C)\) <em>et</em> si chaque paire est indépendante.
+      L'indépendance deux à deux ne suffit pas à garantir l'indépendance mutuelle.
+    </div>
+
+    <div class="box note">
+      <span class="box-t">Arbres à plusieurs niveaux</span>
+      Pour une succession de plus de deux épreuves, l'arbre comporte autant de niveaux que
+      d'épreuves. Les règles restent les mêmes : produit le long d'un chemin, somme des chemins
+      menant à un événement. C'est le passage naturel vers le schéma de Bernoulli (chapitre 15).
+    </div>
+
+  </section>
+
+  <!-- ================= FICHE ================= -->
+  <section id="fiche" class="panel">
+    <div class="fiche">
+      <h2>Fiche résumé — Probabilités conditionnelles</h2>
+      <ul class="keypoints">
+        <li><strong>Conditionnelle</strong> : \(P_A(B) = \frac{P(A\cap B)}{P(A)}\).</li>
+        <li><strong>Intersection</strong> : \(P(A\cap B) = P(A)\,P_A(B)\).</li>
+        <li><strong>Arbre</strong> : chemin = produit ; événement = somme des chemins ; nœud
+        = somme 1.</li>
+        <li><strong>Probabilités totales</strong> : \(P(B)=\sum P(A_i)\,P_{A_i}(B)\) sur une
+        partition.</li>
+        <li><strong>Cas binaire</strong> : \(P(B)=P(A)P_A(B)+P(\bar A)P_{\bar A}(B)\).</li>
+        <li><strong>Probabilité inverse</strong> : \(P_B(A)=\frac{P(A\cap B)}{P(B)}\).</li>
+        <li><strong>Indépendants</strong> : \(P(A\cap B)=P(A)P(B)\), ou \(P_A(B)=P(B)\).</li>
+        <li>Indépendants ≠ incompatibles.</li>
+      </ul>
+      <div class="formule">
+        \[ P_A(B) = \frac{P(A\cap B)}{P(A)} \qquad P(B) = \sum_i P(A_i)\,P_{A_i}(B) \]
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= EXERCICES ================= -->
+  <section id="exos" class="panel">
+
+    <div class="exo">
+      <div class="exo-tag">Exercice 1 · Arbre et probabilités totales</div>
+      <h3>Deux usines</h3>
+      <p>Une entreprise produit des pièces dans deux usines. L'usine A fabrique 70 % des pièces,
+      l'usine B les 30 % restants. 2 % des pièces de A sont défectueuses, 5 % de celles de B.</p>
+      <p>1. Représenter la situation par un arbre.<br>
+      2. Calculer la probabilité qu'une pièce prise au hasard soit défectueuse.</p>
+      <details class="corrige">
+        <summary>Voir le corrigé</summary>
+        <div class="sol">
+          <p><strong>1.</strong> Premier niveau : \(P(A) = 0{,}7\), \(P(B) = 0{,}3\). Second
+          niveau (notons \(D\) « défectueuse ») : \(P_A(D) = 0{,}02\), \(P_B(D) = 0{,}05\).</p>
+          <p><strong>2.</strong> Formule des probabilités totales avec la partition
+          \(\{A,B\}\) :</p>
+          <p>\(P(D) = P(A)P_A(D) + P(B)P_B(D) = 0{,}7\times0{,}02 + 0{,}3\times0{,}05\).</p>
+          <p>\(P(D) = 0{,}014 + 0{,}015 = 0{,}029\), soit 2,9 %.</p>
+        </div>
+      </details>
+    </div>
+
+    <div class="exo">
+      <div class="exo-tag">Exercice 2 · Probabilité inverse</div>
+      <h3>Remonter l'arbre</h3>
+      <p>On reprend l'exercice 1. Une pièce tirée au hasard est défectueuse. Quelle est la
+      probabilité qu'elle provienne de l'usine B ?</p>
+      <details class="corrige">
+        <summary>Voir le corrigé</summary>
+        <div class="sol">
+          <p>On cherche \(P_D(B) = \dfrac{P(B\cap D)}{P(D)}\).</p>
+          <p>\(P(B\cap D) = P(B)\times P_B(D) = 0{,}3\times0{,}05 = 0{,}015\).</p>
+          <p>\(P(D) = 0{,}029\) (calculé en exercice 1).</p>
+          <p>\(P_D(B) = \dfrac{0{,}015}{0{,}029} \approx 0{,}517\). Sachant qu'une pièce est
+          défectueuse, il y a environ 51,7 % de chances qu'elle vienne de B — bien plus que la
+          part de production de B (30 %).</p>
+        </div>
+      </details>
+    </div>
+
+    <div class="exo">
+      <div class="exo-tag">Exercice 3 · Indépendance</div>
+      <h3>Tester l'indépendance</h3>
+      <p>On tire une carte d'un jeu de 32. Soit \(R\) « la carte est rouge » et \(F\) « la carte
+      est une figure » (valet, dame, roi). Le jeu compte 16 cartes rouges et 12 figures, dont 6
+      rouges.</p>
+      <p>Les événements \(R\) et \(F\) sont-ils indépendants ?</p>
+      <details class="corrige">
+        <summary>Voir le corrigé</summary>
+        <div class="sol">
+          <p>\(P(R) = \dfrac{16}{32} = \dfrac12\) ; \(P(F) = \dfrac{12}{32} = \dfrac38\) ;
+          \(P(R\cap F) = \dfrac{6}{32} = \dfrac{3}{16}\).</p>
+          <p>On compare : \(P(R)\times P(F) = \dfrac12\times\dfrac38 = \dfrac{3}{16}\).</p>
+          <p>Comme \(P(R\cap F) = P(R)\times P(F) = \dfrac{3}{16}\), les événements \(R\) et \(F\)
+          sont <strong>indépendants</strong>.</p>
+        </div>
+      </details>
+    </div>
+
+  </section>
+
+  <nav class="chap-nav">
+    <a href="ch13.html">← Chapitre 13 — Combinatoire</a>
+    <a href="ch15.html">Chapitre 15 — Variables aléatoires et loi binomiale →</a>
+  </nav>
+
+</main>
+
+<footer>Bac Mathématiques · Terminale spécialité — Chapitre 14</footer>
+<script src="assets/script.js"></script>
+</body>
+</html>

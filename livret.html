@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Livret d'exercices — Maths Terminale</title>
+<style>
+  :root {
+    --bg:       #0e0f13;
+    --paper:    #16181f;
+    --paper-2:  #1e2128;
+    --line:     #2b2e38;
+    --ink:      #e8e8ea;
+    --ink-soft: #8b909c;
+    --accent:   #4f9cf5;
+    --c-suites:    #f5b13f;
+    --c-fonctions: #4ecdc4;
+    --c-proba:     #f06a8c;
+    --c-geo:       #5fce7e;
+    --c-qcm:       #b07cf2;
+    --font-ui:   -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body { height: 100%; }
+
+  body {
+    font-family: var(--font-ui);
+    background: var(--bg);
+    color: var(--ink);
+    display: flex;
+    flex-direction: column;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ----- Barre supérieure (cohérente avec le site) ----- */
+  .topbar {
+    background: rgba(36,40,50,.85);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+    padding: .8rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-shrink: 0;
+  }
+  .topbar a.brand {
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .topbar a.brand span { color: var(--accent); }
+  .topbar nav a {
+    font-size: .85rem;
+    color: var(--ink-soft);
+    text-decoration: none;
+    margin-left: 1.1rem;
+    transition: color .12s ease;
+  }
+  .topbar nav a:hover { color: var(--accent); }
+
+  /* ----- En-tête du livret ----- */
+  .livret-head {
+    padding: 16px 28px 14px;
+    border-bottom: 1px solid var(--line);
+    flex-shrink: 0;
+  }
+  .livret-head .kicker {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--ink-soft);
+    letter-spacing: .14em;
+    text-transform: uppercase;
+  }
+  .livret-head h1 {
+    font-size: 18px;
+    font-weight: 800;
+    letter-spacing: -.02em;
+    margin-top: 3px;
+  }
+
+  /* ----- Layout deux colonnes ----- */
+  .layout {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    flex: 1;
+    min-height: 0;
+  }
+
+  /* ----- Barre latérale ----- */
+  .sidebar {
+    border-right: 1px solid var(--line);
+    overflow-y: auto;
+    padding: 12px 0;
+    background: var(--paper);
+  }
+  .search {
+    margin: 0 14px 10px;
+  }
+  .search input {
+    width: 100%;
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    color: var(--ink);
+    font-family: var(--font-ui);
+    font-size: 13px;
+    padding: 8px 11px;
+    outline: none;
+  }
+  .search input:focus { border-color: var(--accent); }
+  .search input::placeholder { color: var(--ink-soft); }
+
+  .category-block { margin-bottom: 2px; }
+
+  .cat-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 11px 16px;
+    cursor: pointer;
+    font-size: 12.5px;
+    font-weight: 700;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    transition: background .15s;
+    user-select: none;
+  }
+  .cat-header:hover { background: var(--paper-2); }
+  .cat-dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
+  .cat-count {
+    margin-left: auto;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--ink-soft);
+  }
+  .cat-arrow { font-size: 10px; color: var(--ink-soft); transition: transform .2s; }
+  .cat-header.open .cat-arrow { transform: rotate(90deg); }
+
+  .exo-list { display: none; flex-direction: column; padding: 0 0 8px 0; }
+  .exo-list.open { display: flex; }
+
+  .exo-btn {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 7px 16px 7px 14px;
+    cursor: pointer;
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    color: var(--ink-soft);
+    transition: all .12s;
+    border: none;
+    background: none;
+    text-align: left;
+    width: 100%;
+  }
+  .exo-btn:hover { background: var(--paper-2); color: var(--ink); }
+  .exo-btn.active { color: var(--ink); background: var(--paper-2); box-shadow: inset 2px 0 0 var(--accent); }
+  .exo-main { flex: 1; min-width: 0; }
+  .exo-check {
+    flex-shrink: 0;
+    width: 16px; height: 16px;
+    border: 1.5px solid var(--line);
+    border-radius: 5px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px; color: transparent;
+    transition: all .12s;
+  }
+  .exo-check:hover { border-color: #3ecf8e; transform: scale(1.12); }
+  .exo-btn.done .exo-check { background: #3ecf8e; border-color: #3ecf8e; color: #0b0c0f; }
+  .exo-btn.done .exo-main, .exo-btn.done .exo-name { text-decoration: line-through; opacity: .5; }
+  .exo-btn.done .exo-desc { opacity: .4; }
+  .cat-count.has-done { color: #3ecf8e; }
+  .page-badge {
+    margin-left: auto;
+    font-size: 10px;
+    font-family: var(--font-mono);
+    background: var(--bg);
+    border: 1px solid var(--line);
+    padding: 2px 6px;
+    border-radius: 4px;
+  }
+  .no-result {
+    padding: 20px 16px;
+    font-size: 12px;
+    color: var(--ink-soft);
+    text-align: center;
+    display: none;
+  }
+
+  /* ----- Visionneuse PDF ----- */
+  .viewer {
+    display: flex;
+    flex-direction: column;
+    background: #0a0b0e;
+    overflow: hidden;
+    min-width: 0;
+  }
+  .viewer-toolbar {
+    padding: 11px 20px;
+    border-bottom: 1px solid var(--line);
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: var(--paper);
+    flex-shrink: 0;
+  }
+  .viewer-title { font-size: 13px; font-weight: 700; }
+  .viewer-subtitle {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--ink-soft);
+    margin-top: 2px;
+  }
+  .toolbar-spacer { flex: 1; }
+  .nav-btn {
+    padding: 6px 13px;
+    border: 1px solid var(--line);
+    border-radius: 7px;
+    background: var(--bg);
+    color: var(--ink);
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all .15s;
+    font-family: var(--font-ui);
+  }
+  .nav-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .nav-btn:disabled { opacity: .35; cursor: not-allowed; }
+  .nav-btn:disabled:hover { border-color: var(--line); color: var(--ink); }
+  .page-info {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--ink-soft);
+    min-width: 78px;
+    text-align: center;
+  }
+  iframe { flex: 1; width: 100%; border: none; background: #0a0b0e; }
+
+  .placeholder {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    color: var(--ink-soft);
+    padding: 20px;
+    text-align: center;
+  }
+  .placeholder-icon { font-size: 46px; opacity: .35; }
+  .placeholder-text { font-size: 14px; }
+
+  /* couleurs par catégorie */
+  .dot-suites    { background: var(--c-suites); }
+  .dot-fonctions { background: var(--c-fonctions); }
+  .dot-proba     { background: var(--c-proba); }
+  .dot-geo       { background: var(--c-geo); }
+  .dot-qcm       { background: var(--c-qcm); }
+  .badge-suites    { color: var(--c-suites); }
+  .badge-fonctions { color: var(--c-fonctions); }
+  .badge-proba     { color: var(--c-proba); }
+  .badge-geo       { color: var(--c-geo); }
+  .badge-qcm       { color: var(--c-qcm); }
+
+  .sidebar::-webkit-scrollbar { width: 5px; }
+  .sidebar::-webkit-scrollbar-track { background: transparent; }
+  .sidebar::-webkit-scrollbar-thumb { background: var(--line); border-radius: 3px; }
+
+  /* ----- Responsive ----- */
+  @media (max-width: 720px) {
+    .layout { grid-template-columns: 1fr; }
+    .sidebar { max-height: 42vh; border-right: none; border-bottom: 1px solid var(--line); }
+  }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <a class="brand" href="index.html">Bac <span>Mathématiques</span> · Terminale</a>
+  <nav><a href="index.html">Sommaire</a></nav>
+</header>
+
+<div class="livret-head">
+  <div class="kicker">Livret d'exercices · Spécialité Bac</div>
+  <h1>Exercices de Maths — classés par thème</h1>
+</div>
+
+<div class="layout">
+  <nav class="sidebar" id="sidebar">
+    <div class="search">
+      <input type="text" id="search" placeholder="Rechercher un exercice (n° ou thème)…" autocomplete="off">
+    </div>
+    <div id="cats"></div>
+    <div class="no-result" id="no-result">Aucun exercice trouvé.</div>
+  </nav>
+
+  <div class="viewer">
+    <div class="viewer-toolbar">
+      <div>
+        <div class="viewer-title" id="viewer-title">Sélectionne un exercice</div>
+        <div class="viewer-subtitle" id="viewer-subtitle">↑ Choisis un thème dans le menu de gauche</div>
+      </div>
+      <div class="toolbar-spacer"></div>
+      <button class="nav-btn" id="btn-prev" onclick="changePage(-1)" disabled>← Page préc.</button>
+      <div class="page-info" id="page-info">—</div>
+      <button class="nav-btn" id="btn-next" onclick="changePage(+1)" disabled>Page suiv. →</button>
+    </div>
+    <iframe id="pdf-frame" src="" style="display:none" title="Livret d'exercices"></iframe>
+    <div class="placeholder" id="placeholder">
+      <div class="placeholder-icon">📐</div>
+      <div class="placeholder-text">Choisis un exercice : le livret s'ouvre directement à la bonne page.</div>
+    </div>
+  </div>
+</div>
+
+<script>
+const PDF_PATH = 'assets/livret-ijtihad.pdf';
+const TOTAL_PAGES = 102;
+
+const categories = [
+  {
+    id: 'suites', label: 'Suites', dot: 'dot-suites', badge: 'badge-suites',
+    exercises: [
+      {num:7,page:12},{num:11,page:17},{num:16,page:22},{num:19,page:26},
+      {num:25,page:32},{num:36,page:48},{num:38,page:51},{num:41,page:55},
+      {num:43,page:60},{num:46,page:63},{num:48,page:65},{num:50,page:66},
+      {num:59,page:75},{num:64,page:79},{num:69,page:87},{num:73,page:92},
+      {num:79,page:100},{num:80,page:100}
+    ]
+  },
+  {
+    id: 'fonctions', label: 'Fonctions', dot: 'dot-fonctions', badge: 'badge-fonctions',
+    exercises: [
+      {num:3,page:8},{num:23,page:30},{num:27,page:35},{num:31,page:39},
+      {num:32,page:41},{num:34,page:45},{num:42,page:58},{num:50,page:66},
+      {num:51,page:68},{num:52,page:69},{num:53,page:70},{num:55,page:71},
+      {num:57,page:73},{num:59,page:75},{num:64,page:79},{num:69,page:87},
+      {num:72,page:91},{num:77,page:96}
+    ]
+  },
+  {
+    id: 'proba', label: 'Probabilités', dot: 'dot-proba', badge: 'badge-proba',
+    exercises: [
+      {num:2,page:6},{num:5,page:9},{num:10,page:16},{num:13,page:19},
+      {num:18,page:26},{num:20,page:27},{num:21,page:28},{num:28,page:36},
+      {num:33,page:43},{num:36,page:48},{num:37,page:50},{num:41,page:55},
+      {num:43,page:60},{num:49,page:65},{num:61,page:77},{num:66,page:86},
+      {num:70,page:88},{num:71,page:90},{num:74,page:93},{num:78,page:99}
+    ]
+  },
+  {
+    id: 'geo', label: "Géométrie dans l'espace", dot: 'dot-geo', badge: 'badge-geo',
+    exercises: [
+      {num:4,page:9},{num:8,page:13},{num:12,page:17},{num:14,page:20},
+      {num:24,page:31},{num:26,page:34},{num:29,page:37},{num:30,page:39},
+      {num:40,page:54},{num:44,page:61},{num:45,page:62},{num:47,page:64},
+      {num:51,page:68},{num:54,page:71},{num:58,page:74},{num:60,page:76},
+      {num:65,page:83},{num:68,page:86},{num:76,page:95},{num:81,page:101}
+    ]
+  },
+  {
+    id: 'qcm', label: 'QCM', dot: 'dot-qcm', badge: 'badge-qcm',
+    exercises: [
+      {num:1,page:5},{num:6,page:11},{num:9,page:15},{num:15,page:21},
+      {num:17,page:24},{num:22,page:29},{num:62,page:78},{num:63,page:80},
+      {num:67,page:85},{num:75,page:94}
+    ]
+  }
+];
+
+let currentPage = 1;
+let activeBtn = null;
+
+/* ----- Suivi des exercices faits (sauvegardé dans le navigateur) ----- */
+const STORAGE_KEY = 'maths-done-livret-ijtihad';
+let doneSet = new Set();
+try { doneSet = new Set(JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]')); } catch (e) {}
+
+function saveDone() {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify([...doneSet])); } catch (e) {}
+}
+
+function updateCount(catId) {
+  const cat = categories.find(c => c.id === catId);
+  const span = document.querySelector('.category-block[data-cat="' + catId + '"] .cat-count');
+  if (!span) return;
+  const done = cat.exercises.filter(e => doneSet.has(catId + '|' + e.num)).length;
+  span.textContent = done > 0 ? done + '/' + cat.exercises.length + ' faits' : cat.exercises.length + ' exos';
+  span.classList.toggle('has-done', done > 0);
+}
+
+function toggleDone(id, btn, catId) {
+  if (doneSet.has(id)) doneSet.delete(id); else doneSet.add(id);
+  btn.classList.toggle('done', doneSet.has(id));
+  saveDone();
+  updateCount(catId);
+}
+
+function buildSidebar() {
+  const container = document.getElementById('cats');
+  container.innerHTML = '';
+  categories.forEach(cat => {
+    const block = document.createElement('div');
+    block.className = 'category-block';
+    block.dataset.cat = cat.id;
+
+    const header = document.createElement('div');
+    header.className = 'cat-header';
+    header.innerHTML = `
+      <span class="cat-dot ${cat.dot}"></span>
+      <span>${cat.label}</span>
+      <span class="cat-count">${cat.exercises.length} exos</span>
+      <span class="cat-arrow">▶</span>
+    `;
+
+    const list = document.createElement('div');
+    list.className = 'exo-list';
+
+    cat.exercises.forEach(exo => {
+      const id = cat.id + '|' + exo.num;
+      const btn = document.createElement('button');
+      btn.className = 'exo-btn' + (doneSet.has(id) ? ' done' : '');
+      btn.dataset.num = exo.num;
+      btn.dataset.cat = cat.id;
+      btn.innerHTML = `
+        <span class="exo-check" title="Marquer comme fait">✓</span>
+        <span class="exo-main">Exercice ${exo.num}</span>
+        <span class="page-badge ${cat.badge}">p.${exo.page}</span>`;
+      btn.querySelector('.exo-check').addEventListener('click', ev => {
+        ev.stopPropagation();
+        toggleDone(id, btn, cat.id);
+      });
+      btn.onclick = () => openExo(exo, cat, btn);
+      list.appendChild(btn);
+    });
+
+    header.onclick = () => toggleCat(header, list);
+
+    block.appendChild(header);
+    block.appendChild(list);
+    container.appendChild(block);
+    updateCount(cat.id);
+  });
+}
+
+function toggleCat(header, list) {
+  const isOpen = list.classList.contains('open');
+  document.querySelectorAll('.cat-header').forEach(h => h.classList.remove('open'));
+  document.querySelectorAll('.exo-list').forEach(l => l.classList.remove('open'));
+  if (!isOpen) {
+    header.classList.add('open');
+    list.classList.add('open');
+  }
+}
+
+function openExo(exo, cat, btn) {
+  if (activeBtn) activeBtn.classList.remove('active');
+  btn.classList.add('active');
+  activeBtn = btn;
+
+  currentPage = exo.page;
+  document.getElementById('viewer-title').textContent = `Exercice ${exo.num} — ${cat.label}`;
+  document.getElementById('viewer-subtitle').textContent = `Page ${exo.page} du livret`;
+  document.getElementById('btn-prev').disabled = false;
+  document.getElementById('btn-next').disabled = false;
+  updateFrame();
+}
+
+function updateFrame() {
+  const frame = document.getElementById('pdf-frame');
+  const placeholder = document.getElementById('placeholder');
+  frame.style.display = 'block';
+  placeholder.style.display = 'none';
+  frame.src = `${PDF_PATH}#page=${currentPage}`;
+  document.getElementById('page-info').textContent = `Page ${currentPage}`;
+}
+
+function changePage(delta) {
+  const frame = document.getElementById('pdf-frame');
+  if (frame.style.display === 'none' || !frame.style.display) return;
+  currentPage = Math.max(1, Math.min(TOTAL_PAGES, currentPage + delta));
+  document.getElementById('viewer-subtitle').textContent = `Page ${currentPage} du livret`;
+  updateFrame();
+}
+
+/* recherche : filtre catégories et exercices */
+function runSearch(q) {
+  q = q.trim().toLowerCase();
+  let anyVisible = false;
+  document.querySelectorAll('.category-block').forEach(block => {
+    const cat = categories.find(c => c.id === block.dataset.cat);
+    const catMatch = cat.label.toLowerCase().includes(q);
+    let listVisible = false;
+    block.querySelectorAll('.exo-btn').forEach(btn => {
+      const label = `exercice ${btn.dataset.num}`;
+      const show = q === '' || catMatch || label.includes(q);
+      btn.style.display = show ? 'flex' : 'none';
+      if (show) listVisible = true;
+    });
+    block.style.display = (q === '' || catMatch || listVisible) ? 'block' : 'none';
+    if (q !== '' && (catMatch || listVisible)) {
+      block.querySelector('.cat-header').classList.add('open');
+      block.querySelector('.exo-list').classList.add('open');
+    } else if (q === '') {
+      block.querySelector('.cat-header').classList.remove('open');
+      block.querySelector('.exo-list').classList.remove('open');
+    }
+    if (block.style.display !== 'none') anyVisible = true;
+  });
+  document.getElementById('no-result').style.display = anyVisible ? 'none' : 'block';
+}
+
+document.getElementById('search').addEventListener('input', e => runSearch(e.target.value));
+
+/* navigation clavier : flèches gauche/droite */
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowLeft')  { changePage(-1); }
+  if (e.key === 'ArrowRight') { changePage(+1); }
+});
+
+buildSidebar();
+</script>
+</body>
+</html>

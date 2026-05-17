@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ch.3 — Continuité d'une fonction</title>
+<link rel="stylesheet" href="assets/style.css">
+<script>
+MathJax = {
+  tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="assets/mathjax/tex-svg.js" id="MathJax-script" async></script>
+</head>
+<body>
+
+<header class="topbar">
+  <a class="brand" href="index.html">Bac <span>Mathématiques</span> · Terminale</a>
+  <nav><a href="index.html">Sommaire</a></nav>
+</header>
+
+<main class="wrap reading" data-theme="analyse">
+
+  <div class="chapter-head">
+    <div class="kicker">Thème 1 · Analyse — Chapitre 3</div>
+    <h1>Continuité d'une fonction</h1>
+  </div>
+
+  <nav class="tabs">
+    <button class="tab active" data-target="cours">Cours complet</button>
+    <button class="tab" data-target="fiche">Fiche résumé</button>
+    <button class="tab" data-target="exos">Exercices</button>
+  </nav>
+
+  <!-- ================= COURS ================= -->
+  <section id="cours" class="panel active">
+
+    <div class="toc">
+      <b>Plan du cours</b>
+      <ol>
+        <li><a href="#c1">Notion de continuité</a></li>
+        <li><a href="#c2">Continuité des fonctions usuelles</a></li>
+        <li><a href="#c3">Continuité et dérivabilité</a></li>
+        <li><a href="#c4">Le théorème des valeurs intermédiaires</a></li>
+        <li><a href="#c5">Le corollaire (cas strictement monotone)</a></li>
+        <li><a href="#c6">Méthode de résolution d'équation</a></li>
+        <li><a href="#c7">La méthode de dichotomie</a></li>
+        <li><a href="#c8">Continuité et suites</a></li>
+        <li><a href="#c9">Erreurs fréquentes</a></li>
+        <li><a href="#c10">Compléments et démonstrations</a></li>
+      </ol>
+    </div>
+
+    <h2 id="c1">1. Notion de continuité</h2>
+    <p>Intuitivement, une fonction est <strong>continue</strong> sur un intervalle si l'on peut tracer
+    sa courbe <strong>sans lever le crayon</strong> : la courbe ne présente ni saut, ni trou.</p>
+    <div class="box def">
+      <span class="box-t">Définition</span>
+      Une fonction \(f\) est <strong>continue en \(a\)</strong> si \(f\) est définie en \(a\) et si
+      \[ \lim_{x\to a} f(x) = f(a). \]
+      \(f\) est <strong>continue sur un intervalle \(I\)</strong> si elle est continue en chaque point
+      de \(I\).
+    </div>
+    <p>La définition met des mots précis sur l'image intuitive : « sans saut » signifie exactement
+    que la valeur \(f(a)\) coïncide avec la limite \(\lim_{x\to a} f(x)\). S'il y a un saut, ce vers
+    quoi tend la courbe (la limite) et ce que vaut réellement la fonction en \(a\) ne sont plus la
+    même chose — et la continuité est rompue.</p>
+    <p>La fonction <strong>partie entière</strong> \(x \mapsto \lfloor x\rfloor\) est l'exemple type
+    d'une fonction <em>non continue</em> : elle « saute » d'une unité à chaque entier. À gauche d'un
+    entier \(n\), \(\lfloor x\rfloor = n-1\) ; en \(n\), \(\lfloor x\rfloor = n\). La limite à gauche
+    et la valeur en \(n\) diffèrent : il y a discontinuité.</p>
+
+    <h2 id="c2">2. Continuité des fonctions usuelles</h2>
+    <div class="box prop">
+      <span class="box-t">À retenir</span>
+      Sur tout intervalle où elles sont définies, sont continues :<br>
+      • les fonctions <strong>polynômes</strong> ;<br>
+      • les fonctions <strong>rationnelles</strong> ;<br>
+      • la fonction <strong>racine carrée</strong>, les fonctions <strong>valeur absolue</strong>,
+      <strong>exponentielle</strong>, <strong>logarithme</strong>, <strong>sinus</strong> et
+      <strong>cosinus</strong>.<br>
+      De plus, <strong>somme, produit, quotient et composée</strong> de fonctions continues sont
+      continues (sur leur ensemble de définition).
+    </div>
+    <p>En pratique, presque toutes les fonctions rencontrées au lycée sont continues. La continuité
+    sert surtout à <strong>justifier</strong> l'emploi du théorème des valeurs intermédiaires.</p>
+
+    <h2 id="c3">3. Continuité et dérivabilité</h2>
+    <div class="box prop">
+      <span class="box-t">Lien dérivabilité → continuité</span>
+      Si \(f\) est <strong>dérivable</strong> sur un intervalle \(I\), alors \(f\) est
+      <strong>continue</strong> sur \(I\).
+    </div>
+    <div class="box danger">
+      <span class="box-t">La réciproque est fausse</span>
+      Une fonction peut être continue sans être dérivable. La fonction valeur absolue
+      \(x\mapsto |x|\) est continue en 0, mais sa courbe y présente un <strong>point anguleux</strong>
+      : elle n'y est pas dérivable. De même \(x\mapsto\sqrt x\) est continue en 0 mais non dérivable
+      en 0 (tangente verticale).
+    </div>
+    <p>La distinction est subtile mais utile : la continuité interdit les <em>sauts</em>, la
+    dérivabilité interdit en plus les <em>angles</em>. Une courbe peut donc être d'un seul tenant
+    (continue) tout en présentant une pointe où aucune tangente unique n'existe (non dérivable).
+    En pratique au bac, presque toutes les fonctions étudiées sont dérivables — donc continues —
+    mais il faut retenir que l'implication ne fonctionne que dans ce sens.</p>
+
+    <h2 id="c4">4. Le théorème des valeurs intermédiaires</h2>
+    <div class="box prop">
+      <span class="box-t">Théorème des valeurs intermédiaires (TVI)</span>
+      Soit \(f\) une fonction <strong>continue</strong> sur un intervalle \([a\,;b]\). Alors pour tout
+      réel \(k\) compris entre \(f(a)\) et \(f(b)\), il existe <strong>au moins un</strong> réel
+      \(c \in [a\,;b]\) tel que \(f(c) = k\).
+    </div>
+    <p>En clair : une fonction continue ne peut pas passer d'une valeur à une autre <em>sans
+    prendre toutes les valeurs intermédiaires</em>. C'est exactement la traduction de « tracer sans
+    lever le crayon ».</p>
+    <div class="box note">
+      <span class="box-t">Le rôle de la continuité</span>
+      La continuité est <strong>indispensable</strong> : la fonction partie entière passe de 0 à 1
+      sans jamais prendre la valeur \(0{,}5\). C'est précisément parce qu'elle n'est pas continue.
+    </div>
+    <p>Ce théorème, presque évident sur un dessin, est en réalité l'<strong>outil n°1 pour prouver
+    qu'une équation possède une solution</strong> — sans avoir à la calculer. Beaucoup d'équations,
+    comme \(x^3 + x = 1\), ne se résolvent pas « à la main » : le TVI garantit pourtant l'existence
+    d'une solution, et la méthode de dichotomie (section 7) permettra ensuite d'en obtenir une valeur
+    approchée aussi précise qu'on veut.</p>
+
+    <h2 id="c5">5. Le corollaire (cas strictement monotone)</h2>
+    <p>Le TVI assure l'existence d'une solution, mais pas son unicité. En ajoutant la
+    <strong>stricte monotonie</strong>, on obtient une solution <strong>unique</strong> — c'est la
+    version la plus utilisée au bac.</p>
+    <div class="box prop">
+      <span class="box-t">Corollaire du TVI (théorème de la bijection)</span>
+      Soit \(f\) <strong>continue</strong> et <strong>strictement monotone</strong> sur \([a\,;b]\).
+      Alors pour tout réel \(k\) compris entre \(f(a)\) et \(f(b)\), l'équation \(f(x) = k\) admet
+      une <strong>unique</strong> solution dans \([a\,;b]\).
+    </div>
+    <p>Pourquoi la stricte monotonie apporte-t-elle l'unicité ? Parce qu'une fonction strictement
+    croissante (ou décroissante) ne prend <em>jamais deux fois</em> la même valeur : chaque hauteur
+    \(k\) est atteinte en un seul point. Le TVI donne l'<em>existence</em> d'une solution, la
+    monotonie verrouille son <em>unicité</em>.</p>
+    <p>Le théorème s'étend aux intervalles <strong>ouverts ou infinis</strong> : on remplace alors
+    \(f(a)\) et \(f(b)\) par les <strong>limites</strong> de \(f\) aux bornes de l'intervalle.</p>
+
+    <h2 id="c6">6. Méthode de résolution d'équation</h2>
+    <div class="box method">
+      <span class="box-t">Méthode — montrer que \(f(x)=k\) a une unique solution</span>
+      1. Justifier que \(f\) est <strong>continue</strong> sur l'intervalle (souvent : « somme/quotient
+      de fonctions continues »).<br>
+      2. Étudier les variations de \(f\) et établir que \(f\) est <strong>strictement
+      monotone</strong>.<br>
+      3. Calculer \(f\) (ou ses limites) aux <strong>bornes</strong> et vérifier que \(k\) est
+      <em>compris entre</em> ces valeurs.<br>
+      4. Conclure par le corollaire du TVI : il existe une <strong>unique</strong> solution.
+    </div>
+    <div class="box method">
+      <span class="box-t">Application</span>
+      Montrons que \(x^3 + x - 1 = 0\) admet une unique solution sur \(\mathbb R\). Soit
+      \(f(x) = x^3 + x - 1\).<br>
+      • \(f\) est un polynôme, donc continue sur \(\mathbb R\).<br>
+      • \(f'(x) = 3x^2 + 1 > 0\) : \(f\) est strictement croissante.<br>
+      • \(\lim_{-\infty} f = -\infty\) et \(\lim_{+\infty} f = +\infty\) ; 0 est compris entre.<br>
+      Donc l'équation \(f(x) = 0\) admet une <strong>unique</strong> solution \(\alpha\). De plus
+      \(f(0) = -1 < 0\) et \(f(1) = 1 > 0\), donc \(\alpha \in\, ]0\,;1[\).
+    </div>
+
+    <h2 id="c7">7. La méthode de dichotomie</h2>
+    <p>Une fois l'existence d'une solution \(\alpha\) établie dans un intervalle \([a\,;b]\), la
+    <strong>dichotomie</strong> permet d'en obtenir une valeur approchée aussi précise que voulue.</p>
+    <div class="box method">
+      <span class="box-t">Principe de la dichotomie</span>
+      On part d'un intervalle \([a\,;b]\) contenant \(\alpha\), avec \(f(a)\) et \(f(b)\) de signes
+      contraires. On calcule le milieu \(m = \dfrac{a+b}{2}\) :<br>
+      • si \(f(a)\) et \(f(m)\) sont de signes contraires, \(\alpha \in [a\,;m]\) → remplacer \(b\)
+      par \(m\) ;<br>
+      • sinon, \(\alpha \in [m\,;b]\) → remplacer \(a\) par \(m\).<br>
+      À chaque étape, la <strong>longueur de l'intervalle est divisée par 2</strong>. On répète
+      jusqu'à atteindre la précision souhaitée.
+    </div>
+    <div class="box note">
+      <span class="box-t">En algorithmique</span>
+      <pre style="font-family:monospace;font-size:.85rem">
+a ← 0 ; b ← 1
+Tant que b - a > précision :
+    m ← (a + b)/2
+    Si f(a) × f(m) ⩽ 0 : b ← m
+    Sinon : a ← m
+Renvoyer a, b</pre>
+      Après \(n\) étapes, l'amplitude vaut \(\dfrac{b-a}{2^n}\) : la convergence est rapide.
+    </div>
+
+    <h2 id="c8">8. Continuité et suites</h2>
+    <div class="box prop">
+      <span class="box-t">Limite d'une suite définie par récurrence</span>
+      Soit \((u_n)\) définie par \(u_{n+1} = f(u_n)\), avec \(f\) <strong>continue</strong>. Si
+      \((u_n)\) converge vers un réel \(\ell\), alors \(\ell\) vérifie l'équation
+      \[ f(\ell) = \ell. \]
+    </div>
+    <p>C'est l'outil clé pour <strong>calculer</strong> la limite d'une suite récurrente : une fois
+    la convergence prouvée (par exemple via le théorème de convergence monotone du chapitre 1), on
+    résout l'équation \(f(\ell)=\ell\) pour trouver la valeur de la limite.</p>
+
+    <h2 id="c9">9. Erreurs fréquentes</h2>
+    <div class="box danger">
+      <span class="box-t">À éviter</span>
+      • Appliquer le TVI <strong>sans justifier la continuité</strong> de \(f\).<br>
+      • Conclure à l'<strong>unicité</strong> de la solution sans avoir prouvé la stricte
+      monotonie.<br>
+      • Croire que « continue » implique « dérivable » : c'est l'inverse qui est vrai.<br>
+      • Oublier de vérifier que \(k\) est bien <strong>compris entre</strong> les valeurs (ou
+      limites) aux bornes.<br>
+      • Affirmer qu'une suite récurrente converge vers \(\ell\) <em>parce que</em> \(f(\ell)=\ell\) :
+      l'équation \(f(\ell)=\ell\) ne donne la limite que <strong>si</strong> la convergence est
+      déjà prouvée.
+    </div>
+
+    <h2 id="c10">10. Compléments et démonstrations</h2>
+
+    <h3>Définition formelle de la continuité</h3>
+    <div class="box def">
+      <span class="box-t">Continuité en \(a\) (avec \(\varepsilon\))</span>
+      \(f\) est continue en \(a\) si : pour tout \(\varepsilon > 0\), il existe \(\eta > 0\) tel
+      que \(|x - a| < \eta \Rightarrow |f(x) - f(a)| < \varepsilon\).
+    </div>
+
+    <div class="box prop">
+      <span class="box-t">Idée de démonstration du TVI (par dichotomie)</span>
+      Supposons \(f(a) < k < f(b)\). On construit deux suites adjacentes \((a_n)\) et \((b_n)\) en
+      coupant l'intervalle en deux à chaque étape, en gardant la moitié où \(f\) change de part et
+      d'autre de \(k\). Ces suites convergent vers une limite commune \(c\) ; la continuité de
+      \(f\) donne alors \(f(c) = k\).
+    </div>
+
+    <h3>Fonctions continues sur un segment <span style="font-weight:400">(hors-programme)</span></h3>
+    <div class="box prop">
+      <span class="box-t">Théorème des bornes atteintes</span>
+      Toute fonction continue sur un <strong>segment</strong> \([a\,;b]\) (intervalle fermé borné)
+      est <strong>bornée</strong> et <strong>atteint ses bornes</strong> : il existe des réels de
+      \([a\,;b]\) où \(f\) atteint son minimum et son maximum.
+    </div>
+
+    <h3>Prolongement par continuité</h3>
+    <div class="box def">
+      <span class="box-t">Prolonger par continuité</span>
+      Si \(f\) n'est pas définie en \(a\) mais que \(\displaystyle\lim_{x\to a} f(x) = \ell\)
+      existe et est finie, on peut <strong>prolonger \(f\) par continuité</strong> en posant
+      \(f(a) = \ell\). Exemple : \(x \mapsto \dfrac{\sin x}{x}\) se prolonge en 0 par la valeur 1.
+    </div>
+
+    <h3>Bijection et fonction réciproque</h3>
+    <div class="box prop">
+      <span class="box-t">Théorème de la bijection</span>
+      Une fonction continue et strictement monotone sur \(I\) réalise une <strong>bijection</strong>
+      de \(I\) sur l'intervalle image \(f(I)\). Sa <strong>fonction réciproque</strong> \(f^{-1}\)
+      est elle aussi continue et strictement monotone, de même sens. Les courbes de \(f\) et de
+      \(f^{-1}\) sont symétriques par rapport à la droite \(y = x\) (c'est le lien
+      \(\exp\) / \(\ln\)).
+    </div>
+
+    <div class="box note">
+      <span class="box-t">Convention des tableaux de variation</span>
+      Dans un tableau de variation, une <strong>flèche oblique</strong> signifie que la fonction
+      est <em>continue et strictement monotone</em> sur l'intervalle considéré : le tableau
+      contient donc déjà les hypothèses du corollaire du TVI.
+    </div>
+
+  </section>
+
+  <!-- ================= FICHE ================= -->
+  <section id="fiche" class="panel">
+    <div class="fiche">
+      <h2>Fiche résumé — Continuité</h2>
+      <ul class="keypoints">
+        <li><strong>Continue en \(a\)</strong> : \(\lim_{x\to a} f(x) = f(a)\) — tracé sans lever le
+        crayon.</li>
+        <li>Polynômes, rationnelles, racine, exp, ln, sin, cos sont continues sur leur domaine.</li>
+        <li><strong>Dérivable ⇒ continue</strong> (la réciproque est fausse : \(|x|\) en 0).</li>
+        <li><strong>TVI</strong> : \(f\) continue sur \([a\,;b]\), \(k\) entre \(f(a)\) et \(f(b)\)
+        ⇒ \(\exists\,c,\ f(c)=k\).</li>
+        <li><strong>Corollaire</strong> : \(f\) continue <em>et strictement monotone</em> ⇒ solution
+        <strong>unique</strong>.</li>
+        <li>Sur intervalle ouvert/infini : remplacer \(f(a)\), \(f(b)\) par les <strong>limites</strong>
+        aux bornes.</li>
+        <li><strong>Dichotomie</strong> : amplitude divisée par 2 à chaque étape.</li>
+        <li>Suite \(u_{n+1}=f(u_n)\) convergente, \(f\) continue ⇒ la limite vérifie
+        \(f(\ell)=\ell\).</li>
+      </ul>
+      <div class="formule">
+        \[ f \text{ continue + strictement monotone sur } I \;\Rightarrow\; f(x)=k \text{ a une
+        unique solution} \]
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= EXERCICES ================= -->
+  <section id="exos" class="panel">
+
+    <div class="exo">
+      <div class="exo-tag">Exercice 1 · Application du corollaire</div>
+      <h3>Existence et unicité</h3>
+      <p>Soit \(f(x) = x^3 - 3x + 1\) sur \([0\,;2]\).</p>
+      <p>1. Étudier les variations de \(f\) sur \([0\,;2]\) — on pourra restreindre.<br>
+      2. Montrer que l'équation \(f(x) = 0\) admet une unique solution sur \([1\,;2]\).</p>
+      <details class="corrige">
+        <summary>Voir le corrigé</summary>
+        <div class="sol">
+          <p><strong>1.</strong> \(f'(x) = 3x^2 - 3 = 3(x-1)(x+1)\). Sur \([1\,;2]\), \(x-1\ge0\) et
+          \(x+1>0\), donc \(f'(x) \ge 0\) : \(f\) est <strong>strictement croissante</strong> sur
+          \([1\,;2]\) (et décroissante sur \([0\,;1]\)).</p>
+          <p><strong>2.</strong> Sur \([1\,;2]\) : \(f\) est continue (polynôme) et strictement
+          croissante. \(f(1) = 1 - 3 + 1 = -1\) et \(f(2) = 8 - 6 + 1 = 3\).</p>
+          <p>0 est compris entre \(-1\) et 3 ; par le corollaire du TVI, l'équation \(f(x)=0\) admet
+          une <strong>unique</strong> solution \(\alpha\) sur \([1\,;2]\).</p>
+        </div>
+      </details>
+    </div>
+
+    <div class="exo">
+      <div class="exo-tag">Exercice 2 · Dichotomie</div>
+      <h3>Valeur approchée d'une solution</h3>
+      <p>On reprend \(f(x) = x^3 - 3x + 1\) et sa solution \(\alpha\in[1\,;2]\) avec \(f(\alpha)=0\).
+      Appliquer trois étapes de dichotomie pour encadrer \(\alpha\).</p>
+      <details class="corrige">
+        <summary>Voir le corrigé</summary>
+        <div class="sol">
+          <p><em>Départ</em> : \(f(1)=-1<0\), \(f(2)=3>0\).</p>
+          <p><strong>Étape 1</strong> : \(m = 1{,}5\), \(f(1{,}5) = 3{,}375 - 4{,}5 + 1 = -0{,}125<0\).
+          Même signe que \(f(1)\) ⇒ \(\alpha\in[1{,}5\,;2]\).</p>
+          <p><strong>Étape 2</strong> : \(m = 1{,}75\), \(f(1{,}75)\approx 5{,}359 - 5{,}25 + 1
+          \approx 1{,}109>0\). ⇒ \(\alpha\in[1{,}5\,;1{,}75]\).</p>
+          <p><strong>Étape 3</strong> : \(m = 1{,}625\), \(f(1{,}625)\approx 4{,}29 - 4{,}875 + 1
+          \approx 0{,}416>0\). ⇒ \(\alpha\in[1{,}5\,;1{,}625]\).</p>
+          <p>On obtient l'encadrement \(1{,}5 \le \alpha \le 1{,}625\) (amplitude \(0{,}125\)).</p>
+        </div>
+      </details>
+    </div>
+
+    <div class="exo">
+      <div class="exo-tag">Exercice 3 · Intervalle ouvert</div>
+      <h3>TVI avec des limites aux bornes</h3>
+      <p>Soit \(f(x) = \dfrac{1}{x} + x\) définie sur \(]0\,;+\infty[\).</p>
+      <p>1. Calculer \(f'\) et dresser le tableau de variations sur \(]0\,;+\infty[\).<br>
+      2. Montrer que l'équation \(f(x) = 3\) admet exactement deux solutions.</p>
+      <details class="corrige">
+        <summary>Voir le corrigé</summary>
+        <div class="sol">
+          <p><strong>1.</strong> \(f'(x) = -\dfrac{1}{x^2} + 1 = \dfrac{x^2-1}{x^2}\). Sur
+          \(]0\,;1[\), \(f'<0\) ; sur \(]1\,;+\infty[\), \(f'>0\). Minimum en \(x=1\) :
+          \(f(1) = 2\).</p>
+          <p>Limites : \(\lim_{x\to0^+} f = +\infty\) et \(\lim_{x\to+\infty} f = +\infty\).</p>
+          <p><strong>2.</strong> Sur \(]0\,;1]\) : \(f\) est continue, strictement décroissante de
+          \(+\infty\) à \(2\). Comme \(3 \in [2\,;+\infty[\), il existe une unique solution dans
+          \(]0\,;1[\).</p>
+          <p>Sur \([1\,;+\infty[\) : \(f\) est continue, strictement croissante de \(2\) à
+          \(+\infty\). Comme \(3 \in [2\,;+\infty[\), il existe une unique solution dans
+          \(]1\,;+\infty[\).</p>
+          <p>Au total, l'équation \(f(x)=3\) admet exactement <strong>deux solutions</strong>.</p>
+        </div>
+      </details>
+    </div>
+
+  </section>
+
+  <nav class="chap-nav">
+    <a href="ch02.html">← Chapitre 2 — Limites de fonctions</a>
+    <a href="ch04.html">Chapitre 4 — Dérivation et convexité →</a>
+  </nav>
+
+</main>
+
+<footer>Bac Mathématiques · Terminale spécialité — Chapitre 3</footer>
+<script src="assets/script.js"></script>
+</body>
+</html>

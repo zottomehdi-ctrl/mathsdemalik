@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ch.7 — Fonctions trigonométriques</title>
+<link rel="stylesheet" href="assets/style.css">
+<script>
+MathJax = {
+  tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="assets/mathjax/tex-svg.js" id="MathJax-script" async></script>
+</head>
+<body>
+
+<header class="topbar">
+  <a class="brand" href="index.html">Bac <span>Mathématiques</span> · Terminale</a>
+  <nav><a href="index.html">Sommaire</a></nav>
+</header>
+
+<main class="wrap reading" data-theme="analyse">
+
+  <div class="chapter-head">
+    <div class="kicker">Thème 1 · Analyse — Chapitre 7</div>
+    <h1>Fonctions trigonométriques</h1>
+  </div>
+
+  <nav class="tabs">
+    <button class="tab active" data-target="cours">Cours complet</button>
+    <button class="tab" data-target="fiche">Fiche résumé</button>
+    <button class="tab" data-target="exos">Exercices</button>
+  </nav>
+
+  <!-- ================= COURS ================= -->
+  <section id="cours" class="panel active">
+
+    <div class="toc">
+      <b>Plan du cours</b>
+      <ol>
+        <li><a href="#c1">Le cercle trigonométrique</a></li>
+        <li><a href="#c2">Cosinus et sinus d'un réel</a></li>
+        <li><a href="#c3">Valeurs remarquables</a></li>
+        <li><a href="#c4">Angles associés</a></li>
+        <li><a href="#c5">Les fonctions sinus et cosinus</a></li>
+        <li><a href="#c6">Dérivées de sinus et cosinus</a></li>
+        <li><a href="#c7">Limites usuelles</a></li>
+        <li><a href="#c8">Équations trigonométriques</a></li>
+        <li><a href="#c9">Erreurs fréquentes</a></li>
+        <li><a href="#c10">Compléments et démonstrations</a></li>
+      </ol>
+    </div>
+
+    <h2 id="c1">1. Le cercle trigonométrique</h2>
+    <p>Le <strong>cercle trigonométrique</strong> est le cercle de centre \(O\) et de rayon 1, muni
+    d'un sens direct (sens inverse des aiguilles d'une montre). À chaque réel \(x\), on associe un
+    point \(M\) du cercle en « enroulant » la droite réelle : \(x\) est la <strong>mesure en
+    radians</strong> de l'angle orienté.</p>
+    <div class="box def">
+      <span class="box-t">Le radian</span>
+      Un tour complet correspond à \(2\pi\) radians ; un demi-tour à \(\pi\) ; un quart de tour à
+      \(\dfrac\pi2\). Conversion : \(180° = \pi\) rad, donc
+      \(x_{\text{rad}} = \dfrac{\pi}{180}\,x_{\text{deg}}\).
+    </div>
+    <p>Pourquoi abandonner les degrés pour les radians ? Parce que le radian est l'unité « naturelle »
+    qui rend les formules de dérivation simples : \((\sin x)' = \cos x\) n'est vrai <em>qu'en
+    radians</em>. En degrés, un facteur parasite apparaîtrait. En analyse, les angles sont donc
+    toujours mesurés en radians — c'est une convention à ne jamais oublier.</p>
+
+    <h2 id="c2">2. Cosinus et sinus d'un réel</h2>
+    <div class="box def">
+      <span class="box-t">Définition</span>
+      Soit \(M\) le point du cercle trigonométrique associé au réel \(x\). Alors :<br>
+      • \(\cos x\) est l'<strong>abscisse</strong> de \(M\) ;<br>
+      • \(\sin x\) est l'<strong>ordonnée</strong> de \(M\).
+    </div>
+    <div class="box prop">
+      <span class="box-t">Propriétés immédiates</span>
+      Pour tout réel \(x\) :<br>
+      • \(-1 \le \cos x \le 1\) et \(-1 \le \sin x \le 1\) ;<br>
+      • \(\cos^{2} x + \sin^{2} x = 1\) (théorème de Pythagore dans le cercle) ;<br>
+      • \(\cos(x + 2\pi) = \cos x\) et \(\sin(x + 2\pi) = \sin x\) : ces fonctions sont
+      <strong>périodiques de période \(2\pi\)</strong>.
+    </div>
+
+    <h2 id="c3">3. Valeurs remarquables</h2>
+    <p>Ces valeurs reviennent dans tous les exercices : il faut les avoir en mémoire. Une astuce pour
+    le tableau : les sinus suivent la séquence \(\dfrac{\sqrt0}{2}, \dfrac{\sqrt1}{2}, \dfrac{\sqrt2}{2},
+    \dfrac{\sqrt3}{2}, \dfrac{\sqrt4}{2}\) (soit \(0, \tfrac12, \tfrac{\sqrt2}{2}, \tfrac{\sqrt3}{2},
+    1\)) à mesure que l'angle croît de 0 à \(\dfrac\pi2\) ; les cosinus suivent la même séquence,
+    mais à l'envers. C'est cohérent : sur le cercle, plus on monte (angle qui croît), plus
+    l'ordonnée \(\sin\) augmente et plus l'abscisse \(\cos\) diminue.</p>
+    <table>
+      <caption>Valeurs à connaître par cœur</caption>
+      <tr><th>\(x\)</th><th>\(0\)</th><th>\(\dfrac\pi6\)</th><th>\(\dfrac\pi4\)</th><th>\(\dfrac\pi3\)</th><th>\(\dfrac\pi2\)</th></tr>
+      <tr><th>\(\cos x\)</th><td>\(1\)</td><td>\(\dfrac{\sqrt3}{2}\)</td><td>\(\dfrac{\sqrt2}{2}\)</td><td>\(\dfrac12\)</td><td>\(0\)</td></tr>
+      <tr><th>\(\sin x\)</th><td>\(0\)</td><td>\(\dfrac12\)</td><td>\(\dfrac{\sqrt2}{2}\)</td><td>\(\dfrac{\sqrt3}{2}\)</td><td>\(1\)</td></tr>
+    </table>
+
+    <h2 id="c4">4. Angles associés</h2>
+    <p>La symétrie du cercle donne des relations entre les valeurs prises par \(\cos\) et \(\sin\)
+    pour des angles « associés ».</p>
+    <div class="box prop">
+      <span class="box-t">Formules des angles associés</span>
+      \[ \cos(-x) = \cos x \qquad\qquad \sin(-x) = -\sin x \]
+      \[ \cos(\pi - x) = -\cos x \qquad \sin(\pi - x) = \sin x \]
+      \[ \cos(\pi + x) = -\cos x \qquad \sin(\pi + x) = -\sin x \]
+      \[ \cos\!\left(\tfrac\pi2 - x\right) = \sin x \qquad \sin\!\left(\tfrac\pi2 - x\right)
+      = \cos x \]
+    </div>
+    <p>On retient : \(\cos\) est une fonction <strong>paire</strong> (\(\cos(-x)=\cos x\)), \(\sin\)
+    est une fonction <strong>impaire</strong> (\(\sin(-x)=-\sin x\)).</p>
+    <p>Inutile d'apprendre ces formules par cœur : elles se <em>lisent</em> sur le cercle. Remplacer
+    \(x\) par \(-x\) revient à une symétrie par rapport à l'axe horizontal — l'abscisse (\(\cos\))
+    ne bouge pas, l'ordonnée (\(\sin\)) change de signe. Remplacer \(x\) par \(\pi - x\) est une
+    symétrie par rapport à l'axe vertical, et ainsi de suite. Faire un petit dessin du cercle est
+    toujours plus sûr que de réciter une formule.</p>
+
+    <h2 id="c5">5. Les fonctions sinus et cosinus</h2>
+    <div class="box prop">
+      <span class="box-t">Propriétés des fonctions</span>
+      • \(x\mapsto\cos x\) et \(x\mapsto\sin x\) sont définies et <strong>continues</strong> sur
+      \(\mathbb R\), périodiques de période \(2\pi\).<br>
+      • \(\cos\) est <strong>paire</strong> : courbe symétrique par rapport à l'axe des
+      ordonnées.<br>
+      • \(\sin\) est <strong>impaire</strong> : courbe symétrique par rapport à l'origine.
+    </div>
+    <p>Grâce à la périodicité et à la parité, il suffit d'étudier ces fonctions sur \([0\,;\pi]\),
+    puis de compléter par symétrie.</p>
+
+    <h2 id="c6">6. Dérivées de sinus et cosinus</h2>
+    <div class="box prop">
+      <span class="box-t">Dérivées</span>
+      Les fonctions \(\sin\) et \(\cos\) sont dérivables sur \(\mathbb R\) :
+      \[ (\sin x)' = \cos x \qquad\qquad (\cos x)' = -\sin x. \]
+    </div>
+    <div class="box prop">
+      <span class="box-t">Cas composé</span>
+      Si \(u\) est dérivable :
+      \[ \big(\sin u\big)' = u'\cos u \qquad \big(\cos u\big)' = -u'\sin u. \]
+      En particulier \(\big(\sin(ax+b)\big)' = a\cos(ax+b)\).
+    </div>
+    <div class="box method">
+      <span class="box-t">Application</span>
+      \(f(x) = \sin(2x)\) : \(f'(x) = 2\cos(2x)\).<br>
+      \(g(x) = \cos(x^{2})\) : avec \(u = x^2\), \(u'=2x\), \(g'(x) = -2x\sin(x^{2})\).
+    </div>
+
+    <h2 id="c7">7. Limites usuelles</h2>
+    <div class="box prop">
+      <span class="box-t">Limites en 0 (nombres dérivés)</span>
+      \[ \lim_{x\to0}\frac{\sin x}{x} = 1 \qquad\qquad \lim_{x\to0}\frac{\cos x - 1}{x} = 0. \]
+    </div>
+    <p>La première limite est le <strong>nombre dérivé de \(\sin\) en 0</strong> ; la seconde, celui
+    de \(\cos\) en 0. Elles servent à lever des indéterminations \(\frac00\) faisant intervenir des
+    fonctions trigonométriques. La limite \(\dfrac{\sin x}{x}\to1\) a aussi une interprétation
+    géométrique : près de 0, l'arc de cercle et sa corde sont quasiment confondus, donc \(\sin x\)
+    et \(x\) sont presque égaux — c'est pourquoi leur quotient tend vers 1.</p>
+    <div class="box note">
+      <span class="box-t">Pas de limite en l'infini</span>
+      Les fonctions \(\sin\) et \(\cos\) n'ont <strong>pas de limite</strong> en \(+\infty\) ni en
+      \(-\infty\) : elles oscillent indéfiniment entre \(-1\) et \(1\).
+    </div>
+
+    <h2 id="c8">8. Équations trigonométriques</h2>
+    <div class="box prop">
+      <span class="box-t">Équations de référence</span>
+      Pour \(a\) et \(b\) réels (\(k\) entier) :
+      \[ \cos a = \cos b \iff a = b + 2k\pi \;\text{ ou }\; a = -b + 2k\pi \]
+      \[ \sin a = \sin b \iff a = b + 2k\pi \;\text{ ou }\; a = \pi - b + 2k\pi \]
+    </div>
+    <div class="box method">
+      <span class="box-t">Application</span>
+      Résoudre \(\cos x = \dfrac12\) sur \([0\,;2\pi]\). On sait que
+      \(\cos\dfrac\pi3 = \dfrac12\), donc \(x = \dfrac\pi3 + 2k\pi\) ou \(x = -\dfrac\pi3 + 2k\pi\).
+      Dans \([0\,;2\pi]\) : \(x = \dfrac\pi3\) ou \(x = 2\pi - \dfrac\pi3 = \dfrac{5\pi}{3}\). Donc
+      \(S = \left\{\dfrac\pi3\,;\dfrac{5\pi}{3}\right\}\).
+    </div>
+
+    <h2 id="c9">9. Erreurs fréquentes</h2>
+    <div class="box danger">
+      <span class="box-t">À éviter</span>
+      • Travailler en degrés : en analyse, les angles sont <strong>en radians</strong>.<br>
+      • Oublier le signe « moins » : \((\cos x)' = -\sin x\).<br>
+      • Oublier le facteur \(u'\) : \((\sin(2x))' = 2\cos(2x)\), pas \(\cos(2x)\).<br>
+      • Chercher une limite de \(\sin\) ou \(\cos\) en l'infini : elle n'existe pas.<br>
+      • Ne donner qu'une solution à une équation trigonométrique : il y en a généralement deux
+      familles sur une période.
+    </div>
+
+    <h2 id="c10">10. Compléments et démonstrations</h2>
+
+    <h3>Formules d'addition et de duplication</h3>
+    <div class="box prop">
+      <span class="box-t">Formules d'addition <span style="font-weight:400">(hors-programme)</span></span>
+      \[ \cos(a + b) = \cos a\cos b - \sin a\sin b \]
+      \[ \sin(a + b) = \sin a\cos b + \cos a\sin b \]
+      \[ \cos(a - b) = \cos a\cos b + \sin a\sin b \qquad
+      \sin(a - b) = \sin a\cos b - \cos a\sin b \]
+    </div>
+    <div class="box prop">
+      <span class="box-t">Formules de duplication</span>
+      \[ \cos(2a) = \cos^{2}a - \sin^{2}a = 2\cos^{2}a - 1 = 1 - 2\sin^{2}a \]
+      \[ \sin(2a) = 2\sin a\cos a \]
+    </div>
+
+    <div class="box prop">
+      <span class="box-t">Démonstration — limite \(\dfrac{\sin x}{x}\) en 0</span>
+      C'est le nombre dérivé de \(\sin\) en 0 :
+      \[ \lim_{x\to0}\frac{\sin x}{x} = \lim_{x\to0}\frac{\sin x - \sin 0}{x - 0}
+      = \sin'(0) = \cos 0 = 1. \]
+    </div>
+
+    <h3>La fonction tangente <span style="font-weight:400">(hors-programme)</span></h3>
+    <div class="box def">
+      <span class="box-t">Fonction tangente</span>
+      Pour \(\cos x \ne 0\), on pose \(\tan x = \dfrac{\sin x}{\cos x}\). Elle est dérivable de
+      dérivée
+      \[ (\tan x)' = 1 + \tan^{2}x = \frac{1}{\cos^{2}x}. \]
+      Elle est périodique de période \(\pi\) et impaire.
+    </div>
+
+    <div class="box prop">
+      <span class="box-t">Dérivée de \(\sin\) — origine</span>
+      La dérivée de \(\sin\) en \(a\) se calcule avec la formule d'addition :
+      \(\dfrac{\sin(a+h)-\sin a}{h} = \cos a\cdot\dfrac{\sin h}{h} + \sin a\cdot
+      \dfrac{\cos h - 1}{h}\). En faisant \(h \to 0\) avec les limites usuelles, on obtient
+      \(\sin'(a) = \cos a\).
+    </div>
+
+    <h3>Résolution générale d'équations</h3>
+    <div class="box note">
+      <span class="box-t">Inéquations trigonométriques</span>
+      Pour résoudre \(\cos x \le \tfrac12\) ou \(\sin x \ge \tfrac{\sqrt2}{2}\) sur un intervalle,
+      on s'appuie sur le <strong>cercle trigonométrique</strong> : on repère l'arc des angles
+      vérifiant la condition. La périodicité \(2\pi\) permet ensuite de lister toutes les
+      solutions.
+    </div>
+
+    <div class="box note">
+      <span class="box-t">Valeurs au-delà du premier quadrant</span>
+      Grâce aux angles associés, on connaît \(\cos\) et \(\sin\) partout. Exemples :
+      \(\cos\dfrac{2\pi}{3} = -\dfrac12\), \(\sin\dfrac{2\pi}{3} = \dfrac{\sqrt3}{2}\),
+      \(\cos\dfrac{3\pi}{4} = -\dfrac{\sqrt2}{2}\), \(\cos\pi = -1\), \(\sin\dfrac{3\pi}{2} = -1\).
+    </div>
+
+  </section>
+
+  <!-- ================= FICHE ================= -->
+  <section id="fiche" class="panel">
+    <div class="fiche">
+      <h2>Fiche résumé — Fonctions trigonométriques</h2>
+      <ul class="keypoints">
+        <li><strong>Cercle trigo</strong> : \(\cos x\) = abscisse, \(\sin x\) = ordonnée de \(M\).</li>
+        <li><strong>Identité</strong> : \(\cos^2 x + \sin^2 x = 1\) ; \(-1 \le \cos,\sin \le 1\).</li>
+        <li><strong>Périodicité</strong> : période \(2\pi\). \(\cos\) paire, \(\sin\) impaire.</li>
+        <li><strong>Dérivées</strong> : \((\sin x)'=\cos x\) ; \((\cos x)'=-\sin x\).</li>
+        <li><strong>Composées</strong> : \((\sin u)'=u'\cos u\) ; \((\cos u)'=-u'\sin u\).</li>
+        <li><strong>Limites en 0</strong> : \(\frac{\sin x}{x}\to1\) ;
+        \(\frac{\cos x-1}{x}\to0\).</li>
+        <li><strong>Équations</strong> : \(\cos a=\cos b \iff a=\pm b+2k\pi\) ;
+        \(\sin a=\sin b \iff a=b+2k\pi\) ou \(a=\pi-b+2k\pi\).</li>
+      </ul>
+      <div class="formule">
+        \[ (\sin u)' = u'\cos u \qquad (\cos u)' = -u'\sin u \qquad \lim_{x\to0}\frac{\sin x}{x}=1 \]
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= EXERCICES ================= -->
+  <section id="exos" class="panel">
+
+    <div class="exo">
+      <div class="exo-tag">Exercice 1 · Dérivées</div>
+      <h3>Calculs de dérivées</h3>
+      <p>Dériver : 1. \(f(x) = \sin(3x) + \cos x\) — 2. \(g(x) = x\sin x\) — 3.
+      \(h(x) = \cos^{2}x\).</p>
+      <details class="corrige">
+        <summary>Voir le corrigé</summary>
+        <div class="sol">
+          <p><strong>1.</strong> \(f'(x) = 3\cos(3x) - \sin x\).</p>
+          <p><strong>2.</strong> Produit : \(g'(x) = 1\times\sin x + x\times\cos x
+          = \sin x + x\cos x\).</p>
+          <p><strong>3.</strong> \(h = u^2\) avec \(u = \cos x\), \(u' = -\sin x\) :
+          \(h' = 2u'u = 2(-\sin x)(\cos x) = -2\sin x\cos x\) (soit \(-\sin(2x)\)).</p>
+        </div>
+      </details>
+    </div>
+
+    <div class="exo">
+      <div class="exo-tag">Exercice 2 · Équation</div>
+      <h3>Résolution sur un intervalle</h3>
+      <p>Résoudre \(\sin x = \dfrac{\sqrt2}{2}\) sur l'intervalle \([0\,;2\pi]\).</p>
+      <details class="corrige">
+        <summary>Voir le corrigé</summary>
+        <div class="sol">
+          <p>On sait que \(\sin\dfrac\pi4 = \dfrac{\sqrt2}{2}\).</p>
+          <p>D'après les solutions de \(\sin a = \sin b\) : \(x = \dfrac\pi4 + 2k\pi\) ou
+          \(x = \pi - \dfrac\pi4 + 2k\pi = \dfrac{3\pi}{4} + 2k\pi\).</p>
+          <p>Sur \([0\,;2\pi]\), on retient \(x = \dfrac\pi4\) et \(x = \dfrac{3\pi}{4}\).
+          Donc \(S = \left\{\dfrac\pi4\,;\dfrac{3\pi}{4}\right\}\).</p>
+        </div>
+      </details>
+    </div>
+
+    <div class="exo">
+      <div class="exo-tag">Exercice 3 · Limite et tangente</div>
+      <h3>Étude locale</h3>
+      <p>Soit \(f(x) = \sin x\).</p>
+      <p>1. Donner l'équation de la tangente \(T\) à \(\mathcal C_f\) en \(x = 0\).<br>
+      2. À l'aide d'une limite usuelle, calculer \(\displaystyle\lim_{x\to0}\frac{\sin(3x)}{x}\).</p>
+      <details class="corrige">
+        <summary>Voir le corrigé</summary>
+        <div class="sol">
+          <p><strong>1.</strong> \(f(0) = \sin 0 = 0\) et \(f'(x) = \cos x\) donne \(f'(0) = 1\).
+          Tangente : \(y = f'(0)(x-0) + f(0) = x\). La droite \(y = x\) est tangente en l'origine.</p>
+          <p><strong>2.</strong> On écrit \(\dfrac{\sin(3x)}{x} = 3\times\dfrac{\sin(3x)}{3x}\).
+          Quand \(x\to0\), \(3x\to0\), donc \(\dfrac{\sin(3x)}{3x}\to1\). Ainsi
+          \(\displaystyle\lim_{x\to0}\frac{\sin(3x)}{x} = 3\times1 = 3\).</p>
+        </div>
+      </details>
+    </div>
+
+  </section>
+
+  <nav class="chap-nav">
+    <a href="ch06.html">← Chapitre 6 — Fonction logarithme</a>
+    <a href="ch08.html">Chapitre 8 — Primitives et équations différentielles →</a>
+  </nav>
+
+</main>
+
+<footer>Bac Mathématiques · Terminale spécialité — Chapitre 7</footer>
+<script src="assets/script.js"></script>
+</body>
+</html>

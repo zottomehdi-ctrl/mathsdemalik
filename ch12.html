@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ch.12 — Droites et plans : équations</title>
+<link rel="stylesheet" href="assets/style.css">
+<script>
+MathJax = {
+  tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="assets/mathjax/tex-svg.js" id="MathJax-script" async></script>
+</head>
+<body>
+
+<header class="topbar">
+  <a class="brand" href="index.html">Bac <span>Mathématiques</span> · Terminale</a>
+  <nav><a href="index.html">Sommaire</a></nav>
+</header>
+
+<main class="wrap reading" data-theme="geo">
+
+  <div class="chapter-head">
+    <div class="kicker">Thème 2 · Géométrie — Chapitre 12</div>
+    <h1>Droites et plans : représentations et équations</h1>
+  </div>
+
+  <nav class="tabs">
+    <button class="tab active" data-target="cours">Cours complet</button>
+    <button class="tab" data-target="fiche">Fiche résumé</button>
+    <button class="tab" data-target="exos">Exercices</button>
+  </nav>
+
+  <!-- ================= COURS ================= -->
+  <section id="cours" class="panel active">
+
+    <div class="toc">
+      <b>Plan du cours</b>
+      <ol>
+        <li><a href="#c1">Représentation paramétrique d'une droite</a></li>
+        <li><a href="#c2">Utiliser une représentation paramétrique</a></li>
+        <li><a href="#c3">Équation cartésienne d'un plan</a></li>
+        <li><a href="#c4">Déterminer une équation de plan</a></li>
+        <li><a href="#c5">Intersection droite / plan</a></li>
+        <li><a href="#c6">Positions relatives de deux plans</a></li>
+        <li><a href="#c7">Distance d'un point à un plan</a></li>
+        <li><a href="#c8">Méthode du projeté orthogonal</a></li>
+        <li><a href="#c9">Erreurs fréquentes</a></li>
+        <li><a href="#c10">Compléments et démonstrations</a></li>
+      </ol>
+    </div>
+
+    <h2 id="c1">1. Représentation paramétrique d'une droite</h2>
+    <p>Une droite de l'espace est définie par un point \(A\) et un vecteur directeur \(\vec u\).
+    Traduire \(\overrightarrow{AM} = t\,\vec u\) en coordonnées donne sa
+    <strong>représentation paramétrique</strong>.</p>
+    <div class="box def">
+      <span class="box-t">Représentation paramétrique</span>
+      La droite passant par \(A(x_A;y_A;z_A)\) et de vecteur directeur \(\vec u(a;b;c)\) est
+      l'ensemble des points \(M(x;y;z)\) tels que
+      \[ \begin{cases} x = x_A + a\,t\\ y = y_A + b\,t\\ z = z_A + c\,t \end{cases}
+      \qquad t \in \mathbb R. \]
+      Le réel \(t\) est le <strong>paramètre</strong> : à chaque valeur de \(t\) correspond un
+      point de la droite.
+    </div>
+    <p>Le mot « paramétrique » vient de là : le point \(M\) n'est pas figé, il <em>dépend du
+    paramètre</em> \(t\). Quand \(t\) parcourt tous les réels, le point \(M\) parcourt toute la
+    droite — un peu comme un curseur qui glisse. C'est très différent d'une équation cartésienne,
+    qui décrit un objet par une condition à vérifier ; ici, on dispose d'une « machine à fabriquer
+    les points » de la droite.</p>
+    <div class="box method">
+      <span class="box-t">Application</span>
+      Droite passant par \(A(1;2;0)\) de vecteur directeur \(\vec u(3;-1;2)\) :
+      \[ \begin{cases} x = 1 + 3t\\ y = 2 - t\\ z = 2t \end{cases} \]
+    </div>
+
+    <h2 id="c2">2. Utiliser une représentation paramétrique</h2>
+    <div class="box method">
+      <span class="box-t">Méthode — un point appartient-il à la droite ?</span>
+      Pour tester si \(M_0(x_0;y_0;z_0)\in d\) : on cherche une valeur de \(t\) à partir de la
+      première équation, puis on vérifie qu'<strong>elle convient aux deux autres</strong>. Si une
+      seule valeur de \(t\) satisfait les trois équations, \(M_0\in d\) ; sinon \(M_0\notin d\).
+    </div>
+
+    <h2 id="c3">3. Équation cartésienne d'un plan</h2>
+    <p>C'est ici qu'intervient le vecteur normal du chapitre 11.</p>
+    <div class="box prop">
+      <span class="box-t">Équation cartésienne</span>
+      Dans un repère orthonormé, tout plan admet une équation de la forme
+      \[ ax + by + cz + d = 0, \]
+      où \(\vec n(a;b;c)\) est un <strong>vecteur normal</strong> au plan. Réciproquement, une telle
+      équation (avec \((a,b,c)\ne(0,0,0)\)) est toujours celle d'un plan de vecteur normal
+      \(\vec n(a;b;c)\).
+    </div>
+    <div class="box note">
+      <span class="box-t">Lecture directe du vecteur normal</span>
+      Les <strong>coefficients de \(x\), \(y\), \(z\)</strong> dans l'équation donnent directement
+      les coordonnées d'un vecteur normal. Exemple : le plan \(2x - y + 3z - 5 = 0\) a pour vecteur
+      normal \(\vec n(2;-1;3)\).
+    </div>
+    <p>C'est l'idée maîtresse du chapitre : un plan, c'est « l'ensemble des points vus sous un
+    certain angle ». Fixer un vecteur normal \(\vec n\), c'est fixer l'<em>orientation</em> du plan
+    dans l'espace ; le terme \(d\) ne fait ensuite que régler à quelle « hauteur » le plan se place.
+    D'où ce réflexe à avoir : devant une équation \(ax+by+cz+d=0\), on lit immédiatement le vecteur
+    normal sur les coefficients.</p>
+
+    <h2 id="c4">4. Déterminer une équation de plan</h2>
+    <div class="box method">
+      <span class="box-t">Méthode — équation d'un plan passant par \(A\), de normal \(\vec n\)</span>
+      1. Écrire \(ax + by + cz + d = 0\) avec \(\vec n(a;b;c)\) connu.<br>
+      2. Reporter les coordonnées de \(A\) dans l'équation pour déterminer \(d\).
+    </div>
+    <div class="box method">
+      <span class="box-t">Application</span>
+      Plan passant par \(A(1;0;2)\) et de vecteur normal \(\vec n(2;1;-1)\). L'équation est de la
+      forme \(2x + y - z + d = 0\). En \(A\) : \(2(1) + 0 - 2 + d = 0\), donc \(d = 0\). Équation :
+      \(2x + y - z = 0\).
+    </div>
+    <p>Si l'on connaît trois points, on cherche d'abord un vecteur normal (deux produits scalaires
+    nuls, chapitre 11), puis on applique cette méthode.</p>
+
+    <h2 id="c5">5. Intersection droite / plan</h2>
+    <div class="box method">
+      <span class="box-t">Méthode</span>
+      Pour intersecter une droite \(d\) (représentation paramétrique) et un plan \(\mathcal P\)
+      (équation cartésienne) :<br>
+      1. <strong>Substituer</strong> \(x\), \(y\), \(z\) de la droite dans l'équation du plan.<br>
+      2. Résoudre l'équation obtenue, d'inconnue \(t\).<br>
+      — une solution unique → un <strong>point</strong> d'intersection ;<br>
+      — aucune solution → droite <strong>parallèle stricte</strong> au plan ;<br>
+      — une infinité de solutions → droite <strong>incluse</strong> dans le plan.
+    </div>
+    <p>L'astuce de la substitution est efficace parce qu'elle combine les deux écritures dans ce
+    qu'elles ont de mieux : la droite est connue « point par point » (paramétrique), le plan est une
+    « condition à remplir » (cartésienne). Injecter l'une dans l'autre ramène le problème à une
+    simple équation à une inconnue, \(t\). Le nombre de solutions de cette équation raconte alors
+    toute la géométrie : un point, du parallélisme, ou une inclusion.</p>
+
+    <h2 id="c6">6. Positions relatives de deux plans</h2>
+    <div class="box prop">
+      <span class="box-t">Critère par les vecteurs normaux</span>
+      Soient \(\mathcal P\) et \(\mathcal P'\) de vecteurs normaux \(\vec n\) et \(\vec n'\).<br>
+      • Si \(\vec n\) et \(\vec n'\) sont <strong>colinéaires</strong> : les plans sont
+      <strong>parallèles</strong> (confondus ou strictement parallèles).<br>
+      • Sinon : les plans sont <strong>sécants</strong> selon une droite.<br>
+      Les plans sont <strong>perpendiculaires</strong> si \(\vec n\cdot\vec n' = 0\).
+    </div>
+
+    <h2 id="c7">7. Distance d'un point à un plan</h2>
+    <div class="box prop">
+      <span class="box-t">Formule de la distance</span>
+      La distance d'un point \(M(x_0;y_0;z_0)\) au plan \(\mathcal P : ax+by+cz+d = 0\) (repère
+      orthonormé) est
+      \[ \mathrm{dist}(M,\mathcal P) = \frac{|a x_0 + b y_0 + c z_0 + d|}{\sqrt{a^{2}+b^{2}+c^{2}}}. \]
+    </div>
+    <p>Cette distance est toujours mesurée <strong>perpendiculairement</strong> au plan : c'est la
+    plus courte des distances de \(M\) à un point du plan. Le numérateur n'est autre que l'équation
+    du plan évaluée au point \(M\) : s'il est nul, \(M\) appartient au plan (distance nulle). La
+    valeur absolue garantit un résultat positif, et le dénominateur \(\sqrt{a^2+b^2+c^2}\) n'est que
+    la norme du vecteur normal.</p>
+    <div class="box method">
+      <span class="box-t">Application</span>
+      Distance de \(M(1;2;3)\) au plan \(x + 2y - 2z + 1 = 0\) :
+      \[ d = \frac{|1 + 4 - 6 + 1|}{\sqrt{1 + 4 + 4}} = \frac{|0|}{3} = 0. \]
+      La distance est nulle : le point \(M\) appartient au plan.
+    </div>
+
+    <h2 id="c8">8. Méthode du projeté orthogonal</h2>
+    <p>Pour déterminer le projeté orthogonal \(H\) d'un point \(M\) sur un plan \(\mathcal P\), on
+    combine les outils du chapitre.</p>
+    <div class="box method">
+      <span class="box-t">Méthode — projeté orthogonal de \(M\) sur \(\mathcal P\)</span>
+      1. Écrire la droite \(\Delta\) passant par \(M\), de vecteur directeur \(\vec n\) (le vecteur
+      normal du plan) : représentation paramétrique.<br>
+      2. Déterminer l'intersection de \(\Delta\) avec \(\mathcal P\) : c'est le point \(H\).<br>
+      3. La distance \(MH\) est alors la distance de \(M\) au plan.
+    </div>
+
+    <h2 id="c9">9. Erreurs fréquentes</h2>
+    <div class="box danger">
+      <span class="box-t">À éviter</span>
+      • Confondre représentation <strong>paramétrique</strong> (pour une droite) et équation
+      <strong>cartésienne</strong> (pour un plan).<br>
+      • Lire un vecteur <em>directeur</em> à la place d'un vecteur <em>normal</em> dans l'équation
+      d'un plan.<br>
+      • Dans une intersection, ne tester qu'une des trois équations paramétriques.<br>
+      • Oublier la <strong>valeur absolue</strong> au numérateur ou la racine au dénominateur dans
+      la formule de distance.<br>
+      • Utiliser ces formules dans un repère <strong>non orthonormé</strong>.
+    </div>
+
+    <h2 id="c10">10. Compléments et démonstrations</h2>
+
+    <div class="box prop">
+      <span class="box-t">Démonstration — équation cartésienne d'un plan</span>
+      Soit \(\mathcal P\) le plan passant par \(A(x_A;y_A;z_A)\) de vecteur normal
+      \(\vec n(a;b;c)\). Un point \(M(x;y;z)\) appartient à \(\mathcal P\) si et seulement si
+      \(\overrightarrow{AM}\cdot\vec n = 0\), c'est-à-dire
+      \(a(x-x_A) + b(y-y_A) + c(z-z_A) = 0\). En développant, on obtient
+      \(ax + by + cz + d = 0\) avec \(d = -(ax_A + by_A + cz_A)\).
+    </div>
+
+    <h3>Intersection de deux plans</h3>
+    <div class="box method">
+      <span class="box-t">Méthode</span>
+      Deux plans sécants \(\mathcal P\) et \(\mathcal P'\) se coupent selon une droite. On résout
+      le <strong>système</strong> formé de leurs deux équations cartésiennes : en exprimant deux
+      inconnues en fonction d'un paramètre \(t\), on obtient une <strong>représentation
+      paramétrique</strong> de la droite d'intersection.
+    </div>
+
+    <h3>Distance d'un point à une droite</h3>
+    <div class="box method">
+      <span class="box-t">Par le projeté orthogonal</span>
+      Pour la distance d'un point \(M\) à une droite \(d\) de point \(A\) et vecteur directeur
+      \(\vec u\) : le projeté orthogonal \(H\) de \(M\) sur \(d\) vérifie
+      \(\overrightarrow{AH} = t\,\vec u\) avec \(t = \dfrac{\overrightarrow{AM}\cdot\vec u}
+      {\|\vec u\|^{2}}\). La distance cherchée est alors \(MH\).
+    </div>
+
+    <h3>Angle de deux plans</h3>
+    <div class="box prop">
+      <span class="box-t">Angle entre deux plans</span>
+      L'angle entre deux plans se lit sur leurs vecteurs normaux \(\vec n\) et \(\vec n'\) :
+      \[ \cos\theta = \frac{|\vec n\cdot\vec n'|}{\|\vec n\|\,\|\vec n'\|}. \]
+      Les plans sont perpendiculaires si \(\vec n\cdot\vec n' = 0\), parallèles si \(\vec n\) et
+      \(\vec n'\) sont colinéaires.
+    </div>
+
+    <h3>Équation d'une sphère <span style="font-weight:400">(hors-programme)</span></h3>
+    <div class="box note">
+      <span class="box-t">Sphère de centre \(\Omega\) et de rayon \(R\)</span>
+      L'ensemble des points \(M\) tels que \(\Omega M = R\) a pour équation
+      \[ (x - x_\Omega)^{2} + (y - y_\Omega)^{2} + (z - z_\Omega)^{2} = R^{2}. \]
+      C'est l'analogue dans l'espace de l'équation d'un cercle dans le plan.
+    </div>
+
+    <div class="box note">
+      <span class="box-t">Plan tangent à une sphère</span>
+      Un plan est tangent à une sphère lorsque la distance du centre \(\Omega\) au plan est égale
+      au rayon \(R\) — d'où l'intérêt de la formule de distance point-plan.
+    </div>
+
+  </section>
+
+  <!-- ================= FICHE ================= -->
+  <section id="fiche" class="panel">
+    <div class="fiche">
+      <h2>Fiche résumé — Droites et plans : équations</h2>
+      <ul class="keypoints">
+        <li><strong>Droite</strong> : représentation paramétrique
+        \(x=x_A+at,\ y=y_A+bt,\ z=z_A+ct\).</li>
+        <li><strong>Plan</strong> : équation cartésienne \(ax+by+cz+d=0\).</li>
+        <li>Le vecteur \(\vec n(a;b;c)\) (coefficients de l'équation) est
+        <strong>normal</strong> au plan.</li>
+        <li><strong>Équation de plan</strong> : \(\vec n\) connu → trouver \(d\) avec un point.</li>
+        <li><strong>Intersection droite/plan</strong> : substituer la paramétrique dans l'équation,
+        résoudre en \(t\).</li>
+        <li><strong>Deux plans</strong> : normaux colinéaires ⇒ parallèles ; sinon sécants.</li>
+        <li><strong>Distance point-plan</strong> :
+        \(\dfrac{|ax_0+by_0+cz_0+d|}{\sqrt{a^2+b^2+c^2}}\).</li>
+        <li><strong>Projeté orthogonal</strong> : droite par \(M\) dirigée par \(\vec n\),
+        ∩ plan.</li>
+      </ul>
+      <div class="formule">
+        \[ \mathrm{dist}(M,\mathcal P) = \frac{|ax_0+by_0+cz_0+d|}{\sqrt{a^2+b^2+c^2}} \]
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= EXERCICES ================= -->
+  <section id="exos" class="panel">
+
+    <div class="exo">
+      <div class="exo-tag">Exercice 1 · Équation de plan</div>
+      <h3>Plan défini par trois points</h3>
+      <p>Soit \(A(1;0;0)\), \(B(0;2;0)\), \(C(0;0;3)\). Déterminer une équation cartésienne du plan
+      \((ABC)\).</p>
+      <details class="corrige">
+        <summary>Voir le corrigé</summary>
+        <div class="sol">
+          <p>Vecteurs directeurs : \(\overrightarrow{AB}(-1;2;0)\),
+          \(\overrightarrow{AC}(-1;0;3)\), non colinéaires.</p>
+          <p>Vecteur normal \(\vec n(a;b;c)\) : \(\vec n\cdot\overrightarrow{AB} = -a+2b = 0\) et
+          \(\vec n\cdot\overrightarrow{AC} = -a+3c = 0\). En posant \(a = 6\) : \(b = 3\),
+          \(c = 2\), soit \(\vec n(6;3;2)\).</p>
+          <p>Équation : \(6x + 3y + 2z + d = 0\). En \(A(1;0;0)\) : \(6 + d = 0\), donc \(d = -6\).</p>
+          <p>Équation du plan \((ABC)\) : \(\boxed{6x + 3y + 2z - 6 = 0}\).</p>
+        </div>
+      </details>
+    </div>
+
+    <div class="exo">
+      <div class="exo-tag">Exercice 2 · Intersection</div>
+      <h3>Droite et plan</h3>
+      <p>Soit \(d\) la droite \(\begin{cases} x = 1+t\\ y = -t\\ z = 2+2t \end{cases}\) et
+      \(\mathcal P : x + y + z - 5 = 0\). Déterminer leur intersection.</p>
+      <details class="corrige">
+        <summary>Voir le corrigé</summary>
+        <div class="sol">
+          <p>On substitue dans l'équation du plan :
+          \((1+t) + (-t) + (2+2t) - 5 = 0\).</p>
+          <p>\(1 + t - t + 2 + 2t - 5 = 0 \;\Rightarrow\; 2t - 2 = 0 \;\Rightarrow\; t = 1\).</p>
+          <p>Une solution unique : la droite et le plan sont sécants. Pour \(t = 1\) :
+          \(x = 2\), \(y = -1\), \(z = 4\).</p>
+          <p>Le point d'intersection est \(I(2;-1;4)\).</p>
+        </div>
+      </details>
+    </div>
+
+    <div class="exo">
+      <div class="exo-tag">Exercice 3 · Distance</div>
+      <h3>Distance d'un point à un plan</h3>
+      <p>Soit \(\mathcal P : 2x - y + 2z - 3 = 0\) et le point \(M(4;1;0)\).</p>
+      <p>1. Calculer la distance de \(M\) à \(\mathcal P\).<br>
+      2. Donner une représentation paramétrique de la droite \(\Delta\) passant par \(M\) et
+      orthogonale à \(\mathcal P\).</p>
+      <details class="corrige">
+        <summary>Voir le corrigé</summary>
+        <div class="sol">
+          <p><strong>1.</strong> \(\mathrm{dist}(M,\mathcal P) =
+          \dfrac{|2\times4 - 1 + 2\times0 - 3|}{\sqrt{2^2+(-1)^2+2^2}}
+          = \dfrac{|8-1-3|}{\sqrt9} = \dfrac{4}{3}\).</p>
+          <p><strong>2.</strong> \(\Delta\) est dirigée par le vecteur normal de \(\mathcal P\),
+          soit \(\vec n(2;-1;2)\), et passe par \(M(4;1;0)\) :</p>
+          <p>\(\Delta : \begin{cases} x = 4 + 2t\\ y = 1 - t\\ z = 2t \end{cases}\) , \(t\in\mathbb R\).</p>
+        </div>
+      </details>
+    </div>
+
+  </section>
+
+  <nav class="chap-nav">
+    <a href="ch11.html">← Chapitre 11 — Produit scalaire</a>
+    <a href="ch13.html">Chapitre 13 — Combinatoire et dénombrement →</a>
+  </nav>
+
+</main>
+
+<footer>Bac Mathématiques · Terminale spécialité — Chapitre 12</footer>
+<script src="assets/script.js"></script>
+</body>
+</html>

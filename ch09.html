@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ch.9 — Calcul intégral</title>
+<link rel="stylesheet" href="assets/style.css">
+<script>
+MathJax = {
+  tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="assets/mathjax/tex-svg.js" id="MathJax-script" async></script>
+</head>
+<body>
+
+<header class="topbar">
+  <a class="brand" href="index.html">Bac <span>Mathématiques</span> · Terminale</a>
+  <nav><a href="index.html">Sommaire</a></nav>
+</header>
+
+<main class="wrap reading" data-theme="analyse">
+
+  <div class="chapter-head">
+    <div class="kicker">Thème 1 · Analyse — Chapitre 9</div>
+    <h1>Calcul intégral</h1>
+  </div>
+
+  <nav class="tabs">
+    <button class="tab active" data-target="cours">Cours complet</button>
+    <button class="tab" data-target="fiche">Fiche résumé</button>
+    <button class="tab" data-target="exos">Exercices</button>
+  </nav>
+
+  <!-- ================= COURS ================= -->
+  <section id="cours" class="panel active">
+
+    <div class="toc">
+      <b>Plan du cours</b>
+      <ol>
+        <li><a href="#c1">Intégrale et aire</a></li>
+        <li><a href="#c2">Intégrale et primitives</a></li>
+        <li><a href="#c3">Calcul pratique d'une intégrale</a></li>
+        <li><a href="#c4">Propriétés de l'intégrale</a></li>
+        <li><a href="#c5">Intégrale et ordre</a></li>
+        <li><a href="#c6">Valeur moyenne d'une fonction</a></li>
+        <li><a href="#c7">Calculs d'aires</a></li>
+        <li><a href="#c8">Intégration par parties</a></li>
+        <li><a href="#c9">Erreurs fréquentes</a></li>
+        <li><a href="#c10">Compléments et démonstrations</a></li>
+      </ol>
+    </div>
+
+    <h2 id="c1">1. Intégrale et aire</h2>
+    <p>Soit \(f\) une fonction <strong>continue et positive</strong> sur \([a\,;b]\), de courbe
+    \(\mathcal C_f\). L'<strong>intégrale</strong> de \(f\) entre \(a\) et \(b\) est l'aire, exprimée
+    en unités d'aire, du domaine compris entre la courbe, l'axe des abscisses et les droites
+    verticales \(x = a\) et \(x = b\).</p>
+    <div class="box def">
+      <span class="box-t">Notation</span>
+      Cette aire est notée \(\displaystyle\int_{a}^{b} f(x)\,\mathrm dx\). \(a\) et \(b\) sont les
+      <strong>bornes</strong>, \(x\) est une variable <em>muette</em> (on peut la nommer \(t\) sans
+      changer la valeur).
+    </div>
+
+    <h2 id="c2">2. Intégrale et primitives</h2>
+    <p>Le lien entre intégrale (aire) et primitive (dérivation inverse) est le résultat central de ce
+    chapitre. À première vue, ces deux notions n'ont rien à voir : l'une mesure une <em>surface</em>,
+    l'autre « remonte » une dérivation. Le théorème fondamental affirme pourtant qu'elles sont les
+    deux faces d'une même pièce — et c'est ce qui rend le calcul d'aires possible sans découper le
+    domaine en petits morceaux.</p>
+    <div class="box prop">
+      <span class="box-t">Théorème fondamental</span>
+      Soit \(f\) une fonction <strong>continue</strong> sur \([a\,;b]\) et \(F\) une primitive
+      <strong>quelconque</strong> de \(f\). Alors
+      \[ \int_{a}^{b} f(x)\,\mathrm dx = F(b) - F(a). \]
+      On note souvent ce résultat \(\big[F(x)\big]_{a}^{b}\).
+    </div>
+    <p>Conséquence importante : la fonction \(x \mapsto \displaystyle\int_{a}^{x} f(t)\,\mathrm dt\)
+    est <strong>la</strong> primitive de \(f\) qui s'annule en \(a\).</p>
+
+    <h2 id="c3">3. Calcul pratique d'une intégrale</h2>
+    <div class="box method">
+      <span class="box-t">Méthode</span>
+      1. Déterminer une primitive \(F\) de \(f\) (chapitre 8).<br>
+      2. Calculer \(F(b) - F(a)\).<br>
+      Le \(+C\) est inutile : il disparaît dans la soustraction.
+    </div>
+    <div class="box method">
+      <span class="box-t">Application</span>
+      \[ \int_{0}^{2} (3x^{2} + 1)\,\mathrm dx = \big[x^{3} + x\big]_{0}^{2}
+      = (8 + 2) - (0 + 0) = 10. \]
+      \[ \int_{1}^{e} \frac{1}{x}\,\mathrm dx = \big[\ln x\big]_{1}^{e} = \ln e - \ln 1 = 1. \]
+    </div>
+
+    <h2 id="c4">4. Propriétés de l'intégrale</h2>
+    <div class="box prop">
+      <span class="box-t">Propriétés algébriques</span>
+      \[ \int_{a}^{a} f = 0 \qquad \int_{b}^{a} f = -\int_{a}^{b} f \]
+      <strong>Relation de Chasles</strong> : \(\displaystyle\int_{a}^{b} f + \int_{b}^{c} f
+      = \int_{a}^{c} f\).<br>
+      <strong>Linéarité</strong> : \(\displaystyle\int_{a}^{b}(\alpha f + \beta g)
+      = \alpha\!\int_{a}^{b} f + \beta\!\int_{a}^{b} g\).
+    </div>
+    <p>Ces propriétés se comprennent bien avec l'image des aires. La <strong>relation de
+    Chasles</strong> dit simplement que l'aire de \(a\) à \(c\) est la somme de l'aire de \(a\) à
+    \(b\) et de celle de \(b\) à \(c\) : on découpe le domaine en deux. La <strong>linéarité</strong>
+    permet d'intégrer terme à terme : on n'intègre jamais un produit ou un quotient « d'un bloc »,
+    mais on a le droit de séparer une somme et de sortir les constantes.</p>
+
+    <h2 id="c5">5. Intégrale et ordre</h2>
+    <div class="box prop">
+      <span class="box-t">Positivité et comparaison</span>
+      Pour \(a \le b\) :<br>
+      • si \(f \ge 0\) sur \([a\,;b]\), alors \(\displaystyle\int_{a}^{b} f \ge 0\) ;<br>
+      • si \(f \le g\) sur \([a\,;b]\), alors \(\displaystyle\int_{a}^{b} f \le \int_{a}^{b} g\)
+      (<strong>croissance</strong> de l'intégrale).
+    </div>
+    <div class="box danger">
+      <span class="box-t">Attention au signe</span>
+      Si \(f\) est <strong>négative</strong> sur \([a\,;b]\), l'intégrale est négative : ce n'est
+      plus directement une aire. L'aire géométrique du domaine vaut alors
+      \(-\displaystyle\int_{a}^{b} f\) (valeur absolue).
+    </div>
+
+    <h2 id="c6">6. Valeur moyenne d'une fonction</h2>
+    <div class="box def">
+      <span class="box-t">Valeur moyenne</span>
+      La <strong>valeur moyenne</strong> d'une fonction continue \(f\) sur \([a\,;b]\) (avec
+      \(a < b\)) est
+      \[ \mu = \frac{1}{b-a}\int_{a}^{b} f(x)\,\mathrm dx. \]
+    </div>
+    <p>Interprétation : \(\mu\) est la hauteur du rectangle de base \([a\,;b]\) qui aurait la même
+    aire que le domaine sous la courbe. Autrement dit, si l'on « aplatissait » la courbe pour la
+    rendre horizontale sans changer l'aire en dessous, elle se stabiliserait à la hauteur \(\mu\).
+    C'est la généralisation continue de la moyenne d'une liste de nombres : au lieu d'additionner
+    un nombre fini de valeurs, on « somme » toutes les valeurs de \(f\) grâce à l'intégrale.</p>
+
+    <h2 id="c7">7. Calculs d'aires</h2>
+    <div class="box prop">
+      <span class="box-t">Aire entre deux courbes</span>
+      Si \(f \ge g\) sur \([a\,;b]\), l'aire (en unités d'aire) du domaine compris entre
+      \(\mathcal C_f\) et \(\mathcal C_g\) vaut
+      \[ \mathcal A = \int_{a}^{b}\big(f(x) - g(x)\big)\,\mathrm dx. \]
+    </div>
+    <div class="box method">
+      <span class="box-t">Méthode</span>
+      1. Déterminer les <strong>abscisses d'intersection</strong> (résoudre \(f(x) = g(x)\)).<br>
+      2. Déterminer laquelle des deux courbes est <strong>au-dessus</strong>.<br>
+      3. Intégrer la différence « courbe du haut moins courbe du bas ».
+    </div>
+
+    <h2 id="c8">8. Intégration par parties</h2>
+    <p>Certaines fonctions n'ont pas de primitive « évidente » : c'est le cas des produits comme
+    \(x\,e^x\) ou \(x\ln x\). L'intégration par parties est la technique qui permet de s'en sortir.
+    Elle n'est rien d'autre que la formule de dérivation d'un produit, \((uv)' = u'v + uv'\),
+    réorganisée et intégrée. Son principe : <strong>échanger</strong> l'intégrale de départ contre
+    une autre, plus simple à calculer.</p>
+    <div class="box prop">
+      <span class="box-t">Formule d'intégration par parties (IPP)</span>
+      Soit \(u\) et \(v\) deux fonctions dérivables, à dérivées continues sur \([a\,;b]\). Alors
+      \[ \int_{a}^{b} u'(x)\,v(x)\,\mathrm dx = \big[u(x)\,v(x)\big]_{a}^{b}
+      - \int_{a}^{b} u(x)\,v'(x)\,\mathrm dx. \]
+    </div>
+    <p>L'IPP transforme une intégrale en une autre, plus simple. Elle est utile lorsqu'on intègre un
+    <strong>produit</strong>, typiquement un polynôme multiplié par \(e^x\) ou \(\ln x\).</p>
+    <div class="box method">
+      <span class="box-t">Application</span>
+      Calculer \(I = \displaystyle\int_{0}^{1} x\,e^{x}\,\mathrm dx\). On pose \(v(x) = x\) (donc
+      \(v' = 1\)) et \(u'(x) = e^x\) (donc \(u = e^x\)) :
+      \[ I = \big[x\,e^{x}\big]_{0}^{1} - \int_{0}^{1} 1\times e^{x}\,\mathrm dx
+      = (1\cdot e - 0) - \big[e^{x}\big]_{0}^{1} = e - (e - 1) = 1. \]
+    </div>
+
+    <h2 id="c9">9. Erreurs fréquentes</h2>
+    <div class="box danger">
+      <span class="box-t">À éviter</span>
+      • Oublier d'<strong>évaluer la primitive aux deux bornes</strong> : c'est \(F(b)-F(a)\), pas
+      seulement \(F(b)\).<br>
+      • Calculer \(F(a) - F(b)\) au lieu de \(F(b) - F(a)\).<br>
+      • Confondre intégrale (qui peut être négative) et aire (toujours positive).<br>
+      • Calculer une aire entre deux courbes sans repérer laquelle est au-dessus.<br>
+      • Dans une IPP, mal choisir \(u'\) et \(v\), ou oublier le signe « moins » devant la seconde
+      intégrale.
+    </div>
+
+    <h2 id="c10">10. Compléments et démonstrations</h2>
+
+    <div class="box prop">
+      <span class="box-t">Démonstration — théorème fondamental</span>
+      Soit \(f\) continue positive et \(\Phi(x) = \displaystyle\int_{a}^{x} f(t)\,\mathrm dt\).
+      Pour \(h > 0\) petit, \(\Phi(x+h) - \Phi(x)\) est l'aire d'une bande de largeur \(h\) et de
+      hauteur voisine de \(f(x)\), donc \(\dfrac{\Phi(x+h)-\Phi(x)}{h} \to f(x)\). Ainsi
+      \(\Phi' = f\) : \(\Phi\) est la primitive de \(f\) s'annulant en \(a\). Pour toute primitive
+      \(F\), \(\int_{a}^{b} f = \Phi(b) = F(b) - F(a)\).
+    </div>
+
+    <h3>Sommes de Riemann <span style="font-weight:400">(hors-programme)</span></h3>
+    <div class="box prop">
+      <span class="box-t">Approche par découpage</span>
+      En découpant \([a\,;b]\) en \(n\) sous-intervalles de largeur \(\frac{b-a}{n}\), la somme des
+      aires des rectangles approche l'intégrale :
+      \[ \int_{a}^{b} f(x)\,\mathrm dx = \lim_{n\to+\infty}\frac{b-a}{n}\sum_{k=0}^{n-1}
+      f\!\left(a + k\,\frac{b-a}{n}\right). \]
+    </div>
+
+    <h3>Intégrale et symétries</h3>
+    <div class="box prop">
+      <span class="box-t">Fonctions paires et impaires</span>
+      Sur un intervalle symétrique \([-a\,;a]\) :<br>
+      • si \(f\) est <strong>paire</strong> : \(\displaystyle\int_{-a}^{a} f = 2\int_{0}^{a} f\) ;<br>
+      • si \(f\) est <strong>impaire</strong> : \(\displaystyle\int_{-a}^{a} f = 0\).
+    </div>
+
+    <div class="box prop">
+      <span class="box-t">Inégalité de la moyenne</span>
+      Si \(m \le f(x) \le M\) sur \([a\,;b]\), alors
+      \[ m\,(b-a) \le \int_{a}^{b} f(x)\,\mathrm dx \le M\,(b-a). \]
+      La valeur moyenne \(\mu\) est ainsi comprise entre le minimum et le maximum de \(f\).
+    </div>
+
+    <h3>Intégration par changement de variable <span style="font-weight:400">(hors-programme)</span></h3>
+    <div class="box note">
+      <span class="box-t">Méthode du changement de variable</span>
+      Avec \(u = \varphi(x)\), \(\mathrm du = \varphi'(x)\,\mathrm dx\) :
+      \[ \int_{a}^{b} f\big(\varphi(x)\big)\,\varphi'(x)\,\mathrm dx
+      = \int_{\varphi(a)}^{\varphi(b)} f(u)\,\mathrm du. \]
+      C'est la version « intégrale » de la dérivation des composées.
+    </div>
+
+    <div class="box note">
+      <span class="box-t">Calcul de volumes <span style="font-weight:400">(hors-programme)</span></span>
+      Le volume d'un solide dont la section à la cote \(x\) a pour aire \(S(x)\) vaut
+      \(V = \displaystyle\int_{a}^{b} S(x)\,\mathrm dx\). Pour un solide de révolution engendré par
+      \(\mathcal C_f\) autour de l'axe \((Ox)\) : \(V = \pi\displaystyle\int_{a}^{b} f(x)^{2}\,
+      \mathrm dx\).
+    </div>
+
+  </section>
+
+  <!-- ================= FICHE ================= -->
+  <section id="fiche" class="panel">
+    <div class="fiche">
+      <h2>Fiche résumé — Calcul intégral</h2>
+      <ul class="keypoints">
+        <li><strong>Intégrale</strong> de \(f\ge0\) = aire sous la courbe sur \([a\,;b]\).</li>
+        <li><strong>Théorème fondamental</strong> : \(\int_a^b f = F(b)-F(a)\), \(F\) primitive
+        de \(f\).</li>
+        <li><strong>Chasles</strong> : \(\int_a^b f + \int_b^c f = \int_a^c f\) ;
+        <strong>linéarité</strong>.</li>
+        <li><strong>Croissance</strong> : \(f\le g\) ⇒ \(\int_a^b f \le \int_a^b g\).</li>
+        <li><strong>Valeur moyenne</strong> : \(\mu = \frac{1}{b-a}\int_a^b f\).</li>
+        <li><strong>Aire entre courbes</strong> (\(f\ge g\)) : \(\int_a^b (f-g)\).</li>
+        <li><strong>IPP</strong> : \(\int_a^b u'v = [uv]_a^b - \int_a^b uv'\).</li>
+      </ul>
+      <div class="formule">
+        \[ \int_a^b f(x)\,\mathrm dx = F(b)-F(a) \qquad
+        \int_a^b u'v = \big[uv\big]_a^b - \int_a^b uv' \]
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= EXERCICES ================= -->
+  <section id="exos" class="panel">
+
+    <div class="exo">
+      <div class="exo-tag">Exercice 1 · Calculs d'intégrales</div>
+      <h3>Application directe</h3>
+      <p>Calculer : 1. \(\displaystyle\int_{1}^{3}(2x - 1)\,\mathrm dx\) — 2.
+      \(\displaystyle\int_{0}^{1} e^{2x}\,\mathrm dx\) — 3.
+      \(\displaystyle\int_{0}^{\pi}\sin x\,\mathrm dx\).</p>
+      <details class="corrige">
+        <summary>Voir le corrigé</summary>
+        <div class="sol">
+          <p><strong>1.</strong> \(\big[x^{2}-x\big]_{1}^{3} = (9-3) - (1-1) = 6 - 0 = 6\).</p>
+          <p><strong>2.</strong> Primitive de \(e^{2x}\) : \(\dfrac12 e^{2x}\).
+          \(\left[\dfrac12 e^{2x}\right]_{0}^{1} = \dfrac12 e^{2} - \dfrac12 = \dfrac{e^{2}-1}{2}\).</p>
+          <p><strong>3.</strong> \(\big[-\cos x\big]_{0}^{\pi} = -\cos\pi - (-\cos 0)
+          = -(-1) + 1 = 2\).</p>
+        </div>
+      </details>
+    </div>
+
+    <div class="exo">
+      <div class="exo-tag">Exercice 2 · Aire et valeur moyenne</div>
+      <h3>Domaine sous une parabole</h3>
+      <p>Soit \(f(x) = 4 - x^{2}\).</p>
+      <p>1. Vérifier que \(f \ge 0\) sur \([-2\,;2]\), puis calculer l'aire \(\mathcal A\) du domaine
+      entre \(\mathcal C_f\) et l'axe des abscisses sur \([-2\,;2]\).<br>
+      2. Calculer la valeur moyenne de \(f\) sur \([-2\,;2]\).</p>
+      <details class="corrige">
+        <summary>Voir le corrigé</summary>
+        <div class="sol">
+          <p><strong>1.</strong> Sur \([-2\,;2]\), \(x^2 \le 4\), donc \(f(x) = 4 - x^2 \ge 0\).</p>
+          <p>\(\mathcal A = \displaystyle\int_{-2}^{2}(4 - x^{2})\,\mathrm dx
+          = \left[4x - \dfrac{x^{3}}{3}\right]_{-2}^{2}\).</p>
+          <p>\(= \left(8 - \dfrac83\right) - \left(-8 + \dfrac83\right) = \dfrac{16}{3}
+          + \dfrac{16}{3} = \dfrac{32}{3}\) unités d'aire.</p>
+          <p><strong>2.</strong> \(\mu = \dfrac{1}{2-(-2)}\displaystyle\int_{-2}^{2} f
+          = \dfrac14\times\dfrac{32}{3} = \dfrac{8}{3}\).</p>
+        </div>
+      </details>
+    </div>
+
+    <div class="exo">
+      <div class="exo-tag">Exercice 3 · Intégration par parties</div>
+      <h3>Intégrale d'un logarithme</h3>
+      <p>Calculer \(I = \displaystyle\int_{1}^{e}\ln x\,\mathrm dx\).</p>
+      <details class="corrige">
+        <summary>Voir le corrigé</summary>
+        <div class="sol">
+          <p>On écrit \(\ln x = 1\times\ln x\) et on pose \(u'(x) = 1\) (donc \(u(x) = x\)) et
+          \(v(x) = \ln x\) (donc \(v'(x) = \dfrac1x\)).</p>
+          <p>\[ I = \big[x\ln x\big]_{1}^{e} - \int_{1}^{e} x\times\frac1x\,\mathrm dx
+          = \big[x\ln x\big]_{1}^{e} - \int_{1}^{e} 1\,\mathrm dx. \]</p>
+          <p>\(\big[x\ln x\big]_{1}^{e} = e\ln e - 1\ln 1 = e - 0 = e\).</p>
+          <p>\(\displaystyle\int_{1}^{e} 1\,\mathrm dx = \big[x\big]_{1}^{e} = e - 1\).</p>
+          <p>Donc \(I = e - (e - 1) = \boxed{1}\).</p>
+        </div>
+      </details>
+    </div>
+
+  </section>
+
+  <nav class="chap-nav">
+    <a href="ch08.html">← Chapitre 8 — Primitives</a>
+    <a href="ch10.html">Chapitre 10 — Vecteurs de l'espace →</a>
+  </nav>
+
+</main>
+
+<footer>Bac Mathématiques · Terminale spécialité — Chapitre 9</footer>
+<script src="assets/script.js"></script>
+</body>
+</html>

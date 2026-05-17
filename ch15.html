@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ch.15 — Variables aléatoires et loi binomiale</title>
+<link rel="stylesheet" href="assets/style.css">
+<script>
+MathJax = {
+  tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="assets/mathjax/tex-svg.js" id="MathJax-script" async></script>
+</head>
+<body>
+
+<header class="topbar">
+  <a class="brand" href="index.html">Bac <span>Mathématiques</span> · Terminale</a>
+  <nav><a href="index.html">Sommaire</a></nav>
+</header>
+
+<main class="wrap reading" data-theme="proba">
+
+  <div class="chapter-head">
+    <div class="kicker">Thème 3 · Probabilités — Chapitre 15</div>
+    <h1>Variables aléatoires et loi binomiale</h1>
+  </div>
+
+  <nav class="tabs">
+    <button class="tab active" data-target="cours">Cours complet</button>
+    <button class="tab" data-target="fiche">Fiche résumé</button>
+    <button class="tab" data-target="exos">Exercices</button>
+  </nav>
+
+  <!-- ================= COURS ================= -->
+  <section id="cours" class="panel active">
+
+    <div class="toc">
+      <b>Plan du cours</b>
+      <ol>
+        <li><a href="#c1">Variable aléatoire et loi</a></li>
+        <li><a href="#c2">Espérance, variance, écart-type</a></li>
+        <li><a href="#c3">Propriétés de l'espérance et de la variance</a></li>
+        <li><a href="#c4">Épreuve et loi de Bernoulli</a></li>
+        <li><a href="#c5">Le schéma de Bernoulli</a></li>
+        <li><a href="#c6">La loi binomiale</a></li>
+        <li><a href="#c7">Espérance et variance de la loi binomiale</a></li>
+        <li><a href="#c8">Calculs avec la loi binomiale</a></li>
+        <li><a href="#c9">Erreurs fréquentes</a></li>
+        <li><a href="#c10">Compléments et démonstrations</a></li>
+      </ol>
+    </div>
+
+    <h2 id="c1">1. Variable aléatoire et loi</h2>
+    <div class="box def">
+      <span class="box-t">Variable aléatoire</span>
+      Une <strong>variable aléatoire</strong> \(X\) est une fonction qui associe un
+      <strong>nombre réel</strong> à chaque issue d'une expérience aléatoire.
+    </div>
+    <div class="box def">
+      <span class="box-t">Loi de probabilité</span>
+      La <strong>loi de probabilité</strong> de \(X\) donne, pour chaque valeur \(x_i\) que \(X\)
+      peut prendre, la probabilité \(P(X = x_i)\). La somme de toutes ces probabilités vaut
+      <strong>1</strong>.
+    </div>
+    <p>Une variable aléatoire permet de <strong>résumer une expérience par un nombre</strong> :
+    au lieu de manipuler des issues abstraites (« pile », « la boule est rouge »), on travaille avec
+    des nombres — un gain, un nombre de succès, une durée. Donner la loi de \(X\), c'est dresser le
+    « catalogue complet » de ce que \(X\) peut valoir et avec quelle probabilité ; le fait que la
+    somme fasse 1 est un bon moyen de <em>vérifier</em> qu'on n'a rien oublié.</p>
+
+    <h2 id="c2">2. Espérance, variance, écart-type</h2>
+    <div class="box def">
+      <span class="box-t">Indicateurs d'une variable aléatoire</span>
+      Si \(X\) prend les valeurs \(x_1,\ldots,x_n\) avec les probabilités \(p_1,\ldots,p_n\) :<br>
+      • <strong>Espérance</strong> : \(\displaystyle E(X) = \sum_{i=1}^{n} x_i\,p_i\) ;<br>
+      • <strong>Variance</strong> : \(\displaystyle V(X) = \sum_{i=1}^{n} p_i\,\big(x_i - E(X)\big)^2
+      = \Big(\sum x_i^{2}\,p_i\Big) - E(X)^2\) ;<br>
+      • <strong>Écart-type</strong> : \(\sigma(X) = \sqrt{V(X)}\).
+    </div>
+    <p>L'espérance est la <strong>valeur moyenne</strong> de \(X\) sur un grand nombre de
+    répétitions : si l'on répétait l'expérience des milliers de fois, la moyenne des résultats se
+    rapprocherait de \(E(X)\) (c'est précisément ce qu'affirmera la loi des grands nombres au
+    chapitre 16). La variance et l'écart-type, eux, mesurent la <strong>dispersion</strong> : deux
+    jeux peuvent avoir la même espérance mais l'un être régulier, l'autre très risqué — c'est
+    l'écart-type qui les distingue. On retient que l'écart-type, racine de la variance, s'exprime
+    dans la même unité que \(X\).</p>
+
+    <h2 id="c3">3. Propriétés de l'espérance et de la variance</h2>
+    <div class="box prop">
+      <span class="box-t">Transformation affine \(aX + b\)</span>
+      Pour tous réels \(a\) et \(b\) :
+      \[ E(aX + b) = a\,E(X) + b \qquad V(aX + b) = a^{2}\,V(X) \qquad
+      \sigma(aX+b) = |a|\,\sigma(X). \]
+    </div>
+    <p>L'espérance est <strong>linéaire</strong> ; la variance n'est pas affectée par l'ajout d'une
+    constante \(b\) (un décalage ne change pas la dispersion) et le facteur \(a\) y intervient
+    <em>au carré</em>.</p>
+
+    <h2 id="c4">4. Épreuve et loi de Bernoulli</h2>
+    <div class="box def">
+      <span class="box-t">Épreuve de Bernoulli</span>
+      Une <strong>épreuve de Bernoulli</strong> est une expérience aléatoire à exactement
+      <strong>deux issues</strong> : le <strong>succès \(S\)</strong> (de probabilité \(p\)) et
+      l'<strong>échec \(\bar S\)</strong> (de probabilité \(1 - p\)).
+    </div>
+    <div class="box prop">
+      <span class="box-t">Loi de Bernoulli</span>
+      La variable \(X\) qui vaut 1 en cas de succès et 0 en cas d'échec suit la <strong>loi de
+      Bernoulli</strong> de paramètre \(p\). Alors :
+      \[ E(X) = p \qquad V(X) = p(1-p). \]
+    </div>
+
+    <h2 id="c5">5. Le schéma de Bernoulli</h2>
+    <div class="box def">
+      <span class="box-t">Schéma de Bernoulli</span>
+      Un <strong>schéma de Bernoulli</strong> est la répétition de \(n\) épreuves de Bernoulli
+      <strong>identiques et indépendantes</strong>, de même probabilité de succès \(p\).
+    </div>
+    <p>Les trois conditions à vérifier sont : <strong>même expérience</strong>, à <strong>deux
+    issues</strong>, répétée de façon <strong>indépendante</strong>. Ces conditions ne sont pas une
+    formalité : si on les oublie, on applique la loi binomiale à tort. Le piège classique est le
+    tirage <em>sans remise</em> — chaque tirage modifie la composition restante, donc les épreuves
+    ne sont plus indépendantes. La loi binomiale ne s'applique qu'au tirage <em>avec remise</em>
+    (ou assimilé, quand la population est très grande).</p>
+
+    <h2 id="c6">6. La loi binomiale</h2>
+    <div class="box def">
+      <span class="box-t">Loi binomiale</span>
+      Dans un schéma de Bernoulli de paramètres \(n\) et \(p\), la variable aléatoire \(X\) qui
+      compte le <strong>nombre de succès</strong> suit la <strong>loi binomiale</strong> de
+      paramètres \(n\) et \(p\), notée \(\mathcal B(n\,;p)\).
+    </div>
+    <div class="box prop">
+      <span class="box-t">Formule de la loi binomiale</span>
+      Si \(X\) suit \(\mathcal B(n\,;p)\), alors pour tout entier \(k\) de 0 à \(n\) :
+      \[ P(X = k) = \binom{n}{k}\,p^{k}\,(1-p)^{\,n-k}. \]
+    </div>
+    <div class="box note">
+      <span class="box-t">Lecture de la formule</span>
+      • \(p^{k}\) : probabilité d'obtenir \(k\) succès ;<br>
+      • \((1-p)^{n-k}\) : probabilité des \(n-k\) échecs ;<br>
+      • \(\dbinom nk\) : nombre de façons de placer les \(k\) succès parmi les \(n\) épreuves.
+    </div>
+    <p>La formule se lit comme une petite histoire. Un scénario précis avec \(k\) succès puis
+    \(n-k\) échecs a pour probabilité \(p^k(1-p)^{n-k}\) (on multiplie, car les épreuves sont
+    indépendantes). Mais les \(k\) succès peuvent tomber à <em>n'importe quels</em> rangs : il y a
+    \(\dbinom nk\) scénarios différents, tous de même probabilité. On additionne donc, ce qui
+    donne le coefficient \(\dbinom nk\) en facteur. C'est là que le dénombrement du chapitre 13
+    rejoint les probabilités.</p>
+
+    <h2 id="c7">7. Espérance et variance de la loi binomiale</h2>
+    <div class="box prop">
+      <span class="box-t">Indicateurs de \(\mathcal B(n\,;p)\)</span>
+      Si \(X\) suit la loi binomiale \(\mathcal B(n\,;p)\) :
+      \[ E(X) = n\,p \qquad V(X) = n\,p\,(1-p) \qquad \sigma(X) = \sqrt{n\,p\,(1-p)}. \]
+    </div>
+    <p>L'espérance \(np\) s'interprète très simplement : sur \(n\) épreuves de probabilité de
+    succès \(p\), on attend en moyenne \(np\) succès.</p>
+
+    <h2 id="c8">8. Calculs avec la loi binomiale</h2>
+    <div class="box method">
+      <span class="box-t">Méthode — probabilités cumulées</span>
+      • « <strong>au moins un</strong> succès » : passer par l'événement contraire,
+      \(P(X\ge1) = 1 - P(X = 0)\).<br>
+      • « <strong>au plus \(k\)</strong> » : \(P(X\le k) = P(X=0) + \cdots + P(X=k)\).<br>
+      • « <strong>au moins \(k\)</strong> » : \(P(X\ge k) = 1 - P(X\le k-1)\).<br>
+      La calculatrice fournit directement \(P(X = k)\) et \(P(X \le k)\).
+    </div>
+    <div class="box method">
+      <span class="box-t">Application</span>
+      On lance 10 fois un dé équilibré ; \(X\) compte le nombre de 6. Alors \(X\) suit
+      \(\mathcal B\!\left(10\,;\tfrac16\right)\).<br>
+      \(P(X = 2) = \dbinom{10}{2}\!\left(\tfrac16\right)^{2}\!\left(\tfrac56\right)^{8}
+      \approx 0{,}291\).<br>
+      \(P(X \ge 1) = 1 - P(X = 0) = 1 - \left(\tfrac56\right)^{10} \approx 0{,}838\).<br>
+      \(E(X) = 10\times\tfrac16 \approx 1{,}67\).
+    </div>
+
+    <h2 id="c9">9. Erreurs fréquentes</h2>
+    <div class="box danger">
+      <span class="box-t">À éviter</span>
+      • Appliquer la loi binomiale sans vérifier l'<strong>indépendance</strong> des épreuves (ex :
+      tirage sans remise).<br>
+      • Oublier le coefficient \(\dbinom nk\) dans \(P(X=k)\).<br>
+      • Confondre les exposants : \(p^{k}\) pour les succès, \((1-p)^{n-k}\) pour les échecs.<br>
+      • Pour la variance, oublier le carré : \(V(aX+b) = a^{2}V(X)\).<br>
+      • Calculer « au moins un » par une longue somme au lieu du <strong>complémentaire</strong>
+      \(1 - P(X=0)\).
+    </div>
+
+    <h2 id="c10">10. Compléments et démonstrations</h2>
+
+    <div class="box prop">
+      <span class="box-t">Démonstration — espérance de la loi binomiale</span>
+      Une variable \(X\) de loi \(\mathcal B(n\,;p)\) est la somme \(X = X_1 + \cdots + X_n\) de
+      \(n\) variables de Bernoulli indépendantes de paramètre \(p\). Par linéarité de l'espérance :
+      \(E(X) = E(X_1) + \cdots + E(X_n) = n\,p\). De même, par indépendance,
+      \(V(X) = V(X_1) + \cdots + V(X_n) = n\,p(1-p)\).
+    </div>
+
+    <div class="box prop">
+      <span class="box-t">Formule de Kœnig-Huygens</span>
+      La variance se calcule souvent plus vite avec
+      \[ V(X) = E(X^{2}) - \big(E(X)\big)^{2}, \qquad\text{où}\qquad E(X^{2}) = \sum_i x_i^{2}\,p_i. \]
+    </div>
+
+    <h3>Loi uniforme discrète</h3>
+    <div class="box def">
+      <span class="box-t">Loi uniforme</span>
+      Si \(X\) prend \(n\) valeurs \(1, 2, \ldots, n\) avec la même probabilité \(\frac1n\)
+      (lancer d'un dé équilibré), alors
+      \[ E(X) = \frac{n+1}{2}, \qquad V(X) = \frac{n^{2}-1}{12}. \]
+    </div>
+
+    <h3>Propriétés de la loi binomiale</h3>
+    <div class="box note">
+      <span class="box-t">Symétrie et mode</span>
+      • Si \(p = \tfrac12\), la loi \(\mathcal B(n\,;\tfrac12)\) est <strong>symétrique</strong> :
+      \(P(X = k) = P(X = n-k)\).<br>
+      • Le <strong>mode</strong> (valeur la plus probable) est proche de \(np\).<br>
+      • <strong>Fonction de répartition</strong> : \(F(k) = P(X \le k)\), croissante de 0 à 1 ;
+      c'est elle que renvoie la calculatrice pour les probabilités cumulées.
+    </div>
+
+    <h3>La loi géométrique <span style="font-weight:400">(hors-programme)</span></h3>
+    <div class="box note">
+      <span class="box-t">Temps d'attente du premier succès</span>
+      Dans une répétition d'épreuves de Bernoulli, la variable \(Y\) égale au <strong>rang du
+      premier succès</strong> suit la loi géométrique : \(P(Y = k) = (1-p)^{k-1}\,p\), d'espérance
+      \(E(Y) = \dfrac1p\).
+    </div>
+
+    <div class="box method">
+      <span class="box-t">Seuil — « au moins un succès »</span>
+      Déterminer le plus petit \(n\) tel que \(P(X \ge 1) \ge 0{,}99\) revient à résoudre
+      \(1 - (1-p)^{n} \ge 0{,}99\), soit \((1-p)^{n} \le 0{,}01\), d'où
+      \(n \ge \dfrac{\ln 0{,}01}{\ln(1-p)}\).
+    </div>
+
+  </section>
+
+  <!-- ================= FICHE ================= -->
+  <section id="fiche" class="panel">
+    <div class="fiche">
+      <h2>Fiche résumé — Variables aléatoires et loi binomiale</h2>
+      <ul class="keypoints">
+        <li><strong>Loi de \(X\)</strong> : valeurs \(x_i\) et probabilités \(p_i\) ; somme
+        = 1.</li>
+        <li><strong>Espérance</strong> : \(E(X)=\sum x_i p_i\) ; <strong>variance</strong>
+        \(V(X)=\sum x_i^2 p_i - E(X)^2\).</li>
+        <li><strong>Affine</strong> : \(E(aX+b)=aE(X)+b\) ; \(V(aX+b)=a^2 V(X)\).</li>
+        <li><strong>Bernoulli</strong> \((p)\) : \(E(X)=p\), \(V(X)=p(1-p)\).</li>
+        <li><strong>Schéma de Bernoulli</strong> : \(n\) épreuves identiques, indépendantes,
+        2 issues.</li>
+        <li><strong>Binomiale</strong> \(\mathcal B(n;p)\) :
+        \(P(X=k)=\binom nk p^k(1-p)^{n-k}\).</li>
+        <li><strong>\(E(X)=np\)</strong>, \(V(X)=np(1-p)\), \(\sigma(X)=\sqrt{np(1-p)}\).</li>
+        <li>« Au moins un » : \(P(X\ge1)=1-P(X=0)\).</li>
+      </ul>
+      <div class="formule">
+        \[ P(X=k) = \binom nk p^k (1-p)^{n-k} \qquad E(X)=np \qquad V(X)=np(1-p) \]
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= EXERCICES ================= -->
+  <section id="exos" class="panel">
+
+    <div class="exo">
+      <div class="exo-tag">Exercice 1 · Loi et espérance</div>
+      <h3>Un jeu de hasard</h3>
+      <p>Un jeu coûte 2 €. On gagne 5 € avec probabilité \(0{,}3\), 0 € sinon. Soit \(X\) le
+      <em>gain algébrique</em> du joueur (gain moins mise).</p>
+      <p>1. Donner la loi de \(X\).<br>
+      2. Calculer \(E(X)\). Le jeu est-il favorable au joueur ?</p>
+      <details class="corrige">
+        <summary>Voir le corrigé</summary>
+        <div class="sol">
+          <p><strong>1.</strong> En cas de gain : \(5 - 2 = 3\) € avec probabilité \(0{,}3\). Sinon
+          : \(0 - 2 = -2\) € avec probabilité \(0{,}7\).</p>
+          <table>
+            <tr><th>\(x_i\)</th><td>\(3\)</td><td>\(-2\)</td></tr>
+            <tr><th>\(P(X=x_i)\)</th><td>\(0{,}3\)</td><td>\(0{,}7\)</td></tr>
+          </table>
+          <p><strong>2.</strong> \(E(X) = 3\times0{,}3 + (-2)\times0{,}7 = 0{,}9 - 1{,}4
+          = -0{,}5\) €.</p>
+          <p>L'espérance de gain est négative : le jeu est <strong>défavorable</strong> au joueur
+          (perte moyenne de 0,50 € par partie).</p>
+        </div>
+      </details>
+    </div>
+
+    <div class="exo">
+      <div class="exo-tag">Exercice 2 · Loi binomiale</div>
+      <h3>Contrôle qualité</h3>
+      <p>Une machine produit des pièces dont 4 % sont défectueuses. On prélève au hasard 20 pièces
+      (assimilé à un tirage avec remise). Soit \(X\) le nombre de pièces défectueuses.</p>
+      <p>1. Justifier que \(X\) suit une loi binomiale, en préciser les paramètres.<br>
+      2. Calculer \(P(X = 0)\), puis \(P(X \ge 1)\).<br>
+      3. Calculer \(E(X)\).</p>
+      <details class="corrige">
+        <summary>Voir le corrigé</summary>
+        <div class="sol">
+          <p><strong>1.</strong> On répète 20 fois la même épreuve à 2 issues (défectueuse / non),
+          de façon indépendante, avec \(p = 0{,}04\). Donc \(X\) suit
+          \(\mathcal B(20\,;0{,}04)\).</p>
+          <p><strong>2.</strong> \(P(X = 0) = \dbinom{20}{0}(0{,}04)^{0}(0{,}96)^{20}
+          = 0{,}96^{20} \approx 0{,}442\).</p>
+          <p>\(P(X \ge 1) = 1 - P(X = 0) \approx 1 - 0{,}442 = 0{,}558\).</p>
+          <p><strong>3.</strong> \(E(X) = np = 20\times0{,}04 = 0{,}8\) pièce défectueuse en
+          moyenne.</p>
+        </div>
+      </details>
+    </div>
+
+    <div class="exo">
+      <div class="exo-tag">Exercice 3 · Probabilités cumulées</div>
+      <h3>QCM au hasard</h3>
+      <p>Un QCM comporte 8 questions, chacune avec 4 réponses dont une seule correcte. Un élève
+      répond entièrement au hasard. Soit \(X\) le nombre de bonnes réponses.</p>
+      <p>1. Quelle loi suit \(X\) ?<br>
+      2. Calculer la probabilité qu'il obtienne au moins 4 bonnes réponses
+      (on donne \(P(X\le3)\approx0{,}886\)).</p>
+      <details class="corrige">
+        <summary>Voir le corrigé</summary>
+        <div class="sol">
+          <p><strong>1.</strong> 8 questions indépendantes, 2 issues (bonne / mauvaise),
+          \(p = \dfrac14 = 0{,}25\). Donc \(X\) suit \(\mathcal B(8\,;0{,}25)\).</p>
+          <p><strong>2.</strong> « Au moins 4 » correspond à \(X \ge 4\), soit le contraire de
+          \(X \le 3\) :</p>
+          <p>\(P(X \ge 4) = 1 - P(X \le 3) \approx 1 - 0{,}886 = 0{,}114\).</p>
+          <p>L'élève a environ 11 % de chances d'obtenir au moins la moitié des points en répondant
+          au hasard.</p>
+        </div>
+      </details>
+    </div>
+
+  </section>
+
+  <nav class="chap-nav">
+    <a href="ch14.html">← Chapitre 14 — Probabilités conditionnelles</a>
+    <a href="ch16.html">Chapitre 16 — Sommes de variables et loi des grands nombres →</a>
+  </nav>
+
+</main>
+
+<footer>Bac Mathématiques · Terminale spécialité — Chapitre 15</footer>
+<script src="assets/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ch.6 — Fonction logarithme népérien</title>
+<link rel="stylesheet" href="assets/style.css">
+<script>
+MathJax = {
+  tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="assets/mathjax/tex-svg.js" id="MathJax-script" async></script>
+</head>
+<body>
+
+<header class="topbar">
+  <a class="brand" href="index.html">Bac <span>Mathématiques</span> · Terminale</a>
+  <nav><a href="index.html">Sommaire</a></nav>
+</header>
+
+<main class="wrap reading" data-theme="analyse">
+
+  <div class="chapter-head">
+    <div class="kicker">Thème 1 · Analyse — Chapitre 6</div>
+    <h1>Fonction logarithme népérien</h1>
+  </div>
+
+  <nav class="tabs">
+    <button class="tab active" data-target="cours">Cours complet</button>
+    <button class="tab" data-target="fiche">Fiche résumé</button>
+    <button class="tab" data-target="exos">Exercices</button>
+  </nav>
+
+  <!-- ================= COURS ================= -->
+  <section id="cours" class="panel active">
+
+    <div class="toc">
+      <b>Plan du cours</b>
+      <ol>
+        <li><a href="#c1">Définition du logarithme</a></li>
+        <li><a href="#c2">Logarithme et exponentielle</a></li>
+        <li><a href="#c3">La relation fonctionnelle</a></li>
+        <li><a href="#c4">Variations et dérivée</a></li>
+        <li><a href="#c5">Limites de la fonction \(\ln\)</a></li>
+        <li><a href="#c6">Croissances comparées</a></li>
+        <li><a href="#c7">Dérivée de \(\ln u\)</a></li>
+        <li><a href="#c8">Équations et inéquations</a></li>
+        <li><a href="#c9">Erreurs fréquentes</a></li>
+        <li><a href="#c10">Compléments et démonstrations</a></li>
+      </ol>
+    </div>
+
+    <h2 id="c1">1. Définition du logarithme</h2>
+    <p>La fonction exponentielle est continue et strictement croissante de \(\mathbb R\) sur
+    \(]0\,;+\infty[\). D'après le corollaire du TVI, pour tout réel \(x > 0\), l'équation
+    \(e^{y} = x\) admet une <strong>unique</strong> solution \(y\). On définit ainsi une nouvelle
+    fonction.</p>
+    <div class="box def">
+      <span class="box-t">Définition</span>
+      La <strong>fonction logarithme népérien</strong>, notée \(\ln\), est définie sur
+      \(]0\,;+\infty[\). Pour tout \(x > 0\), \(\ln x\) est l'<strong>unique</strong> réel tel que
+      \[ e^{\ln x} = x. \]
+    </div>
+    <p>Le logarithme est la <strong>fonction réciproque</strong> de l'exponentielle : elle « défait »
+    ce que fait l'exponentielle. Là où \(\exp\) prend un exposant et renvoie une puissance, \(\ln\)
+    prend une puissance et retrouve l'exposant. C'est précisément cet outil qui permettra de
+    <strong>résoudre les équations où l'inconnue est en exposant</strong>, comme \(e^x = 7\) ou
+    \(2^n \ge 1000\) — équations impossibles à traiter sans le logarithme.</p>
+
+    <h2 id="c2">2. Logarithme et exponentielle</h2>
+    <div class="box prop">
+      <span class="box-t">Relations fondamentales</span>
+      \[ e^{\ln x} = x \;\;(x>0) \qquad\qquad \ln(e^{x}) = x \;\;(x\in\mathbb R) \]
+      \[ \ln 1 = 0 \qquad \ln e = 1 \qquad \ln(e^{x}) = x \]
+    </div>
+    <div class="box prop">
+      <span class="box-t">Équivalence clé</span>
+      Pour \(x > 0\) et \(y\) réel :
+      \[ \ln x = y \iff x = e^{y}. \]
+      Les courbes de \(\ln\) et de \(\exp\) sont <strong>symétriques par rapport à la droite</strong>
+      \(y = x\).
+    </div>
+
+    <h2 id="c3">3. La relation fonctionnelle</h2>
+    <div class="box prop">
+      <span class="box-t">Propriété fondamentale</span>
+      Pour tous réels strictement positifs \(a\) et \(b\) :
+      \[ \ln(a\times b) = \ln a + \ln b. \]
+      Le logarithme <strong>transforme les produits en sommes</strong>.
+    </div>
+    <p>C'est exactement l'inverse de l'exponentielle, qui transformait les sommes en produits — c'est
+    logique, puisque l'une défait l'autre. Cette propriété a fait la fortune du logarithme avant les
+    calculatrices : elle permettait de remplacer une multiplication compliquée par une simple
+    addition. Toutes les « conséquences » ci-dessous en découlent directement.</p>
+    <div class="box prop">
+      <span class="box-t">Conséquences</span>
+      \[ \ln\!\left(\frac{1}{b}\right) = -\ln b \qquad \ln\!\left(\frac{a}{b}\right) = \ln a - \ln b
+      \qquad \ln(a^{n}) = n\ln a \qquad \ln\sqrt a = \tfrac12\ln a \]
+    </div>
+    <div class="box method">
+      <span class="box-t">Application</span>
+      \(\ln 12 = \ln(4\times3) = \ln 4 + \ln 3 = 2\ln 2 + \ln 3\).<br>
+      \(\ln 8 - \ln 2 = \ln\dfrac{8}{2} = \ln 4 = 2\ln 2\).
+    </div>
+
+    <h2 id="c4">4. Variations et dérivée</h2>
+    <div class="box prop">
+      <span class="box-t">Dérivée et variations</span>
+      La fonction \(\ln\) est dérivable sur \(]0\,;+\infty[\) et
+      \[ (\ln x)' = \frac{1}{x}. \]
+      Comme \(\dfrac1x > 0\) sur \(]0\,;+\infty[\), \(\ln\) est <strong>strictement
+      croissante</strong>.
+    </div>
+    <div class="box prop">
+      <span class="box-t">Conséquences pour les équations</span>
+      \[ \ln a = \ln b \iff a = b \qquad \ln a < \ln b \iff a < b \qquad(a,b>0) \]
+      En particulier : \(\ln x > 0 \iff x > 1\) et \(\ln x < 0 \iff 0 < x < 1\).
+    </div>
+    <p>Le point de bascule \(x = 1\) est à retenir : le logarithme est <em>négatif</em> pour les
+    nombres compris entre 0 et 1, <em>nul</em> en 1, <em>positif</em> au-delà. La stricte croissance,
+    elle, est l'outil qui permet de « passer au logarithme » dans une inéquation : appliquer \(\ln\)
+    aux deux membres en conserve le sens.</p>
+
+    <h2 id="c5">5. Limites de la fonction \(\ln\)</h2>
+    <div class="box prop">
+      <span class="box-t">Limites aux bornes</span>
+      \[ \lim_{x\to+\infty}\ln x = +\infty \qquad\qquad \lim_{x\to0^{+}}\ln x = -\infty. \]
+    </div>
+    <p>En \(0^+\), la courbe « plonge » vers le bas : la droite \(x = 0\) (l'axe des ordonnées) est
+    <strong>asymptote verticale</strong> à la courbe de \(\ln\).</p>
+
+    <h2 id="c6">6. Croissances comparées</h2>
+    <p>Le logarithme croît très lentement : il est <strong>battu par toute puissance de
+    \(x\)</strong>. C'est le miroir exact de l'exponentielle, qui elle écrasait toute puissance.
+    Pour donner une idée : \(\ln x\) ne dépasse 20 que pour \(x\) supérieur à 485 millions. Du coup,
+    dans un quotient \(\dfrac{\ln x}{x}\), c'est le dénominateur qui l'emporte largement, et la
+    limite est 0 — même si numérateur et dénominateur tendent tous deux vers \(+\infty\).</p>
+    <div class="box prop">
+      <span class="box-t">Croissances comparées</span>
+      \[ \lim_{x\to+\infty}\frac{\ln x}{x} = 0, \qquad \lim_{x\to+\infty}\frac{\ln x}{x^{n}} = 0,
+      \qquad \lim_{x\to0^{+}} x\ln x = 0, \qquad \lim_{x\to0^{+}} x^{n}\ln x = 0. \]
+      Une limite utile près de 1 : \(\displaystyle\lim_{x\to0}\frac{\ln(1+x)}{x} = 1\).
+    </div>
+
+    <h2 id="c7">7. Dérivée de \(\ln u\)</h2>
+    <div class="box prop">
+      <span class="box-t">Dérivée d'un logarithme composé</span>
+      Si \(u\) est dérivable et <strong>strictement positive</strong> sur \(I\), alors \(\ln u\) est
+      dérivable et
+      \[ \big(\ln u\big)' = \frac{u'}{u}. \]
+    </div>
+    <div class="box note">
+      <span class="box-t">Conséquence sur les variations</span>
+      Comme \(u > 0\), la dérivée \(\dfrac{u'}{u}\) a le <strong>signe de \(u'\)</strong> : la
+      fonction \(\ln u\) a les <strong>mêmes variations que \(u\)</strong>.
+    </div>
+    <div class="box method">
+      <span class="box-t">Application</span>
+      \(f(x) = \ln(x^{2}+1)\). Avec \(u = x^2+1 > 0\), \(u' = 2x\) :
+      \(f'(x) = \dfrac{2x}{x^{2}+1}\), du signe de \(2x\). \(f\) décroît sur \(]-\infty\,;0]\),
+      croît sur \([0\,;+\infty[\).
+    </div>
+
+    <h2 id="c8">8. Équations et inéquations</h2>
+    <div class="box method">
+      <span class="box-t">Méthode</span>
+      • Commencer par déterminer l'<strong>ensemble de définition</strong> : tout ce qui est
+      « dans le \(\ln\) » doit être strictement positif.<br>
+      • Utiliser \(\ln a = \ln b \iff a = b\) ou \(\ln a = b \iff a = e^{b}\).<br>
+      • Pour une inéquation, exploiter la <strong>stricte croissance</strong> de \(\ln\).<br>
+      • <strong>Vérifier</strong> à la fin que les solutions appartiennent à l'ensemble de
+      définition.
+    </div>
+    <div class="box method">
+      <span class="box-t">Application</span>
+      Résoudre \(\ln(x) + \ln(x-3) = \ln 4\). <em>Domaine</em> : \(x > 0\) et \(x-3 > 0\), donc
+      \(x > 3\).<br>
+      L'équation devient \(\ln\big(x(x-3)\big) = \ln 4\), soit \(x(x-3) = 4\), c'est-à-dire
+      \(x^{2}-3x-4 = 0\). Racines : \(x = 4\) ou \(x = -1\). Seule \(x = 4\) vérifie \(x > 3\). Donc
+      \(S = \{4\}\).
+    </div>
+
+    <h2 id="c9">9. Erreurs fréquentes</h2>
+    <div class="box danger">
+      <span class="box-t">À éviter</span>
+      • Écrire \(\ln(a+b) = \ln a + \ln b\) : faux ; c'est \(\ln(ab) = \ln a + \ln b\).<br>
+      • Oublier la <strong>condition d'existence</strong> : \(\ln x\) n'existe que pour \(x > 0\).<br>
+      • Oublier de <strong>vérifier</strong> les solutions par rapport au domaine.<br>
+      • Confondre \(\ln(x^2)\) (= \(2\ln|x|\)) et \((\ln x)^2\).<br>
+      • Oublier le facteur \(\dfrac{1}{u}\) ou écrire \((\ln u)' = \dfrac{1}{u'}\) : c'est
+      \(\dfrac{u'}{u}\).
+    </div>
+
+    <h2 id="c10">10. Compléments et démonstrations</h2>
+
+    <div class="box prop">
+      <span class="box-t">Démonstration — relation fonctionnelle du logarithme</span>
+      Soient \(a, b > 0\). Posons \(x = \ln a\) et \(y = \ln b\), de sorte que \(a = e^{x}\) et
+      \(b = e^{y}\). Alors \(ab = e^{x}e^{y} = e^{x+y}\), donc par définition du logarithme
+      \(\ln(ab) = x + y = \ln a + \ln b\).
+    </div>
+
+    <div class="box prop">
+      <span class="box-t">Démonstration — dérivée de \(\ln\)</span>
+      Comme \(e^{\ln x} = x\), on dérive les deux membres (composée) :
+      \((\ln x)' \times e^{\ln x} = 1\), soit \((\ln x)' \times x = 1\). D'où
+      \((\ln x)' = \dfrac1x\).
+    </div>
+
+    <h3>Fonction logarithme décimal</h3>
+    <div class="box def">
+      <span class="box-t">Logarithme décimal</span>
+      Le <strong>logarithme décimal</strong> est défini par
+      \[ \log(x) = \frac{\ln x}{\ln 10}. \]
+      Il vérifie \(\log(10) = 1\), \(\log(10^{n}) = n\), et la même relation fonctionnelle
+      \(\log(ab) = \log a + \log b\). Il est utilisé pour les échelles logarithmiques (pH,
+      décibels, magnitudes).
+    </div>
+
+    <h3>Logarithme de base \(a\)</h3>
+    <div class="box note">
+      <span class="box-t">Généralisation</span>
+      Pour \(a > 0\), \(a \ne 1\), le logarithme de base \(a\) est \(\log_a(x) = \dfrac{\ln x}{\ln a}\).
+      C'est la fonction réciproque de \(x \mapsto a^{x}\). Les cas \(a = e\) et \(a = 10\) donnent
+      \(\ln\) et \(\log\).
+    </div>
+
+    <div class="box prop">
+      <span class="box-t">Démonstration — croissance comparée \(\dfrac{\ln x}{x}\)</span>
+      On pose \(t = \ln x\), donc \(x = e^{t}\) et \(t \to +\infty\) quand \(x \to +\infty\).
+      Alors \(\dfrac{\ln x}{x} = \dfrac{t}{e^{t}}\). Or \(\dfrac{e^{t}}{t} \to +\infty\)
+      (chapitre 5), donc \(\dfrac{t}{e^{t}} \to 0\). D'où \(\displaystyle\lim_{x\to+\infty}
+      \frac{\ln x}{x} = 0\).
+    </div>
+
+    <div class="box note">
+      <span class="box-t">Le logarithme comme aire <span style="font-weight:400">(hors-programme)</span></span>
+      On peut aussi définir le logarithme par une intégrale :
+      \[ \ln x = \int_{1}^{x}\frac{1}{t}\,\mathrm dt. \]
+      Cette définition redonne immédiatement \((\ln x)' = \dfrac1x\) et \(\ln 1 = 0\).
+    </div>
+
+    <div class="box prop">
+      <span class="box-t">Inégalité utile</span>
+      Pour tout \(x > 0\) : \(\ln x \le x - 1\) (avec égalité seulement en \(x = 1\)). De façon
+      équivalente, \(\ln(1 + x) \le x\) pour \(x > -1\).
+    </div>
+
+  </section>
+
+  <!-- ================= FICHE ================= -->
+  <section id="fiche" class="panel">
+    <div class="fiche">
+      <h2>Fiche résumé — Fonction logarithme népérien</h2>
+      <ul class="keypoints">
+        <li><strong>Définition</strong> : \(\ln\) réciproque de \(\exp\) ; \(e^{\ln x}=x\),
+        \(\ln(e^x)=x\).</li>
+        <li><strong>Valeurs</strong> : \(\ln 1 = 0\), \(\ln e = 1\).</li>
+        <li><strong>Relation</strong> : \(\ln(ab)=\ln a+\ln b\) ; \(\ln\frac ab=\ln a-\ln b\) ;
+        \(\ln(a^n)=n\ln a\).</li>
+        <li><strong>Dérivée</strong> : \((\ln x)'=\frac1x\) ; strictement croissante sur
+        \(]0\,;+\infty[\).</li>
+        <li><strong>\(\ln a=\ln b \iff a=b\)</strong> ; \(\ln x>0 \iff x>1\).</li>
+        <li><strong>Limites</strong> : \(\lim_{+\infty}\ln x=+\infty\) ;
+        \(\lim_{0^+}\ln x=-\infty\).</li>
+        <li><strong>Croissances comparées</strong> : \(\frac{\ln x}{x}\to0\) ;
+        \(x\ln x\to0\) en \(0^+\).</li>
+        <li><strong>Dérivée composée</strong> : \((\ln u)'=\frac{u'}{u}\), mêmes variations que
+        \(u\).</li>
+      </ul>
+      <div class="formule">
+        \[ (\ln u)' = \frac{u'}{u} \qquad \ln(ab)=\ln a+\ln b \qquad \lim_{x\to+\infty}
+        \frac{\ln x}{x}=0 \]
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= EXERCICES ================= -->
+  <section id="exos" class="panel">
+
+    <div class="exo">
+      <div class="exo-tag">Exercice 1 · Propriétés</div>
+      <h3>Simplifications</h3>
+      <p>Exprimer en fonction de \(\ln 2\) et \(\ln 3\) : 1. \(\ln 6\) — 2. \(\ln\dfrac{9}{4}\)
+      — 3. \(\ln 24\). Résoudre ensuite \(e^{x} = 7\).</p>
+      <details class="corrige">
+        <summary>Voir le corrigé</summary>
+        <div class="sol">
+          <p><strong>1.</strong> \(\ln 6 = \ln(2\times3) = \ln 2 + \ln 3\).</p>
+          <p><strong>2.</strong> \(\ln\dfrac{9}{4} = \ln 9 - \ln 4 = 2\ln 3 - 2\ln 2\).</p>
+          <p><strong>3.</strong> \(24 = 2^3\times3\), donc \(\ln 24 = 3\ln 2 + \ln 3\).</p>
+          <p>Équation : \(e^x = 7 \iff x = \ln 7\).</p>
+        </div>
+      </details>
+    </div>
+
+    <div class="exo">
+      <div class="exo-tag">Exercice 2 · Inéquation</div>
+      <h3>Résolution avec domaine</h3>
+      <p>Résoudre dans \(\mathbb R\) l'inéquation \(\ln(2x - 1) \le \ln(x + 3)\).</p>
+      <details class="corrige">
+        <summary>Voir le corrigé</summary>
+        <div class="sol">
+          <p><em>Domaine</em> : \(2x-1 > 0\) et \(x+3 > 0\), donc \(x > \dfrac12\) et \(x > -3\) :
+          ensemble \(\left]\dfrac12\,;+\infty\right[\).</p>
+          <p>La fonction \(\ln\) est strictement croissante, donc l'inéquation équivaut à
+          \(2x-1 \le x+3\), soit \(x \le 4\).</p>
+          <p>En combinant avec le domaine : \(\dfrac12 < x \le 4\). L'ensemble des solutions est
+          \(S = \left]\dfrac12\,;4\right]\).</p>
+        </div>
+      </details>
+    </div>
+
+    <div class="exo">
+      <div class="exo-tag">Exercice 3 · Étude de fonction</div>
+      <h3>Variations et limites</h3>
+      <p>Soit \(f(x) = x - \ln x\) sur \(]0\,;+\infty[\).</p>
+      <p>1. Déterminer \(\lim_{x\to0^{+}} f(x)\) et \(\lim_{x\to+\infty} f(x)\).<br>
+      2. Étudier les variations de \(f\) et donner son minimum.</p>
+      <details class="corrige">
+        <summary>Voir le corrigé</summary>
+        <div class="sol">
+          <p><strong>1.</strong> En \(0^+\) : \(x\to0\) et \(-\ln x\to+\infty\), donc
+          \(\lim_{0^+} f = +\infty\).</p>
+          <p>En \(+\infty\) : \(f(x) = x\!\left(1 - \dfrac{\ln x}{x}\right)\). Par croissances
+          comparées \(\dfrac{\ln x}{x}\to0\), le facteur tend vers 1, donc \(\lim_{+\infty} f
+          = +\infty\).</p>
+          <p><strong>2.</strong> \(f'(x) = 1 - \dfrac1x = \dfrac{x-1}{x}\). Sur \(]0\,;+\infty[\),
+          le dénominateur est positif ; \(f'\) est du signe de \(x-1\).</p>
+          <p>\(f'<0\) sur \(]0\,;1[\), \(f'>0\) sur \(]1\,;+\infty[\). \(f\) admet un minimum en
+          \(x=1\) : \(f(1) = 1 - \ln 1 = 1\). Donc pour tout \(x>0\), \(f(x) \ge 1\), ce qui
+          prouve au passage que \(\ln x \le x - 1\).</p>
+        </div>
+      </details>
+    </div>
+
+  </section>
+
+  <nav class="chap-nav">
+    <a href="ch05.html">← Chapitre 5 — Fonction exponentielle</a>
+    <a href="ch07.html">Chapitre 7 — Fonctions trigonométriques →</a>
+  </nav>
+
+</main>
+
+<footer>Bac Mathématiques · Terminale spécialité — Chapitre 6</footer>
+<script src="assets/script.js"></script>
+</body>
+</html>

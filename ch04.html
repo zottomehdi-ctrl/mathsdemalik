@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ch.4 — Dérivation et convexité</title>
+<link rel="stylesheet" href="assets/style.css">
+<script>
+MathJax = {
+  tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="assets/mathjax/tex-svg.js" id="MathJax-script" async></script>
+</head>
+<body>
+
+<header class="topbar">
+  <a class="brand" href="index.html">Bac <span>Mathématiques</span> · Terminale</a>
+  <nav><a href="index.html">Sommaire</a></nav>
+</header>
+
+<main class="wrap reading" data-theme="analyse">
+
+  <div class="chapter-head">
+    <div class="kicker">Thème 1 · Analyse — Chapitre 4</div>
+    <h1>Compléments sur la dérivation — convexité</h1>
+  </div>
+
+  <nav class="tabs">
+    <button class="tab active" data-target="cours">Cours complet</button>
+    <button class="tab" data-target="fiche">Fiche résumé</button>
+    <button class="tab" data-target="exos">Exercices</button>
+  </nav>
+
+  <!-- ================= COURS ================= -->
+  <section id="cours" class="panel active">
+
+    <div class="toc">
+      <b>Plan du cours</b>
+      <ol>
+        <li><a href="#c1">Rappels sur la dérivation</a></li>
+        <li><a href="#c2">Dérivée d'une fonction composée</a></li>
+        <li><a href="#c3">Dérivées et variations</a></li>
+        <li><a href="#c4">La dérivée seconde</a></li>
+        <li><a href="#c5">Fonctions convexes et concaves</a></li>
+        <li><a href="#c6">Convexité et dérivée seconde</a></li>
+        <li><a href="#c7">Position courbe / tangente</a></li>
+        <li><a href="#c8">Points d'inflexion</a></li>
+        <li><a href="#c9">Erreurs fréquentes</a></li>
+        <li><a href="#c10">Compléments et démonstrations</a></li>
+      </ol>
+    </div>
+
+    <h2 id="c1">1. Rappels sur la dérivation</h2>
+    <p>Le nombre dérivé \(f'(a)\) est le <strong>coefficient directeur de la tangente</strong> à la
+    courbe \(\mathcal C_f\) au point d'abscisse \(a\). L'équation de cette tangente est :</p>
+    <div class="formule">
+      <span class="nom">Équation de la tangente en \(a\)</span>
+      \[ y = f'(a)(x - a) + f(a) \]
+    </div>
+    <table>
+      <caption>Dérivées usuelles</caption>
+      <tr><th>\(f(x)\)</th><th>\(x^n\)</th><th>\(\sqrt x\)</th><th>\(\dfrac1x\)</th><th>\(e^x\)</th><th>\(\ln x\)</th><th>\(\sin x\)</th><th>\(\cos x\)</th></tr>
+      <tr><th>\(f'(x)\)</th><td>\(nx^{n-1}\)</td><td>\(\dfrac{1}{2\sqrt x}\)</td><td>\(-\dfrac{1}{x^2}\)</td><td>\(e^x\)</td><td>\(\dfrac1x\)</td><td>\(\cos x\)</td><td>\(-\sin x\)</td></tr>
+    </table>
+    <div class="box prop">
+      <span class="box-t">Opérations sur les dérivées</span>
+      \[ (u+v)' = u' + v' \qquad (uv)' = u'v + uv' \qquad
+      \left(\frac uv\right)' = \frac{u'v - uv'}{v^2} \]
+    </div>
+
+    <h2 id="c2">2. Dérivée d'une fonction composée</h2>
+    <p>La nouveauté de Terminale est la dérivation d'une <strong>composée</strong> : une fonction de
+    la forme \(x \mapsto g(u(x))\), où l'on applique \(u\) puis \(g\).</p>
+    <p>Le principe à retenir : on dérive la fonction « extérieure » \(g\) en gardant \(u(x)\) à
+    l'intérieur, puis on <strong>multiplie par la dérivée de l'intérieur</strong> \(u'\). Ce facteur
+    \(u'\) est l'erreur la plus fréquente du chapitre — l'oublier, c'est dériver à moitié. Les quatre
+    cas particuliers ci-dessous ne sont que cette règle appliquée aux fonctions usuelles ; il faut
+    les connaître par cœur car ils reviennent dans tous les chapitres d'analyse.</p>
+    <div class="box prop">
+      <span class="box-t">Dérivée d'une composée</span>
+      Si \(u\) est dérivable sur \(I\) et \(g\) dérivable sur \(u(I)\), alors \(g\circ u\) est
+      dérivable et
+      \[ (g\circ u)'(x) = u'(x)\times g'\!\big(u(x)\big). \]
+    </div>
+    <div class="box prop">
+      <span class="box-t">Cas particuliers à connaître par cœur</span>
+      \[ \big(u^n\big)' = n\,u'\,u^{n-1} \qquad \big(\sqrt u\big)' = \frac{u'}{2\sqrt u} \qquad
+      \big(e^{u}\big)' = u'\,e^{u} \qquad \big(\ln u\big)' = \frac{u'}{u} \]
+    </div>
+    <div class="box method">
+      <span class="box-t">Application</span>
+      Soit \(f(x) = (3x^2 + 1)^4\). On pose \(u(x) = 3x^2+1\), donc \(u'(x) = 6x\) :
+      \[ f'(x) = 4\,u' \,u^3 = 4\times 6x\times(3x^2+1)^3 = 24x\,(3x^2+1)^3. \]
+      Soit \(g(x) = e^{-x^2}\). Avec \(u(x) = -x^2\), \(u'(x) = -2x\) :
+      \(g'(x) = -2x\,e^{-x^2}\).
+    </div>
+
+    <h2 id="c3">3. Dérivées et variations</h2>
+    <div class="box prop">
+      <span class="box-t">Signe de \(f'\) et sens de variation</span>
+      Sur un intervalle \(I\) :<br>
+      • si \(f' > 0\), alors \(f\) est strictement <strong>croissante</strong> ;<br>
+      • si \(f' < 0\), alors \(f\) est strictement <strong>décroissante</strong> ;<br>
+      • si \(f' = 0\) sur \(I\), alors \(f\) est <strong>constante</strong>.<br>
+      \(f\) admet un <strong>extremum local</strong> là où \(f'\) <strong>s'annule en changeant de
+      signe</strong>.
+    </div>
+    <p>Attention au mot « en changeant de signe » : \(f'\) peut s'annuler sans qu'il y ait d'extremum.
+    Pour \(f(x) = x^3\), la dérivée \(f'(x) = 3x^2\) s'annule en 0, mais reste positive de part et
+    d'autre : la fonction continue de croître, il n'y a pas d'extremum. C'est bien le
+    <em>changement</em> de signe, et non la simple annulation, qui crée un sommet ou un creux.</p>
+
+    <h2 id="c4">4. La dérivée seconde</h2>
+    <div class="box def">
+      <span class="box-t">Dérivée seconde</span>
+      Si la dérivée \(f'\) est elle-même dérivable, sa dérivée est appelée <strong>dérivée
+      seconde</strong> de \(f\), notée \(f''\). On dit que \(f\) est <em>deux fois dérivable</em>.
+    </div>
+    <p>La dérivée \(f'\) renseigne sur les <em>variations</em> de \(f\). De la même manière, \(f''\)
+    renseigne sur les variations de \(f'\) — c'est cela qui décrit la <strong>convexité</strong> de
+    \(f\).</p>
+
+    <h2 id="c5">5. Fonctions convexes et concaves</h2>
+    <div class="box def">
+      <span class="box-t">Convexité, concavité</span>
+      Soit \(f\) dérivable sur \(I\) :<br>
+      • \(f\) est <strong>convexe</strong> sur \(I\) si sa courbe est entièrement
+      <strong>au-dessus de chacune de ses tangentes</strong> (la courbe « tourne » vers le haut,
+      en forme de cuvette) ;<br>
+      • \(f\) est <strong>concave</strong> sur \(I\) si sa courbe est entièrement
+      <strong>en dessous de chacune de ses tangentes</strong> (en forme de dôme).
+    </div>
+    <p>Autre lecture, par les <em>cordes</em> : une fonction convexe a sa courbe <strong>en dessous
+    de chacune de ses cordes</strong> ; une fonction concave, au-dessus.</p>
+    <p>Il faut bien séparer <strong>convexité</strong> et <strong>variations</strong> : ce sont deux
+    informations indépendantes. Une fonction peut être croissante <em>et</em> convexe (\(e^x\)),
+    croissante <em>et</em> concave (\(\ln x\), \(\sqrt x\)), décroissante et convexe, etc. Les
+    variations disent si la courbe monte ou descend ; la convexité dit comment elle <em>tourne</em>
+    — en creux vers le haut ou en bosse vers le bas.</p>
+    <div class="box note">
+      <span class="box-t">Exemples de référence</span>
+      • \(x \mapsto x^2\) et \(x \mapsto e^x\) sont <strong>convexes</strong> sur \(\mathbb R\).<br>
+      • \(x \mapsto \sqrt x\) et \(x \mapsto \ln x\) sont <strong>concaves</strong> sur
+      \(]0\,;+\infty[\).
+    </div>
+
+    <h2 id="c6">6. Convexité et dérivée seconde</h2>
+    <div class="box prop">
+      <span class="box-t">Caractérisations de la convexité</span>
+      Soit \(f\) deux fois dérivable sur \(I\). Les énoncés suivants sont équivalents :<br>
+      • \(f\) est <strong>convexe</strong> sur \(I\) ;<br>
+      • \(f'\) est <strong>croissante</strong> sur \(I\) ;<br>
+      • \(f'' \ge 0\) sur \(I\).<br>
+      De même : \(f\) <strong>concave</strong> \(\Leftrightarrow\) \(f'\) décroissante
+      \(\Leftrightarrow\) \(f'' \le 0\).
+    </div>
+    <p>La logique de cette chaîne d'équivalences est limpide. \(f\) convexe veut dire que sa pente
+    augmente sans cesse : la courbe se redresse de plus en plus. Or « la pente augmente » signifie
+    exactement que \(f'\) est croissante — et une fonction croissante a une dérivée positive, ici
+    \(f''\). Étudier la convexité revient donc, concrètement, à étudier le <strong>signe de
+    \(f''\)</strong>, comme on étudiait le signe de \(f'\) pour les variations.</p>
+    <div class="box method">
+      <span class="box-t">Méthode — étudier la convexité</span>
+      1. Calculer \(f'\) puis \(f''\).<br>
+      2. Étudier le <strong>signe de \(f''\)</strong>.<br>
+      3. Là où \(f'' > 0\) : \(f\) est convexe ; là où \(f'' < 0\) : \(f\) est concave.
+    </div>
+    <div class="box method">
+      <span class="box-t">Application</span>
+      Soit \(f(x) = x^3\). Alors \(f'(x) = 3x^2\) et \(f''(x) = 6x\).<br>
+      • Pour \(x < 0\) : \(f'' < 0\), \(f\) est concave.<br>
+      • Pour \(x > 0\) : \(f'' > 0\), \(f\) est convexe.<br>
+      La convexité change en \(x = 0\).
+    </div>
+
+    <h2 id="c7">7. Position courbe / tangente</h2>
+    <p>La convexité fournit directement la position de \(\mathcal C_f\) par rapport à ses
+    tangentes :</p>
+    <ul>
+      <li>sur un intervalle où \(f\) est <strong>convexe</strong>, la courbe est <strong>au-dessus</strong>
+      de toutes ses tangentes ;</li>
+      <li>sur un intervalle où \(f\) est <strong>concave</strong>, la courbe est <strong>en
+      dessous</strong> de toutes ses tangentes.</li>
+    </ul>
+    <p>Cela évite parfois un calcul de signe : il suffit de connaître la convexité pour conclure sur
+    une inégalité du type \(f(x) \ge\) (équation d'une tangente).</p>
+
+    <h2 id="c8">8. Points d'inflexion</h2>
+    <div class="box def">
+      <span class="box-t">Point d'inflexion</span>
+      Un <strong>point d'inflexion</strong> de \(\mathcal C_f\) est un point où la courbe
+      <strong>change de convexité</strong> (de convexe à concave, ou inversement). En ce point,
+      la courbe <em>traverse</em> sa tangente.
+    </div>
+    <div class="box prop">
+      <span class="box-t">Caractérisation</span>
+      \(\mathcal C_f\) admet un point d'inflexion en \(x_0\) si et seulement si \(f''\)
+      <strong>s'annule en changeant de signe</strong> en \(x_0\).
+    </div>
+    <div class="box danger">
+      <span class="box-t">Attention</span>
+      \(f''(x_0) = 0\) ne suffit pas : il faut un <strong>changement de signe</strong>. Pour
+      \(f(x) = x^4\), \(f''(x) = 12x^2\) s'annule en 0 mais reste positive : pas de point
+      d'inflexion, la fonction reste convexe.
+    </div>
+
+    <h2 id="c9">9. Erreurs fréquentes</h2>
+    <div class="box danger">
+      <span class="box-t">À éviter</span>
+      • Oublier le facteur \(u'\) dans la dérivée d'une composée : \((e^u)' = u'e^u\), pas
+      \(e^u\).<br>
+      • Confondre le rôle de \(f'\) (variations) et celui de \(f''\) (convexité).<br>
+      • Conclure à un extremum dès que \(f'\) s'annule : il faut un <strong>changement de
+      signe</strong>.<br>
+      • Conclure à un point d'inflexion dès que \(f''=0\) : il faut un changement de signe de
+      \(f''\).<br>
+      • Dire « convexe = croissante » : convexité et variations sont des notions
+      <strong>indépendantes</strong>.
+    </div>
+
+    <h2 id="c10">10. Compléments et démonstrations</h2>
+
+    <h3>Nombre dérivé : définition par la limite</h3>
+    <div class="box def">
+      <span class="box-t">Définition du nombre dérivé</span>
+      \(f\) est dérivable en \(a\) si le <strong>taux d'accroissement</strong> admet une limite
+      finie :
+      \[ f'(a) = \lim_{h\to0}\frac{f(a+h) - f(a)}{h} = \lim_{x\to a}\frac{f(x) - f(a)}{x - a}. \]
+    </div>
+
+    <div class="box prop">
+      <span class="box-t">Démonstration — dérivée d'un produit</span>
+      On forme le taux d'accroissement de \(uv\) :
+      \[ \frac{u(x)v(x) - u(a)v(a)}{x-a} = \frac{u(x)-u(a)}{x-a}\,v(x)
+      + u(a)\,\frac{v(x)-v(a)}{x-a}. \]
+      Quand \(x \to a\), on obtient \(u'(a)v(a) + u(a)v'(a)\), d'où \((uv)' = u'v + uv'\).
+    </div>
+
+    <div class="box prop">
+      <span class="box-t">Idée — dérivée d'une composée</span>
+      Pour \(g\circ u\), on écrit le taux d'accroissement
+      \(\dfrac{g(u(x))-g(u(a))}{x-a} = \dfrac{g(u(x))-g(u(a))}{u(x)-u(a)}\times
+      \dfrac{u(x)-u(a)}{x-a}\). Le premier facteur tend vers \(g'(u(a))\), le second vers
+      \(u'(a)\) : \((g\circ u)'(a) = u'(a)\,g'(u(a))\).
+    </div>
+
+    <h3>Approximation affine</h3>
+    <div class="box prop">
+      <span class="box-t">Approximation locale</span>
+      Au voisinage de \(a\) : \(f(a + h) \approx f(a) + h\,f'(a)\). La tangente est la
+      <strong>meilleure approximation affine</strong> de la courbe près du point de contact.
+    </div>
+
+    <h3>Théorèmes des accroissements finis <span style="font-weight:400">(hors-programme)</span></h3>
+    <div class="box prop">
+      <span class="box-t">Théorème de Rolle et théorème des accroissements finis</span>
+      • <strong>Rolle</strong> : si \(f\) est continue sur \([a\,;b]\), dérivable sur \(]a\,;b[\) et
+      \(f(a) = f(b)\), il existe \(c \in\, ]a\,;b[\) tel que \(f'(c) = 0\).<br>
+      • <strong>TAF</strong> : sous les mêmes hypothèses de régularité, il existe
+      \(c \in\, ]a\,;b[\) tel que \(f'(c) = \dfrac{f(b)-f(a)}{b-a}\).<br>
+      <strong>Inégalité des accroissements finis</strong> : si \(|f'| \le M\) sur \([a\,;b]\),
+      alors \(|f(b) - f(a)| \le M\,|b - a|\).
+    </div>
+
+    <h3>Inégalités de convexité</h3>
+    <div class="box prop">
+      <span class="box-t">Inégalité de convexité</span>
+      Si \(f\) est convexe sur \(I\), alors pour tous \(x, y \in I\) et tout \(t \in [0\,;1]\) :
+      \[ f\big(t x + (1-t) y\big) \le t\,f(x) + (1-t)\,f(y). \]
+      La courbe est sous la corde. Pour une fonction concave, l'inégalité est inversée. Appliquée
+      à \(\ln\) (concave), elle donne l'inégalité arithmético-géométrique.
+    </div>
+
+    <div class="box note">
+      <span class="box-t">Dérivées successives</span>
+      En dérivant de façon répétée, on définit \(f'\), \(f''\), \(f'''\), …, \(f^{(n)}\)
+      (dérivée \(n\)-ième). \(f'\) gouverne les variations, \(f''\) la convexité.
+    </div>
+
+  </section>
+
+  <!-- ================= FICHE ================= -->
+  <section id="fiche" class="panel">
+    <div class="fiche">
+      <h2>Fiche résumé — Dérivation et convexité</h2>
+      <ul class="keypoints">
+        <li><strong>Tangente</strong> en \(a\) : \(y = f'(a)(x-a) + f(a)\).</li>
+        <li><strong>Composée</strong> : \((g\circ u)' = u'\times(g'\circ u)\).</li>
+        <li><strong>À connaître</strong> : \((u^n)'=nu'u^{n-1}\), \((\sqrt u)'=\frac{u'}{2\sqrt u}\),
+        \((e^u)'=u'e^u\), \((\ln u)'=\frac{u'}{u}\).</li>
+        <li><strong>Variations</strong> : signe de \(f'\) ; extremum si \(f'\) change de signe.</li>
+        <li><strong>Convexe</strong> ⇔ \(f'\) croissante ⇔ \(f'' \ge 0\) ⇔ courbe au-dessus des
+        tangentes.</li>
+        <li><strong>Concave</strong> ⇔ \(f'\) décroissante ⇔ \(f'' \le 0\) ⇔ courbe sous les
+        tangentes.</li>
+        <li><strong>Point d'inflexion</strong> : \(f''\) s'annule <em>en changeant de signe</em>.</li>
+        <li>Convexes : \(x^2\), \(e^x\). Concaves : \(\sqrt x\), \(\ln x\).</li>
+      </ul>
+      <div class="formule">
+        \[ (g\circ u)'(x) = u'(x)\,g'\!\big(u(x)\big) \qquad f \text{ convexe} \iff f'' \ge 0 \]
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= EXERCICES ================= -->
+  <section id="exos" class="panel">
+
+    <div class="exo">
+      <div class="exo-tag">Exercice 1 · Dérivée d'une composée</div>
+      <h3>Calculs de dérivées</h3>
+      <p>Dériver : 1. \(f(x) = (2x-5)^3\) — 2. \(g(x) = \sqrt{x^2+1}\) — 3.
+      \(h(x) = e^{3x-1}\) — 4. \(k(x) = \ln(x^2+4)\).</p>
+      <details class="corrige">
+        <summary>Voir le corrigé</summary>
+        <div class="sol">
+          <p><strong>1.</strong> \(u = 2x-5\), \(u'=2\) : \(f' = 3u'u^2 = 3\times2\times(2x-5)^2
+          = 6(2x-5)^2\).</p>
+          <p><strong>2.</strong> \(u = x^2+1\), \(u'=2x\) : \(g' = \dfrac{u'}{2\sqrt u}
+          = \dfrac{2x}{2\sqrt{x^2+1}} = \dfrac{x}{\sqrt{x^2+1}}\).</p>
+          <p><strong>3.</strong> \(u = 3x-1\), \(u'=3\) : \(h' = u'e^u = 3e^{3x-1}\).</p>
+          <p><strong>4.</strong> \(u = x^2+4\), \(u'=2x\) : \(k' = \dfrac{u'}{u}
+          = \dfrac{2x}{x^2+4}\).</p>
+        </div>
+      </details>
+    </div>
+
+    <div class="exo">
+      <div class="exo-tag">Exercice 2 · Convexité</div>
+      <h3>Étude de la convexité</h3>
+      <p>Soit \(f(x) = x^3 - 6x^2 + 5\) sur \(\mathbb R\).</p>
+      <p>1. Calculer \(f'\) et \(f''\).<br>
+      2. Étudier la convexité de \(f\) et préciser l'éventuel point d'inflexion.</p>
+      <details class="corrige">
+        <summary>Voir le corrigé</summary>
+        <div class="sol">
+          <p><strong>1.</strong> \(f'(x) = 3x^2 - 12x\) ; \(f''(x) = 6x - 12 = 6(x-2)\).</p>
+          <p><strong>2.</strong> Signe de \(f''\) : \(f''(x) < 0\) pour \(x < 2\), \(f''(x) > 0\)
+          pour \(x > 2\).</p>
+          <p>Donc \(f\) est <strong>concave</strong> sur \(]-\infty\,;2]\) et <strong>convexe</strong>
+          sur \([2\,;+\infty[\). \(f''\) s'annule en changeant de signe en \(x=2\) : le point
+          d'abscisse 2, soit \(\big(2\,;f(2)\big) = (2\,;-11)\), est un <strong>point
+          d'inflexion</strong>.</p>
+        </div>
+      </details>
+    </div>
+
+    <div class="exo">
+      <div class="exo-tag">Exercice 3 · Inégalité par convexité</div>
+      <h3>La courbe au-dessus d'une tangente</h3>
+      <p>Soit \(f(x) = e^x\). On admet que \(f\) est convexe sur \(\mathbb R\).</p>
+      <p>1. Donner l'équation de la tangente \(T\) à \(\mathcal C_f\) en \(x = 0\).<br>
+      2. En déduire que pour tout réel \(x\), \(e^x \ge 1 + x\).</p>
+      <details class="corrige">
+        <summary>Voir le corrigé</summary>
+        <div class="sol">
+          <p><strong>1.</strong> \(f(0) = 1\) et \(f'(x) = e^x\) donc \(f'(0) = 1\). La tangente est
+          \(y = f'(0)(x-0) + f(0) = x + 1\).</p>
+          <p><strong>2.</strong> \(f\) est convexe sur \(\mathbb R\) : sa courbe est
+          <strong>au-dessus de toutes ses tangentes</strong>, en particulier de \(T\). Donc pour
+          tout \(x\), \(f(x) \ge x + 1\), c'est-à-dire \(\boxed{e^x \ge 1 + x}\).</p>
+        </div>
+      </details>
+    </div>
+
+  </section>
+
+  <nav class="chap-nav">
+    <a href="ch03.html">← Chapitre 3 — Continuité</a>
+    <a href="ch05.html">Chapitre 5 — Fonction exponentielle →</a>
+  </nav>
+
+</main>
+
+<footer>Bac Mathématiques · Terminale spécialité — Chapitre 4</footer>
+<script src="assets/script.js"></script>
+</body>
+</html>

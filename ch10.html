@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ch.10 — Vecteurs, droites et plans de l'espace</title>
+<link rel="stylesheet" href="assets/style.css">
+<script>
+MathJax = {
+  tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="assets/mathjax/tex-svg.js" id="MathJax-script" async></script>
+</head>
+<body>
+
+<header class="topbar">
+  <a class="brand" href="index.html">Bac <span>Mathématiques</span> · Terminale</a>
+  <nav><a href="index.html">Sommaire</a></nav>
+</header>
+
+<main class="wrap reading" data-theme="geo">
+
+  <div class="chapter-head">
+    <div class="kicker">Thème 2 · Géométrie — Chapitre 10</div>
+    <h1>Vecteurs, droites et plans de l'espace</h1>
+  </div>
+
+  <nav class="tabs">
+    <button class="tab active" data-target="cours">Cours complet</button>
+    <button class="tab" data-target="fiche">Fiche résumé</button>
+    <button class="tab" data-target="exos">Exercices</button>
+  </nav>
+
+  <!-- ================= COURS ================= -->
+  <section id="cours" class="panel active">
+
+    <div class="toc">
+      <b>Plan du cours</b>
+      <ol>
+        <li><a href="#c1">Vecteurs de l'espace</a></li>
+        <li><a href="#c2">Colinéarité de deux vecteurs</a></li>
+        <li><a href="#c3">Vecteurs coplanaires</a></li>
+        <li><a href="#c4">Repères et bases de l'espace</a></li>
+        <li><a href="#c5">Coordonnées et calculs</a></li>
+        <li><a href="#c6">Caractérisation vectorielle d'une droite</a></li>
+        <li><a href="#c7">Caractérisation vectorielle d'un plan</a></li>
+        <li><a href="#c8">Positions relatives</a></li>
+        <li><a href="#c9">Erreurs fréquentes</a></li>
+        <li><a href="#c10">Compléments et démonstrations</a></li>
+      </ol>
+    </div>
+
+    <h2 id="c1">1. Vecteurs de l'espace</h2>
+    <p>Toutes les notions vectorielles du plan se généralisent à l'espace : un <strong>vecteur</strong>
+    de l'espace est défini par une direction, un sens et une longueur (sa <em>norme</em>). On additionne
+    les vecteurs et on les multiplie par un réel exactement comme dans le plan.</p>
+    <div class="box prop">
+      <span class="box-t">Règles de calcul</span>
+      Les règles connues restent valables : relation de Chasles
+      \(\overrightarrow{AB} + \overrightarrow{BC} = \overrightarrow{AC}\), règle du parallélogramme,
+      \(k(\vec u + \vec v) = k\vec u + k\vec v\)…
+    </div>
+    <p>Bonne nouvelle, donc : aucune règle de calcul vectoriel n'est à réapprendre. La vraie
+    nouveauté de l'espace tient en une notion supplémentaire — la <strong>coplanarité</strong> —
+    et en une dimension de plus : les vecteurs ont désormais <em>trois</em> coordonnées au lieu de
+    deux. Tout le reste prolonge fidèlement la géométrie vectorielle du plan.</p>
+
+    <h2 id="c2">2. Colinéarité de deux vecteurs</h2>
+    <div class="box def">
+      <span class="box-t">Vecteurs colinéaires</span>
+      Deux vecteurs \(\vec u\) et \(\vec v\) sont <strong>colinéaires</strong> s'il existe un réel
+      \(k\) tel que \(\vec v = k\,\vec u\) (avec \(\vec u \ne \vec 0\)). Ils ont alors la même
+      <strong>direction</strong>.
+    </div>
+    <div class="box prop">
+      <span class="box-t">Applications</span>
+      • Les points \(A\), \(B\), \(C\) sont <strong>alignés</strong> \(\iff\)
+      \(\overrightarrow{AB}\) et \(\overrightarrow{AC}\) sont colinéaires.<br>
+      • Les droites \((AB)\) et \((CD)\) sont <strong>parallèles</strong> \(\iff\)
+      \(\overrightarrow{AB}\) et \(\overrightarrow{CD}\) sont colinéaires.
+    </div>
+
+    <h2 id="c3">3. Vecteurs coplanaires</h2>
+    <p>La nouveauté de l'espace est la notion de <strong>coplanarité</strong> : trois vecteurs
+    peuvent ou non « tenir dans un même plan ».</p>
+    <div class="box def">
+      <span class="box-t">Vecteurs coplanaires</span>
+      Trois vecteurs \(\vec u\), \(\vec v\), \(\vec w\) sont <strong>coplanaires</strong> s'il existe
+      des représentants de ces vecteurs situés dans un même plan.
+    </div>
+    <div class="box prop">
+      <span class="box-t">Caractérisation</span>
+      Si \(\vec u\) et \(\vec v\) ne sont <strong>pas colinéaires</strong>, alors \(\vec w\) est
+      coplanaire avec \(\vec u\) et \(\vec v\) si et seulement s'il existe des réels \(a\) et \(b\)
+      tels que
+      \[ \vec w = a\,\vec u + b\,\vec v. \]
+    </div>
+    <p>L'idée : deux vecteurs non colinéaires « engendrent » un plan, comme deux axes. Dire que
+    \(\vec w\) est coplanaire avec eux, c'est dire qu'il <em>tient dans ce plan</em>, donc qu'on
+    peut le fabriquer en combinant \(\vec u\) et \(\vec v\). Concrètement, prouver une coplanarité
+    revient à résoudre un système : on cherche les coefficients \(a\) et \(b\) — s'ils existent,
+    les vecteurs sont coplanaires ; si le système est impossible, ils ne le sont pas.</p>
+    <div class="box note">
+      <span class="box-t">Conséquence géométrique</span>
+      Quatre points \(A\), \(B\), \(C\), \(D\) sont <strong>coplanaires</strong> si et seulement si
+      les vecteurs \(\overrightarrow{AB}\), \(\overrightarrow{AC}\), \(\overrightarrow{AD}\) le sont.
+    </div>
+
+    <h2 id="c4">4. Repères et bases de l'espace</h2>
+    <div class="box def">
+      <span class="box-t">Base et repère</span>
+      • Trois vecteurs \((\vec\imath, \vec\jmath, \vec k)\) <strong>non coplanaires</strong> forment
+      une <strong>base</strong> de l'espace.<br>
+      • Un point \(O\) et une base \((\vec\imath, \vec\jmath, \vec k)\) forment un
+      <strong>repère</strong> \((O\,;\vec\imath, \vec\jmath, \vec k)\) de l'espace.
+    </div>
+    <div class="box prop">
+      <span class="box-t">Décomposition unique</span>
+      Dans une base donnée, tout vecteur \(\vec u\) s'écrit de <strong>manière unique</strong>
+      \(\vec u = x\,\vec\imath + y\,\vec\jmath + z\,\vec k\). Le triplet \((x\,;y\,;z)\) donne les
+      <strong>coordonnées</strong> de \(\vec u\).
+    </div>
+    <p>Pourquoi exiger trois vecteurs <em>non coplanaires</em> ? Parce qu'il faut « trois directions
+    indépendantes » pour atteindre tous les points de l'espace. Avec deux vecteurs seulement, on ne
+    décrirait qu'un plan ; le troisième apporte la profondeur. C'est la condition de non-coplanarité
+    qui garantit que la décomposition d'un vecteur en coordonnées est <strong>unique</strong>.</p>
+
+    <h2 id="c5">5. Coordonnées et calculs</h2>
+    <p>Dans un repère, on note \(A(x_A\,;y_A\,;z_A)\). Les formules sont l'extension naturelle de
+    celles du plan.</p>
+    <div class="box prop">
+      <span class="box-t">Formules de coordonnées</span>
+      Pour \(A(x_A;y_A;z_A)\) et \(B(x_B;y_B;z_B)\) :
+      \[ \overrightarrow{AB}\begin{pmatrix} x_B-x_A\\ y_B-y_A\\ z_B-z_A \end{pmatrix}
+      \qquad \text{milieu } I\!\left(\tfrac{x_A+x_B}{2};\tfrac{y_A+y_B}{2};\tfrac{z_A+z_B}{2}\right) \]
+    </div>
+    <div class="box prop">
+      <span class="box-t">Colinéarité en coordonnées</span>
+      \(\vec u(x;y;z)\) et \(\vec v(x';y';z')\) sont colinéaires si leurs coordonnées sont
+      <strong>proportionnelles</strong> : il existe \(k\) tel que \(x'=kx\), \(y'=ky\),
+      \(z'=kz\).
+    </div>
+
+    <h2 id="c6">6. Caractérisation vectorielle d'une droite</h2>
+    <div class="box def">
+      <span class="box-t">Droite définie par un point et un vecteur directeur</span>
+      La droite \(d\) passant par \(A\) et de <strong>vecteur directeur</strong> \(\vec u\)
+      (non nul) est l'ensemble des points \(M\) tels que \(\overrightarrow{AM}\) soit colinéaire
+      à \(\vec u\) :
+      \[ M \in d \iff \overrightarrow{AM} = t\,\vec u, \quad t \in \mathbb R. \]
+    </div>
+    <p>Cette écriture est le fondement de la <strong>représentation paramétrique</strong> d'une
+    droite (chapitre 12) : faire varier le paramètre \(t\) sur \(\mathbb R\), c'est balayer tous les
+    points de la droite. Pour \(t = 0\) on est en \(A\) ; chaque valeur de \(t\) fait « avancer » du
+    vecteur directeur \(\vec u\) répété \(t\) fois, dans un sens ou dans l'autre.</p>
+
+    <h2 id="c7">7. Caractérisation vectorielle d'un plan</h2>
+    <div class="box def">
+      <span class="box-t">Plan défini par un point et deux vecteurs</span>
+      Le plan \(\mathcal P\) passant par \(A\) et dirigé par deux vecteurs \(\vec u\), \(\vec v\)
+      <strong>non colinéaires</strong> est l'ensemble des points \(M\) tels que
+      \[ M \in \mathcal P \iff \overrightarrow{AM} = t\,\vec u + s\,\vec v, \quad (t,s)\in\mathbb R^2. \]
+    </div>
+    <p>Un plan est aussi déterminé par <strong>trois points non alignés</strong>, ou par une droite
+    et un point hors de cette droite.</p>
+
+    <h2 id="c8">8. Positions relatives</h2>
+    <div class="box prop">
+      <span class="box-t">Deux droites de l'espace</span>
+      Deux droites peuvent être : <strong>coplanaires</strong> (et alors sécantes ou parallèles) ou
+      <strong>non coplanaires</strong> (cas propre à l'espace : elles ne se coupent pas et ne sont
+      pas parallèles).
+    </div>
+    <div class="box prop">
+      <span class="box-t">Droite et plan, deux plans</span>
+      • Une droite et un plan : la droite est <strong>incluse</strong> dans le plan,
+      <strong>parallèle stricte</strong>, ou <strong>sécante</strong> (intersection : un point).<br>
+      • Deux plans : <strong>parallèles</strong> (confondus ou strictement) ou
+      <strong>sécants</strong> (intersection : une droite).
+    </div>
+    <div class="box prop">
+      <span class="box-t">Théorème du toit</span>
+      Si deux plans sécants contiennent chacun une droite, et que ces deux droites sont
+      <strong>parallèles entre elles</strong>, alors leur droite d'intersection est parallèle à ces
+      deux droites.
+    </div>
+
+    <h2 id="c9">9. Erreurs fréquentes</h2>
+    <div class="box danger">
+      <span class="box-t">À éviter</span>
+      • Confondre <strong>colinéaires</strong> (2 vecteurs, même direction) et
+      <strong>coplanaires</strong> (3 vecteurs, même plan).<br>
+      • Croire que deux droites non parallèles de l'espace sont forcément sécantes : elles peuvent
+      être <strong>non coplanaires</strong>.<br>
+      • Choisir comme vecteurs directeurs d'un plan deux vecteurs <strong>colinéaires</strong> : ils
+      doivent être non colinéaires.<br>
+      • Oublier qu'une base de l'espace exige <strong>trois</strong> vecteurs non coplanaires.
+    </div>
+
+    <h2 id="c10">10. Compléments et démonstrations</h2>
+
+    <div class="box prop">
+      <span class="box-t">Unicité de la décomposition dans une base</span>
+      Soit \((\vec\imath,\vec\jmath,\vec k)\) une base. Si
+      \(x\vec\imath + y\vec\jmath + z\vec k = x'\vec\imath + y'\vec\jmath + z'\vec k\), alors
+      \((x-x')\vec\imath + (y-y')\vec\jmath + (z-z')\vec k = \vec0\). Comme les trois vecteurs ne
+      sont pas coplanaires, cette égalité impose \(x = x'\), \(y = y'\), \(z = z'\) : les
+      coordonnées sont <strong>uniques</strong>.
+    </div>
+
+    <h3>Repérage d'un point — barycentre</h3>
+    <div class="box def">
+      <span class="box-t">Milieu et centre de gravité</span>
+      • Milieu de \([AB]\) : \(\overrightarrow{OI} = \tfrac12(\overrightarrow{OA}
+      + \overrightarrow{OB})\).<br>
+      • Centre de gravité \(G\) d'un triangle \(ABC\) :
+      \(\overrightarrow{OG} = \tfrac13(\overrightarrow{OA} + \overrightarrow{OB}
+      + \overrightarrow{OC})\), caractérisé par \(\overrightarrow{GA} + \overrightarrow{GB}
+      + \overrightarrow{GC} = \vec0\).
+    </div>
+
+    <h3>Caractérisations vectorielles utiles</h3>
+    <div class="box prop">
+      <span class="box-t">Appartenance à une droite ou un plan</span>
+      • \(M \in (AB)\) \(\iff\) \(\exists\,t,\ \overrightarrow{AM} = t\,\overrightarrow{AB}\).<br>
+      • \(M \in (ABC)\) (avec \(A\), \(B\), \(C\) non alignés) \(\iff\) \(\exists\,(t,s),\
+      \overrightarrow{AM} = t\,\overrightarrow{AB} + s\,\overrightarrow{AC}\).<br>
+      • Quatre points \(A\), \(B\), \(C\), \(D\) sont coplanaires \(\iff\)
+      \(\overrightarrow{AD}\) est combinaison linéaire de \(\overrightarrow{AB}\) et
+      \(\overrightarrow{AC}\).
+    </div>
+
+    <div class="box prop">
+      <span class="box-t">Parallélisme — critères</span>
+      • Une droite est parallèle à un plan \(\iff\) son vecteur directeur est coplanaire avec deux
+      vecteurs directeurs du plan.<br>
+      • Deux plans sont parallèles \(\iff\) deux vecteurs directeurs de l'un sont coplanaires avec
+      deux vecteurs directeurs de l'autre.
+    </div>
+
+    <div class="box note">
+      <span class="box-t">Sections planes de solides <span style="font-weight:400">(méthode)</span></span>
+      Pour construire la section d'un cube ou d'un tétraèdre par un plan : on cherche les
+      intersections du plan avec les faces. Le <strong>théorème du toit</strong> est l'outil clé
+      lorsqu'une droite du plan de coupe est parallèle à une arête.
+    </div>
+
+  </section>
+
+  <!-- ================= FICHE ================= -->
+  <section id="fiche" class="panel">
+    <div class="fiche">
+      <h2>Fiche résumé — Vecteurs de l'espace</h2>
+      <ul class="keypoints">
+        <li><strong>Colinéaires</strong> : \(\vec v = k\vec u\) — alignement, parallélisme.</li>
+        <li><strong>Coplanaires</strong> : \(\vec w = a\vec u + b\vec v\) (\(\vec u,\vec v\) non
+        colinéaires).</li>
+        <li><strong>Base</strong> : 3 vecteurs non coplanaires ; décomposition unique de tout
+        vecteur.</li>
+        <li><strong>Coordonnées</strong> : \(\overrightarrow{AB}(x_B-x_A;y_B-y_A;z_B-z_A)\).</li>
+        <li><strong>Droite</strong> : point \(A\) + vecteur directeur \(\vec u\) :
+        \(\overrightarrow{AM}=t\vec u\).</li>
+        <li><strong>Plan</strong> : point \(A\) + 2 vecteurs non colinéaires :
+        \(\overrightarrow{AM}=t\vec u+s\vec v\).</li>
+        <li>2 droites de l'espace : coplanaires (sécantes/parallèles) ou non coplanaires.</li>
+        <li><strong>Théorème du toit</strong> : intersection de 2 plans sécants parallèle aux
+        droites parallèles qu'ils contiennent.</li>
+      </ul>
+      <div class="formule">
+        \[ M\in\mathcal P \iff \overrightarrow{AM} = t\,\vec u + s\,\vec v \]
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= EXERCICES ================= -->
+  <section id="exos" class="panel">
+
+    <div class="exo">
+      <div class="exo-tag">Exercice 1 · Colinéarité</div>
+      <h3>Points alignés</h3>
+      <p>On donne \(A(1\,;0\,;2)\), \(B(3\,;2\,;6)\) et \(C(0\,;-1\,;0)\). Les points \(A\), \(B\),
+      \(C\) sont-ils alignés ?</p>
+      <details class="corrige">
+        <summary>Voir le corrigé</summary>
+        <div class="sol">
+          <p>\(\overrightarrow{AB}(3-1\,;2-0\,;6-2) = (2\,;2\,;4)\).</p>
+          <p>\(\overrightarrow{AC}(0-1\,;-1-0\,;0-2) = (-1\,;-1\,;-2)\).</p>
+          <p>On cherche \(k\) tel que \(\overrightarrow{AB} = k\,\overrightarrow{AC}\) :
+          \(2 = -k\), \(2 = -k\), \(4 = -2k\) donnent toutes \(k = -2\).</p>
+          <p>Les coordonnées sont proportionnelles : les vecteurs sont colinéaires, donc \(A\),
+          \(B\), \(C\) sont <strong>alignés</strong>.</p>
+        </div>
+      </details>
+    </div>
+
+    <div class="exo">
+      <div class="exo-tag">Exercice 2 · Coplanarité</div>
+      <h3>Quatre points</h3>
+      <p>Soit \(A(0;0;0)\), \(B(1;1;0)\), \(C(1;0;1)\) et \(D(2;1;1)\). Montrer que ces quatre
+      points sont coplanaires.</p>
+      <details class="corrige">
+        <summary>Voir le corrigé</summary>
+        <div class="sol">
+          <p>\(\overrightarrow{AB}(1;1;0)\), \(\overrightarrow{AC}(1;0;1)\),
+          \(\overrightarrow{AD}(2;1;1)\). \(\overrightarrow{AB}\) et \(\overrightarrow{AC}\) ne sont
+          pas colinéaires (les coordonnées ne sont pas proportionnelles).</p>
+          <p>On cherche \(a\), \(b\) tels que \(\overrightarrow{AD} = a\,\overrightarrow{AB}
+          + b\,\overrightarrow{AC}\) :</p>
+          <p>\(\begin{cases} a + b = 2\\ a = 1\\ b = 1 \end{cases}\) — la valeur \(a=1\), \(b=1\)
+          vérifie bien la première équation (\(1+1=2\)).</p>
+          <p>Donc \(\overrightarrow{AD} = \overrightarrow{AB} + \overrightarrow{AC}\) : les trois
+          vecteurs sont coplanaires, donc \(A\), \(B\), \(C\), \(D\) sont
+          <strong>coplanaires</strong>.</p>
+        </div>
+      </details>
+    </div>
+
+    <div class="exo">
+      <div class="exo-tag">Exercice 3 · Base de l'espace</div>
+      <h3>Vérifier une base</h3>
+      <p>Les vecteurs \(\vec u(1;0;0)\), \(\vec v(1;1;0)\) et \(\vec w(1;1;1)\) forment-ils une base
+      de l'espace ?</p>
+      <details class="corrige">
+        <summary>Voir le corrigé</summary>
+        <div class="sol">
+          <p>Trois vecteurs forment une base s'ils ne sont pas coplanaires, c'est-à-dire si \(\vec w\)
+          ne s'écrit pas \(a\vec u + b\vec v\).</p>
+          <p>Supposons \(\vec w = a\vec u + b\vec v\) :
+          \(\begin{cases} a + b = 1\\ b = 1\\ 0 = 1 \end{cases}\)</p>
+          <p>La troisième équation \(0 = 1\) est <strong>impossible</strong>. Donc \(\vec w\) n'est
+          pas combinaison de \(\vec u\) et \(\vec v\) : les trois vecteurs sont non coplanaires et
+          forment bien une <strong>base</strong> de l'espace.</p>
+        </div>
+      </details>
+    </div>
+
+  </section>
+
+  <nav class="chap-nav">
+    <a href="ch09.html">← Chapitre 9 — Calcul intégral</a>
+    <a href="ch11.html">Chapitre 11 — Produit scalaire dans l'espace →</a>
+  </nav>
+
+</main>
+
+<footer>Bac Mathématiques · Terminale spécialité — Chapitre 10</footer>
+<script src="assets/script.js"></script>
+</body>
+</html>

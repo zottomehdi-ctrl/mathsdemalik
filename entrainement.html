@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Espace Entraînement — Maths Terminale</title>
+<style>
+  :root {
+    --bg:       #0e0f13;
+    --paper:    #16181f;
+    --paper-2:  #1e2128;
+    --line:     #2b2e38;
+    --ink:      #e8e8ea;
+    --ink-soft: #8b909c;
+    --accent:   #4f9cf5;
+    --c-livret: #4ecdc4;
+    --c-2024:   #f5b13f;
+    --c-2025:   #5fce7e;
+    --font-ui:   -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: var(--font-ui);
+    background: var(--bg);
+    color: var(--ink);
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* barre supérieure */
+  .topbar {
+    background: rgba(22,24,31,.85);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+    padding: .8rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+  }
+  .topbar a.brand { font-weight: 700; font-size: 1rem; color: var(--ink); text-decoration: none; }
+  .topbar a.brand span { color: var(--accent); }
+  .topbar nav a {
+    font-size: .85rem; color: var(--ink-soft); text-decoration: none;
+    margin-left: 1.1rem; transition: color .12s ease;
+  }
+  .topbar nav a:hover { color: var(--accent); }
+
+  .wrap { max-width: 1000px; margin: 0 auto; padding: 3rem 1.5rem 4rem; }
+
+  /* en-tête */
+  .head { text-align: center; margin-bottom: 2.6rem; }
+  .head .kicker {
+    font-family: var(--font-mono); font-size: 12px; color: var(--ink-soft);
+    letter-spacing: .18em; text-transform: uppercase;
+  }
+  .head h1 {
+    font-size: 2.5rem; font-weight: 800; letter-spacing: -.5px; margin: .5rem 0 .5rem;
+    background: linear-gradient(120deg, #fff 20%, #7fe3da 60%, #5fce7e 100%);
+    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .head p {
+    font-size: 1.02rem; color: var(--ink-soft); max-width: 600px; margin: 0 auto; line-height: 1.6;
+  }
+
+  /* cartes navigateurs */
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.2rem; }
+  .nav-card {
+    display: flex;
+    flex-direction: column;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 1.5rem 1.5rem 1.4rem;
+    text-decoration: none;
+    color: var(--ink);
+    box-shadow: 0 1px 2px rgba(0,0,0,.5), 0 10px 28px rgba(0,0,0,.4);
+    transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+  }
+  .nav-card:hover { transform: translateY(-5px); }
+  .nav-card .ico {
+    font-size: 2.3rem; line-height: 1; margin-bottom: .8rem;
+  }
+  .nav-card .tag {
+    font-family: var(--font-mono); font-size: 10.5px; font-weight: 700;
+    letter-spacing: .1em; text-transform: uppercase; margin-bottom: .35rem;
+  }
+  .nav-card h2 { font-size: 1.3rem; font-weight: 800; letter-spacing: -.3px; margin-bottom: .5rem; }
+  .nav-card p { font-size: .87rem; color: var(--ink-soft); line-height: 1.55; flex: 1; }
+  .nav-card .go {
+    margin-top: 1rem; font-family: var(--font-mono); font-size: .8rem; font-weight: 700;
+  }
+
+  .c-livret { border-top: 3px solid var(--c-livret); }
+  .c-livret .tag, .c-livret .go { color: var(--c-livret); }
+  .c-livret:hover { border-color: var(--c-livret); box-shadow: 0 14px 34px rgba(78,205,196,.22); }
+
+  .c-2024 { border-top: 3px solid var(--c-2024); }
+  .c-2024 .tag, .c-2024 .go { color: var(--c-2024); }
+  .c-2024:hover { border-color: var(--c-2024); box-shadow: 0 14px 34px rgba(245,177,63,.22); }
+
+  .c-2025 { border-top: 3px solid var(--c-2025); }
+  .c-2025 .tag, .c-2025 .go { color: var(--c-2025); }
+  .c-2025:hover { border-color: var(--c-2025); box-shadow: 0 14px 34px rgba(95,206,126,.22); }
+
+  /* astuce */
+  .tip {
+    margin-top: 2.2rem;
+    background: var(--paper-2);
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--accent);
+    border-radius: 10px;
+    padding: 1rem 1.2rem;
+    font-size: .87rem;
+    color: var(--ink-soft);
+    line-height: 1.6;
+  }
+  .tip strong { color: var(--ink); }
+
+  footer {
+    text-align: center;
+    font-family: var(--font-mono);
+    font-size: .75rem;
+    color: var(--ink-soft);
+    padding: 2rem 1.5rem 3rem;
+    border-top: 1px solid var(--line);
+  }
+
+  @media (max-width: 560px) {
+    .head h1 { font-size: 2rem; }
+    .wrap { padding: 2rem 1rem 3rem; }
+  }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <a class="brand" href="index.html">Bac <span>Mathématiques</span> · Terminale</a>
+  <nav><a href="index.html">Sommaire</a></nav>
+</header>
+
+<main class="wrap">
+
+  <div class="head">
+    <div class="kicker">Espace Entraînement</div>
+    <h1>Entraîne-toi sur des exercices</h1>
+    <p>Trois navigateurs d'exercices, classés par thème. Choisis un exercice :
+    le document s'ouvre directement à la bonne page, prêt à être travaillé.</p>
+  </div>
+
+  <div class="grid">
+
+    <a class="nav-card c-livret" href="livret.html">
+      <div class="ico">📐</div>
+      <div class="tag">Livret · ~80 exercices</div>
+      <h2>Livret d'exercices</h2>
+      <p>Exercices types classés par thème — Suites, Fonctions, Probabilités, Géométrie, QCM.
+      Idéal pour réviser une notion précise du cours.</p>
+      <div class="go">Ouvrir le livret →</div>
+    </a>
+
+    <a class="nav-card c-2024" href="livret-2024.html">
+      <div class="ico">📄</div>
+      <div class="tag">Annales · Session 2024</div>
+      <h2>Sujets du bac 2024</h2>
+      <p>Tous les sujets de spécialité 2024 — métropole, centres étrangers, Asie, Polynésie,
+      Amérique du Sud — avec 85 exercices triés par thème.</p>
+      <div class="go">Ouvrir les annales 2024 →</div>
+    </a>
+
+    <a class="nav-card c-2025" href="livret-2025.html">
+      <div class="ico">📄</div>
+      <div class="tag">Annales · Session 2025</div>
+      <h2>Sujets du bac 2025</h2>
+      <p>Tous les sujets de spécialité 2025 — y compris Nouvelle-Calédonie et sessions de
+      septembre — soit 86 exercices triés par thème.</p>
+      <div class="go">Ouvrir les annales 2025 →</div>
+    </a>
+
+  </div>
+
+  <div class="tip">
+    <strong>Comment ça marche ?</strong> Dans chaque navigateur, déplie un thème dans le menu de
+    gauche, clique sur un exercice : le document s'ouvre à droite à la bonne page. Tu peux aussi
+    utiliser la <strong>barre de recherche</strong> et les <strong>flèches ← →</strong> du clavier
+    pour changer de page.
+  </div>
+
+</main>
+
+<footer>Bac Mathématiques · Terminale spécialité — Espace entraînement</footer>
+
+</body>
+</html>

@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ch.1 — Suites : limites et récurrence</title>
+<link rel="stylesheet" href="assets/style.css">
+<script>
+MathJax = {
+  tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="assets/mathjax/tex-svg.js" id="MathJax-script" async></script>
+</head>
+<body>
+
+<header class="topbar">
+  <a class="brand" href="index.html">Bac <span>Mathématiques</span> · Terminale</a>
+  <nav><a href="index.html">Sommaire</a></nav>
+</header>
+
+<main class="wrap reading" data-theme="analyse">
+
+  <div class="chapter-head">
+    <div class="kicker">Thème 1 · Analyse — Chapitre 1</div>
+    <h1>Suites : limites et raisonnement par récurrence</h1>
+  </div>
+
+  <nav class="tabs">
+    <button class="tab active" data-target="cours">Cours complet</button>
+    <button class="tab" data-target="fiche">Fiche résumé</button>
+    <button class="tab" data-target="exos">Exercices</button>
+  </nav>
+
+  <!-- ================= COURS ================= -->
+  <section id="cours" class="panel active">
+
+    <div class="toc">
+      <b>Plan du cours</b>
+      <ol>
+        <li><a href="#c1">Rappels sur les suites</a></li>
+        <li><a href="#c2">Le raisonnement par récurrence</a></li>
+        <li><a href="#c3">Suites majorées, minorées, bornées</a></li>
+        <li><a href="#c4">Limite infinie d'une suite</a></li>
+        <li><a href="#c5">Limite finie : suites convergentes</a></li>
+        <li><a href="#c6">Opérations sur les limites</a></li>
+        <li><a href="#c7">Théorèmes de comparaison</a></li>
+        <li><a href="#c8">Théorème de la limite monotone</a></li>
+        <li><a href="#c9">Limite d'une suite géométrique</a></li>
+        <li><a href="#c10">Erreurs fréquentes</a></li>
+        <li><a href="#c11">Compléments et démonstrations</a></li>
+      </ol>
+    </div>
+
+    <h2 id="c1">1. Rappels sur les suites</h2>
+    <p>Une <strong>suite numérique</strong> \((u_n)\) est une fonction qui, à chaque entier naturel
+    \(n\), associe un réel noté \(u_n\), appelé <strong>terme de rang \(n\)</strong>. Une suite peut
+    être définie de deux façons.</p>
+    <ul>
+      <li><strong>De façon explicite</strong> : \(u_n = f(n)\). Chaque terme se calcule directement.
+      Exemple : \(u_n = 2n + 3\).</li>
+      <li><strong>Par récurrence</strong> : on donne le premier terme et une relation \(u_{n+1} = f(u_n)\)
+      reliant un terme au suivant. Exemple : \(u_0 = 1\) et \(u_{n+1} = 2u_n + 1\).</li>
+    </ul>
+    <p>Ces deux modes ne se valent pas en pratique. Avec une <strong>formule explicite</strong>, on
+    accède immédiatement à n'importe quel terme : \(u_{1000}\) se calcule en une ligne, sans connaître
+    les précédents. Avec une <strong>définition par récurrence</strong>, il faut au contraire
+    « dérouler » la suite pas à pas — pour obtenir \(u_{1000}\), il faut d'abord \(u_{999}\), donc
+    \(u_{998}\), et ainsi de suite. Une bonne partie de ce chapitre consiste justement à passer d'une
+    définition par récurrence à une expression explicite, ou à comprendre le comportement d'une suite
+    <em>sans</em> disposer de sa formule.</p>
+    <div class="box def">
+      <span class="box-t">Suites de référence</span>
+      • Une suite est <strong>arithmétique</strong> de raison \(r\) si \(u_{n+1} = u_n + r\) ; alors
+      \(u_n = u_0 + nr\).<br>
+      • Une suite est <strong>géométrique</strong> de raison \(q\) si \(u_{n+1} = q\,u_n\) ; alors
+      \(u_n = u_0 \times q^{\,n}\).
+    </div>
+    <p>Une suite est <strong>croissante</strong> si \(u_{n+1} \ge u_n\) pour tout \(n\),
+    <strong>décroissante</strong> si \(u_{n+1} \le u_n\) pour tout \(n\). Étudier la différence
+    \(u_{n+1} - u_n\) revient à mesurer le « pas » que fait la suite entre deux rangs consécutifs :
+    s'il est toujours positif, la suite monte sans cesse ; toujours négatif, elle descend. Pour
+    étudier le sens de variation, on étudie donc le <strong>signe de \(u_{n+1} - u_n\)</strong>, ou
+    — si tous les termes sont strictement positifs — on compare le <strong>quotient</strong>
+    \(\dfrac{u_{n+1}}{u_n}\) à 1 (supérieur à 1 : la suite croît ; inférieur à 1 : elle décroît).
+    Une suite croissante ou décroissante est dite <strong>monotone</strong>.</p>
+
+    <h2 id="c2">2. Le raisonnement par récurrence</h2>
+    <p>Beaucoup de propriétés d'une suite dépendent de \(n\) et doivent être prouvées « pour tout
+    entier \(n\) ». Le <strong>raisonnement par récurrence</strong> est l'outil adapté : il permet de
+    démontrer d'un seul coup une infinité d'affirmations.</p>
+    <div class="box prop">
+      <span class="box-t">Principe de récurrence</span>
+      Soit \(P(n)\) une propriété dépendant de l'entier \(n\). Si :<br>
+      • <strong>Initialisation</strong> : \(P(n_0)\) est vraie pour un certain rang \(n_0\) ;<br>
+      • <strong>Hérédité</strong> : pour tout \(n \ge n_0\), si \(P(n)\) est vraie alors \(P(n+1)\)
+      l'est aussi ;<br>
+      alors \(P(n)\) est vraie pour tout entier \(n \ge n_0\).
+    </div>
+    <p>L'image classique est celle d'une rangée infinie de dominos : l'initialisation fait tomber le
+    premier, l'hérédité garantit que chaque domino fait tomber le suivant. Conclusion : tous tombent.</p>
+    <p>Les deux étapes sont <strong>indispensables</strong> et ne se remplacent pas l'une l'autre.
+    Sans <em>initialisation</em>, l'hérédité pourrait propager une propriété fausse à l'infini :
+    « chaque domino fait tomber le suivant » ne sert à rien si aucun domino ne tombe au départ. Sans
+    <em>hérédité</em>, vérifier \(P(0)\), \(P(1)\), \(P(2)\)… ne prouvera jamais la propriété pour
+    tous les rangs : il y en a une infinité, on ne peut pas tous les tester. La force de la
+    récurrence est précisément de remplacer cette infinité de vérifications par <strong>deux</strong>
+    démonstrations seulement.</p>
+    <div class="box method">
+      <span class="box-t">Méthode — rédiger une récurrence</span>
+      1. Énoncer clairement la propriété \(P(n)\) à démontrer.<br>
+      2. <strong>Initialisation</strong> : vérifier \(P(n_0)\) par le calcul.<br>
+      3. <strong>Hérédité</strong> : se donner un entier \(n \ge n_0\), <em>supposer</em> \(P(n)\)
+      vraie (hypothèse de récurrence), puis démontrer \(P(n+1)\).<br>
+      4. <strong>Conclusion</strong> : par principe de récurrence, \(P(n)\) est vraie pour tout
+      \(n \ge n_0\).
+    </div>
+    <div class="box method">
+      <span class="box-t">Application</span>
+      Soit \((u_n)\) définie par \(u_0 = 1\) et \(u_{n+1} = 2u_n + 1\). Montrons que pour tout \(n\),
+      \(u_n = 2^{n+1} - 1\).<br>
+      • <em>Initialisation</em> : \(u_0 = 1\) et \(2^{0+1} - 1 = 2 - 1 = 1\). \(P(0)\) est vraie.<br>
+      • <em>Hérédité</em> : supposons \(u_n = 2^{n+1} - 1\). Alors
+      \(u_{n+1} = 2u_n + 1 = 2(2^{n+1}-1) + 1 = 2^{n+2} - 2 + 1 = 2^{n+2} - 1\). \(P(n+1)\) est vraie.<br>
+      • Conclusion : pour tout \(n\), \(u_n = 2^{n+1} - 1\).
+    </div>
+
+    <h2 id="c3">3. Suites majorées, minorées, bornées</h2>
+    <p>Avant de parler de limites, il faut savoir si une suite reste « contenue » dans une zone. Une
+    suite peut en effet prendre des valeurs de plus en plus grandes, ou au contraire rester coincée
+    entre deux bornes fixes. Cette distinction est décisive : on verra plus loin que c'est elle qui
+    décide si une suite croissante finit par exploser vers \(+\infty\) ou se stabilise vers une
+    valeur limite.</p>
+    <div class="box def">
+      <span class="box-t">Définitions</span>
+      • \((u_n)\) est <strong>majorée</strong> s'il existe un réel \(M\) tel que \(u_n \le M\) pour
+      tout \(n\). \(M\) est un <em>majorant</em>.<br>
+      • \((u_n)\) est <strong>minorée</strong> s'il existe un réel \(m\) tel que \(u_n \ge m\) pour
+      tout \(n\). \(m\) est un <em>minorant</em>.<br>
+      • \((u_n)\) est <strong>bornée</strong> si elle est à la fois majorée et minorée.
+    </div>
+    <p>Un majorant n'est <strong>pas unique</strong> : si \(M\) majore la suite, tout nombre plus
+    grand que \(M\) la majore aussi. On ne cherche donc pas « le » majorant, mais <em>un</em>
+    majorant simple et commode pour le raisonnement. Géométriquement, dire que la suite est bornée,
+    c'est dire que tous ses points se situent dans une bande horizontale entre les droites
+    \(y = m\) et \(y = M\).</p>
+    <p>On démontre très souvent qu'une suite est majorée ou minorée <strong>par récurrence</strong>,
+    surtout lorsqu'elle est définie par une relation \(u_{n+1} = f(u_n)\) : c'est l'une des
+    applications les plus fréquentes du raisonnement de la section précédente.</p>
+
+    <h2 id="c4">4. Limite infinie d'une suite</h2>
+    <p>Étudier une suite, c'est avant tout comprendre son <strong>comportement quand \(n\) devient très
+    grand</strong>. On parle de comportement « à l'infini ». Un point important : les premiers termes
+    \(u_0, u_1, u_2, \ldots\) n'ont <em>aucune</em> importance pour la limite. Seul compte ce qui se
+    passe « tout au bout », pour \(n\) arbitrairement grand — c'est pourquoi toutes les définitions
+    qui suivent parlent de ce qui se produit « à partir d'un certain rang ».</p>
+    <div class="box def">
+      <span class="box-t">Limite \(+\infty\)</span>
+      La suite \((u_n)\) a pour limite \(+\infty\) si tout intervalle de la forme \(]A\,;+\infty[\)
+      contient tous les termes de la suite à partir d'un certain rang. On note
+      \(\displaystyle\lim_{n \to +\infty} u_n = +\infty\).
+    </div>
+    <p>Autrement dit : aussi grand que soit le seuil \(A\) choisi, les termes finissent par le dépasser
+    et ne plus jamais redescendre en dessous. De même, \(\lim u_n = -\infty\) signifie que les termes
+    finissent par être tous inférieurs à n'importe quel seuil.</p>
+    <div class="box note">
+      <span class="box-t">Limites usuelles</span>
+      \(\lim n = +\infty\), \(\quad\lim n^2 = +\infty\), \(\quad\lim \sqrt{n} = +\infty\),
+      \(\quad\lim n^k = +\infty\) (pour \(k > 0\)).
+    </div>
+
+    <h2 id="c5">5. Limite finie : suites convergentes</h2>
+    <div class="box def">
+      <span class="box-t">Suite convergente</span>
+      La suite \((u_n)\) <strong>converge</strong> vers le réel \(\ell\) si tout intervalle ouvert
+      contenant \(\ell\) contient tous les termes de la suite à partir d'un certain rang. On note
+      \(\displaystyle\lim_{n \to +\infty} u_n = \ell\).
+    </div>
+    <p>Le mot « converge » traduit l'idée que les termes <strong>s'accumulent</strong>, se resserrent
+    autour de \(\ell\) : passé un certain rang, ils sont tous contenus dans n'importe quelle
+    « fenêtre » autour de \(\ell\), aussi étroite soit-elle. La limite \(\ell\) est la valeur dont la
+    suite se rapproche d'aussi près qu'on veut, sans nécessairement l'atteindre.</p>
+    <p>Une suite qui n'est pas convergente est dite <strong>divergente</strong>. Attention au
+    vocabulaire : il y a <em>deux</em> façons de diverger — soit la suite a une limite infinie
+    (\(\pm\infty\)), soit elle n'a tout simplement <em>aucune</em> limite, comme \(u_n = (-1)^n\) qui
+    oscille indéfiniment entre \(-1\) et \(1\) sans jamais se stabiliser.</p>
+    <div class="box prop">
+      <span class="box-t">Unicité de la limite</span>
+      Si une suite admet une limite, alors cette limite est <strong>unique</strong>.
+    </div>
+    <div class="box note">
+      <span class="box-t">Limites usuelles tendant vers 0</span>
+      \(\displaystyle\lim \frac{1}{n} = 0\), \(\quad\lim \frac{1}{n^2} = 0\),
+      \(\quad\lim \frac{1}{\sqrt{n}} = 0\), \(\quad\lim \frac{1}{n^k} = 0\) (pour \(k > 0\)).
+    </div>
+
+    <h2 id="c6">6. Opérations sur les limites</h2>
+    <p>Les limites se combinent comme on s'y attend, à condition de surveiller quatre situations
+    dangereuses appelées <strong>formes indéterminées</strong> (FI). Les tableaux ci-dessous se
+    lisent comme des « tables d'addition et de multiplication » des limites : on croise la limite de
+    \(u_n\) (en ligne) avec celle de \(v_n\) (en colonne) pour lire le résultat. La mention
+    <strong>FI</strong> signale une <em>forme indéterminée</em> : le tableau ne permet pas de
+    conclure tel quel, il faudra d'abord transformer l'expression.</p>
+    <table>
+      <caption>Limite d'une somme \(u_n + v_n\)</caption>
+      <tr><th>\(\lim u_n\)</th><th>\(\ell\)</th><th>\(\ell\)</th><th>\(+\infty\)</th><th>\(-\infty\)</th><th>\(+\infty\)</th></tr>
+      <tr><th>\(\lim v_n\)</th><td>\(\ell'\)</td><td>\(\pm\infty\)</td><td>\(+\infty\)</td><td>\(-\infty\)</td><td>\(-\infty\)</td></tr>
+      <tr><th>\(\lim (u_n+v_n)\)</th><td>\(\ell+\ell'\)</td><td>\(\pm\infty\)</td><td>\(+\infty\)</td><td>\(-\infty\)</td><td><strong>FI</strong></td></tr>
+    </table>
+    <table>
+      <caption>Limite d'un produit \(u_n \times v_n\)</caption>
+      <tr><th>\(\lim u_n\)</th><th>\(\ell\)</th><th>\(\ell \ne 0\)</th><th>\(\pm\infty\)</th><th>\(0\)</th></tr>
+      <tr><th>\(\lim v_n\)</th><td>\(\ell'\)</td><td>\(\pm\infty\)</td><td>\(\pm\infty\)</td><td>\(\pm\infty\)</td></tr>
+      <tr><th>\(\lim (u_n v_n)\)</th><td>\(\ell\ell'\)</td><td>\(\pm\infty\) (règle des signes)</td><td>\(\pm\infty\)</td><td><strong>FI</strong></td></tr>
+    </table>
+    <div class="box danger">
+      <span class="box-t">Les quatre formes indéterminées</span>
+      \[ (+\infty) - (+\infty) \qquad 0 \times \infty \qquad \dfrac{\infty}{\infty} \qquad \dfrac{0}{0} \]
+      Face à une FI, il faut <strong>transformer l'expression</strong> : factoriser par le terme
+      dominant, simplifier, utiliser une expression conjuguée…
+    </div>
+    <div class="box method">
+      <span class="box-t">Application — lever une indétermination</span>
+      Soit \(u_n = n^2 - n\). On a \(\lim n^2 = +\infty\) et \(\lim n = +\infty\) : forme
+      \((+\infty)-(+\infty)\). On factorise par le terme dominant :
+      \(u_n = n^2\!\left(1 - \tfrac{1}{n}\right)\). Comme \(\lim n^2 = +\infty\) et
+      \(\lim\!\left(1 - \tfrac1n\right) = 1\), on obtient \(\lim u_n = +\infty\).
+    </div>
+
+    <h2 id="c7">7. Théorèmes de comparaison</h2>
+    <p>Quand une suite est difficile à étudier directement, on l'<strong>encadre</strong> ou on la
+    <strong>compare</strong> à des suites dont on connaît la limite.</p>
+    <div class="box prop">
+      <span class="box-t">Théorèmes de comparaison (limites infinies)</span>
+      Soit \((u_n)\) et \((v_n)\) telles que \(u_n \le v_n\) à partir d'un certain rang.<br>
+      • Si \(\lim u_n = +\infty\), alors \(\lim v_n = +\infty\).<br>
+      • Si \(\lim v_n = -\infty\), alors \(\lim u_n = -\infty\).
+    </div>
+    <div class="box prop">
+      <span class="box-t">Théorème des gendarmes (limite finie)</span>
+      Si \(u_n \le w_n \le v_n\) à partir d'un certain rang, et si \((u_n)\) et \((v_n)\) convergent
+      <strong>vers la même limite \(\ell\)</strong>, alors \((w_n)\) converge aussi vers \(\ell\).
+    </div>
+    <div class="box method">
+      <span class="box-t">Application</span>
+      Soit \(w_n = \dfrac{\sin n}{n}\). Comme \(-1 \le \sin n \le 1\), on a pour \(n \ge 1\) :
+      \(-\dfrac{1}{n} \le w_n \le \dfrac{1}{n}\). Les deux suites « gendarmes » tendent vers 0, donc
+      \(\lim w_n = 0\).
+    </div>
+
+    <h2 id="c8">8. Théorème de la limite monotone</h2>
+    <p>Ce théorème fondamental permet d'affirmer qu'une suite converge <strong>sans connaître sa
+    limite</strong>. C'est un résultat à la fois surprenant et puissant : jusqu'ici, prouver qu'une
+    suite convergeait supposait plus ou moins d'en connaître la limite \(\ell\). Le théorème de la
+    limite monotone garantit l'existence de cette limite à partir de deux informations très simples
+    — le <em>sens de variation</em> et l'existence d'une <em>borne</em> — même lorsque la valeur
+    exacte de \(\ell\) reste hors d'atteinte.</p>
+    <div class="box prop">
+      <span class="box-t">Théorème de convergence monotone</span>
+      • Toute suite <strong>croissante et majorée</strong> converge.<br>
+      • Toute suite <strong>décroissante et minorée</strong> converge.<br>
+      • Toute suite <strong>croissante et non majorée</strong> tend vers \(+\infty\).<br>
+      • Toute suite <strong>décroissante et non minorée</strong> tend vers \(-\infty\).
+    </div>
+    <div class="box danger">
+      <span class="box-t">Attention</span>
+      Une suite croissante et majorée converge, mais <strong>pas forcément vers son majorant</strong>.
+      Le théorème garantit l'existence de la limite, pas sa valeur. Pour la calculer, on utilise par
+      exemple la relation \(u_{n+1} = f(u_n)\) : si \(u_n \to \ell\), alors \(\ell\) vérifie
+      \(\ell = f(\ell)\).
+    </div>
+
+    <h2 id="c9">9. Limite d'une suite géométrique</h2>
+    <p>Le comportement de la suite \((q^n)\) ne dépend que de la valeur de la raison \(q\).</p>
+    <div class="box prop">
+      <span class="box-t">Limite de \(q^n\)</span>
+      • Si \(q > 1\) : \(\displaystyle\lim_{n\to+\infty} q^n = +\infty\).<br>
+      • Si \(q = 1\) : \(q^n = 1\) pour tout \(n\), donc \(\lim q^n = 1\).<br>
+      • Si \(-1 < q < 1\) : \(\displaystyle\lim_{n\to+\infty} q^n = 0\).<br>
+      • Si \(q \le -1\) : la suite \((q^n)\) <strong>n'a pas de limite</strong> (elle oscille).
+    </div>
+    <p>Ce résultat se démontre, pour \(q > 1\), à l'aide de l'<strong>inégalité de Bernoulli</strong> :
+    pour tout réel \(a > 0\) et tout entier \(n\), \((1+a)^n \ge 1 + na\) (démontrable par récurrence).
+    En posant \(q = 1 + a\), on obtient \(q^n \ge 1 + na \to +\infty\).</p>
+    <div class="box method">
+      <span class="box-t">Application</span>
+      Soit \(u_n = 0{,}8^{\,n}\). Comme \(-1 < 0{,}8 < 1\), \(\lim u_n = 0\).
+      Soit \(v_n = 3 \times 1{,}5^{\,n}\). Comme \(1{,}5 > 1\), \(\lim 1{,}5^{\,n} = +\infty\), donc
+      \(\lim v_n = +\infty\).
+    </div>
+
+    <h2 id="c10">10. Erreurs fréquentes</h2>
+    <div class="box danger">
+      <span class="box-t">À éviter</span>
+      • Oublier l'<strong>initialisation</strong> dans une récurrence : l'hérédité seule ne prouve
+      rien.<br>
+      • Dans l'hérédité, oublier d'<strong>utiliser</strong> l'hypothèse de récurrence — ou la
+      considérer comme déjà démontrée pour tout \(n\).<br>
+      • Conclure \((+\infty) - (+\infty) = 0\) : c'est une <strong>forme indéterminée</strong>.<br>
+      • Appliquer le théorème des gendarmes avec deux limites <strong>différentes</strong>.<br>
+      • Croire qu'une suite majorée converge : il faut <em>aussi</em> qu'elle soit croissante.<br>
+      • Affirmer que \((q^n)\) tend vers 0 dès que \(q < 1\) : c'est faux si \(q \le -1\).
+    </div>
+
+    <h2 id="c11">11. Compléments et démonstrations</h2>
+
+    <h3>Définition formelle d'une limite (avec \(\varepsilon\))</h3>
+    <p>Les définitions « avec un seuil » se formalisent ainsi :</p>
+    <div class="box def">
+      <span class="box-t">Définitions rigoureuses</span>
+      • \(\displaystyle\lim u_n = \ell\) : pour tout réel \(\varepsilon > 0\), il existe un rang
+      \(N\) tel que \(n \ge N \Rightarrow |u_n - \ell| < \varepsilon\).<br>
+      • \(\displaystyle\lim u_n = +\infty\) : pour tout réel \(A\), il existe un rang \(N\) tel que
+      \(n \ge N \Rightarrow u_n > A\).
+    </div>
+
+    <div class="box prop">
+      <span class="box-t">Démonstration — inégalité de Bernoulli</span>
+      Montrons que pour \(a > 0\) et tout \(n \in \mathbb N\), \((1+a)^n \ge 1 + na\).<br>
+      • <em>Initialisation</em> : pour \(n = 0\), \((1+a)^0 = 1\) et \(1 + 0 = 1\) : vrai.<br>
+      • <em>Hérédité</em> : si \((1+a)^n \ge 1 + na\), alors en multipliant par \(1+a > 0\) :
+      \((1+a)^{n+1} \ge (1+na)(1+a) = 1 + (n+1)a + na^2 \ge 1 + (n+1)a\).<br>
+      Conclusion : l'inégalité est vraie pour tout \(n\).
+    </div>
+
+    <div class="box prop">
+      <span class="box-t">Démonstration — limite de \(q^n\) pour \(q > 1\)</span>
+      On écrit \(q = 1 + a\) avec \(a = q - 1 > 0\). Par l'inégalité de Bernoulli,
+      \(q^n \ge 1 + na\). Or \(\lim(1 + na) = +\infty\). Par le théorème de comparaison,
+      \(\lim q^n = +\infty\).
+    </div>
+
+    <div class="box prop">
+      <span class="box-t">Démonstration — toute suite convergente est bornée</span>
+      Si \(\lim u_n = \ell\), en prenant \(\varepsilon = 1\) il existe un rang \(N\) tel que pour
+      \(n \ge N\), \(\ell - 1 < u_n < \ell + 1\). Les termes \(u_0,\ldots,u_{N-1}\) sont en nombre
+      fini. La suite est donc majorée par le plus grand de ces nombres et de \(\ell+1\), et minorée
+      de même : elle est <strong>bornée</strong>.
+    </div>
+
+    <h3>Somme des termes d'une suite géométrique</h3>
+    <div class="formule">
+      <span class="nom">Somme géométrique</span>
+      \[ 1 + q + q^2 + \cdots + q^n = \frac{1 - q^{\,n+1}}{1 - q} \qquad (q \ne 1) \]
+    </div>
+    <p>Si \(-1 < q < 1\), alors \(q^{n+1} \to 0\), d'où la limite remarquable :</p>
+    <div class="formule">
+      \[ \lim_{n\to+\infty}\big(1 + q + \cdots + q^n\big) = \frac{1}{1 - q} \qquad (|q| < 1) \]
+    </div>
+
+    <div class="box note">
+      <span class="box-t">Point fixe et calcul de la limite</span>
+      Si \((u_n)\) définie par \(u_{n+1} = f(u_n)\) converge vers \(\ell\) et que \(f\) est
+      continue en \(\ell\), alors par passage à la limite \(\ell = f(\ell)\) : la limite est un
+      <strong>point fixe</strong> de \(f\). On résout cette équation pour trouver \(\ell\).
+    </div>
+
+    <h3>Suites adjacentes <span style="font-weight:400">(hors-programme)</span></h3>
+    <div class="box prop">
+      <span class="box-t">Théorème des suites adjacentes</span>
+      Deux suites \((u_n)\) et \((v_n)\) sont <strong>adjacentes</strong> si l'une est croissante,
+      l'autre décroissante, et \(\lim(v_n - u_n) = 0\). Alors elles <strong>convergent vers une
+      même limite</strong> \(\ell\), et pour tout \(n\) : \(u_n \le \ell \le v_n\).
+    </div>
+
+    <h3>Variantes du raisonnement par récurrence <span style="font-weight:400">(hors-programme)</span></h3>
+    <p>• <strong>Récurrence double</strong> : l'hérédité utilise \(P(n)\) <em>et</em> \(P(n+1)\)
+    pour démontrer \(P(n+2)\) ; l'initialisation porte alors sur <em>deux</em> rangs. Utile pour des
+    suites du type \(u_{n+2} = a\,u_{n+1} + b\,u_n\).<br>
+    • <strong>Récurrence forte</strong> : l'hérédité suppose \(P(k)\) vraie pour <em>tous</em> les
+    rangs \(k \le n\) afin de démontrer \(P(n+1)\).</p>
+
+  </section>
+
+  <!-- ================= FICHE ================= -->
+  <section id="fiche" class="panel">
+    <div class="fiche">
+      <h2>Fiche résumé — Suites : limites et récurrence</h2>
+      <ul class="keypoints">
+        <li><strong>Récurrence</strong> : initialisation \(P(n_0)\), hérédité
+        \(P(n) \Rightarrow P(n+1)\), conclusion.</li>
+        <li><strong>Majorée</strong> : \(u_n \le M\) ; <strong>minorée</strong> : \(u_n \ge m\) ;
+        <strong>bornée</strong> : les deux.</li>
+        <li><strong>Limites usuelles</strong> : \(\lim n^k = +\infty\) et \(\lim \frac{1}{n^k} = 0\)
+        pour \(k > 0\).</li>
+        <li><strong>Formes indéterminées</strong> : \(\infty - \infty\), \(0 \times \infty\),
+        \(\frac{\infty}{\infty}\), \(\frac{0}{0}\) → factoriser par le terme dominant.</li>
+        <li><strong>Gendarmes</strong> : \(u_n \le w_n \le v_n\) avec \(\lim u_n = \lim v_n = \ell\)
+        ⇒ \(\lim w_n = \ell\).</li>
+        <li><strong>Comparaison</strong> : \(u_n \le v_n\) et \(\lim u_n = +\infty\) ⇒
+        \(\lim v_n = +\infty\).</li>
+        <li><strong>Convergence monotone</strong> : croissante + majorée ⇒ converge ;
+        croissante + non majorée ⇒ \(+\infty\).</li>
+        <li><strong>Suite \(q^n\)</strong> : \(q>1\) ⇒ \(+\infty\) ; \(-1<q<1\) ⇒ \(0\) ;
+        \(q \le -1\) ⇒ pas de limite.</li>
+      </ul>
+      <div class="formule">
+        \[ \lim_{n\to+\infty} q^n = \begin{cases} +\infty & \text{si } q>1\\ 1 & \text{si } q=1\\
+        0 & \text{si } -1<q<1 \end{cases} \]
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= EXERCICES ================= -->
+  <section id="exos" class="panel">
+
+    <div class="exo">
+      <div class="exo-tag">Exercice 1 · Récurrence</div>
+      <h3>Une inégalité à démontrer</h3>
+      <p>Soit \((u_n)\) définie par \(u_0 = 2\) et \(u_{n+1} = \sqrt{u_n + 2}\).</p>
+      <p>1. Démontrer par récurrence que pour tout \(n\), \(0 \le u_n \le 2\).<br>
+      2. Étudier le sens de variation de \((u_n)\) et conclure sur sa convergence.</p>
+      <details class="corrige">
+        <summary>Voir le corrigé</summary>
+        <div class="sol">
+          <p><strong>1.</strong> Soit \(P(n)\) : « \(0 \le u_n \le 2\) ».</p>
+          <p><em>Initialisation</em> : \(u_0 = 2\), donc \(0 \le u_0 \le 2\) : \(P(0)\) est vraie.</p>
+          <p><em>Hérédité</em> : supposons \(0 \le u_n \le 2\). Alors \(2 \le u_n + 2 \le 4\), donc
+          \(\sqrt{2} \le \sqrt{u_n+2} \le 2\) (la fonction racine est croissante). Ainsi
+          \(0 \le u_{n+1} \le 2\) : \(P(n+1)\) est vraie.</p>
+          <p>Par récurrence, \(0 \le u_n \le 2\) pour tout \(n\).</p>
+          <p><strong>2.</strong> Étudions \(u_{n+1} - u_n = \sqrt{u_n+2} - u_n\). Pour \(u_n \in [0\,;2]\),
+          on vérifie que \(\sqrt{u_n+2} \ge u_n\) (équivaut, en élevant au carré, à
+          \(u_n + 2 \ge u_n^2\), soit \(u_n^2 - u_n - 2 \le 0\), vrai sur \([-1\,;2]\)).</p>
+          <p>Donc \((u_n)\) est <strong>croissante</strong> et <strong>majorée par 2</strong> : d'après
+          le théorème de convergence monotone, elle <strong>converge</strong>.</p>
+        </div>
+      </details>
+    </div>
+
+    <div class="exo">
+      <div class="exo-tag">Exercice 2 · Lever une indétermination</div>
+      <h3>Calculs de limites</h3>
+      <p>Déterminer la limite de chaque suite :</p>
+      <p>1. \(u_n = 3n^2 - 5n + 1\) — 2. \(v_n = \dfrac{2n + 1}{n + 3}\) — 3.
+      \(w_n = \sqrt{n+1} - \sqrt{n}\).</p>
+      <details class="corrige">
+        <summary>Voir le corrigé</summary>
+        <div class="sol">
+          <p><strong>1.</strong> Forme \(\infty - \infty\). On factorise par \(n^2\) :
+          \(u_n = n^2\!\left(3 - \tfrac{5}{n} + \tfrac{1}{n^2}\right)\). Le facteur entre parenthèses
+          tend vers 3, et \(n^2 \to +\infty\), donc \(\lim u_n = +\infty\).</p>
+          <p><strong>2.</strong> Forme \(\frac{\infty}{\infty}\). On factorise haut et bas par \(n\) :
+          \(v_n = \dfrac{n(2 + \frac1n)}{n(1 + \frac3n)} = \dfrac{2 + \frac1n}{1 + \frac3n}\). Le
+          numérateur tend vers 2, le dénominateur vers 1, donc \(\lim v_n = 2\).</p>
+          <p><strong>3.</strong> Forme \(\infty - \infty\). On multiplie par l'expression conjuguée :
+          \[ w_n = \frac{(\sqrt{n+1}-\sqrt n)(\sqrt{n+1}+\sqrt n)}{\sqrt{n+1}+\sqrt n}
+          = \frac{1}{\sqrt{n+1}+\sqrt n}. \]
+          Le dénominateur tend vers \(+\infty\), donc \(\lim w_n = 0\).</p>
+        </div>
+      </details>
+    </div>
+
+    <div class="exo">
+      <div class="exo-tag">Exercice 3 · Suite arithmético-géométrique</div>
+      <h3>Étude complète</h3>
+      <p>Soit \((u_n)\) définie par \(u_0 = 5\) et \(u_{n+1} = 0{,}5\,u_n + 3\). On pose
+      \(v_n = u_n - 6\).</p>
+      <p>1. Montrer que \((v_n)\) est géométrique ; préciser sa raison et \(v_0\).<br>
+      2. Exprimer \(v_n\) puis \(u_n\) en fonction de \(n\).<br>
+      3. En déduire \(\displaystyle\lim_{n\to+\infty} u_n\).</p>
+      <details class="corrige">
+        <summary>Voir le corrigé</summary>
+        <div class="sol">
+          <p><strong>1.</strong> \(v_{n+1} = u_{n+1} - 6 = 0{,}5u_n + 3 - 6 = 0{,}5u_n - 3
+          = 0{,}5(u_n - 6) = 0{,}5\,v_n\). Donc \((v_n)\) est géométrique de raison \(q = 0{,}5\),
+          de premier terme \(v_0 = u_0 - 6 = -1\).</p>
+          <p><strong>2.</strong> \(v_n = v_0 \times q^n = -1 \times 0{,}5^{\,n} = -0{,}5^{\,n}\).
+          Donc \(u_n = v_n + 6 = 6 - 0{,}5^{\,n}\).</p>
+          <p><strong>3.</strong> Comme \(-1 < 0{,}5 < 1\), \(\lim 0{,}5^{\,n} = 0\), donc
+          \(\boxed{\lim u_n = 6}\). La suite converge vers 6.</p>
+        </div>
+      </details>
+    </div>
+
+  </section>
+
+  <nav class="chap-nav">
+    <a class="idx" href="index.html">↑ Sommaire</a>
+    <a href="ch02.html">Chapitre 2 — Limites de fonctions →</a>
+  </nav>
+
+</main>
+
+<footer>Bac Mathématiques · Terminale spécialité — Chapitre 1</footer>
+<script src="assets/script.js"></script>
+</body>
+</html>

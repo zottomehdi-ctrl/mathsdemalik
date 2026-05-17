@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ch.11 — Produit scalaire dans l'espace</title>
+<link rel="stylesheet" href="assets/style.css">
+<script>
+MathJax = {
+  tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="assets/mathjax/tex-svg.js" id="MathJax-script" async></script>
+</head>
+<body>
+
+<header class="topbar">
+  <a class="brand" href="index.html">Bac <span>Mathématiques</span> · Terminale</a>
+  <nav><a href="index.html">Sommaire</a></nav>
+</header>
+
+<main class="wrap reading" data-theme="geo">
+
+  <div class="chapter-head">
+    <div class="kicker">Thème 2 · Géométrie — Chapitre 11</div>
+    <h1>Produit scalaire dans l'espace</h1>
+  </div>
+
+  <nav class="tabs">
+    <button class="tab active" data-target="cours">Cours complet</button>
+    <button class="tab" data-target="fiche">Fiche résumé</button>
+    <button class="tab" data-target="exos">Exercices</button>
+  </nav>
+
+  <!-- ================= COURS ================= -->
+  <section id="cours" class="panel active">
+
+    <div class="toc">
+      <b>Plan du cours</b>
+      <ol>
+        <li><a href="#c1">Du plan à l'espace</a></li>
+        <li><a href="#c2">Définitions du produit scalaire</a></li>
+        <li><a href="#c3">Repère orthonormé et expression analytique</a></li>
+        <li><a href="#c4">Norme et distance</a></li>
+        <li><a href="#c5">Propriétés de calcul</a></li>
+        <li><a href="#c6">Orthogonalité</a></li>
+        <li><a href="#c7">Vecteur normal à un plan</a></li>
+        <li><a href="#c8">Projeté orthogonal</a></li>
+        <li><a href="#c9">Erreurs fréquentes</a></li>
+        <li><a href="#c10">Compléments et démonstrations</a></li>
+      </ol>
+    </div>
+
+    <h2 id="c1">1. Du plan à l'espace</h2>
+    <p>Le <strong>produit scalaire</strong> étudié en Première dans le plan se prolonge à l'espace
+    sans changement : deux vecteurs de l'espace étant toujours coplanaires, on peut leur appliquer
+    les définitions du plan. Le produit scalaire est l'outil qui introduit les notions de
+    <strong>longueur</strong>, d'<strong>angle</strong> et d'<strong>orthogonalité</strong>.</p>
+
+    <h2 id="c2">2. Définitions du produit scalaire</h2>
+    <div class="box def">
+      <span class="box-t">Définitions équivalentes</span>
+      Pour deux vecteurs \(\vec u\) et \(\vec v\) de l'espace :<br>
+      • <strong>avec l'angle</strong> : \(\vec u\cdot\vec v = \|\vec u\|\times\|\vec v\|
+      \times\cos\theta\), où \(\theta\) est l'angle entre les vecteurs ;<br>
+      • <strong>avec la norme</strong> : \(\vec u\cdot\vec v = \dfrac12\big(\|\vec u\|^{2}
+      + \|\vec v\|^{2} - \|\vec u - \vec v\|^{2}\big)\) ;<br>
+      • <strong>avec le projeté</strong> : si \(\vec v'\) est le projeté orthogonal de \(\vec v\)
+      sur la direction de \(\vec u\), alors \(\vec u\cdot\vec v = \vec u\cdot\vec v'\).
+    </div>
+    <p>Le résultat \(\vec u\cdot\vec v\) est un <strong>nombre réel</strong> (un « scalaire »), pas
+    un vecteur — d'où le nom. Ces trois définitions sont équivalentes : on choisit celle qui est la
+    plus commode selon les données. La forme « avec l'angle » sert quand on cherche un angle ; la
+    forme analytique (section suivante) sert pour les calculs en coordonnées. Le signe du produit
+    scalaire renseigne déjà : positif si l'angle est aigu, négatif s'il est obtus, nul si les
+    vecteurs sont orthogonaux.</p>
+
+    <h2 id="c3">3. Repère orthonormé et expression analytique</h2>
+    <div class="box def">
+      <span class="box-t">Repère orthonormé</span>
+      Un repère \((O;\vec\imath,\vec\jmath,\vec k)\) est <strong>orthonormé</strong> si les trois
+      vecteurs de base sont deux à deux orthogonaux et de norme 1.
+    </div>
+    <div class="box prop">
+      <span class="box-t">Expression analytique</span>
+      Dans un repère orthonormé, pour \(\vec u(x;y;z)\) et \(\vec v(x';y';z')\) :
+      \[ \vec u\cdot\vec v = xx' + yy' + zz'. \]
+    </div>
+    <div class="box method">
+      <span class="box-t">Application</span>
+      Pour \(\vec u(2;-1;3)\) et \(\vec v(1;4;0)\) :
+      \(\vec u\cdot\vec v = 2\times1 + (-1)\times4 + 3\times0 = 2 - 4 + 0 = -2\).
+    </div>
+    <p>Cette formule \(xx'+yy'+zz'\) est d'une simplicité remarquable et c'est elle qu'on utilise en
+    pratique presque tout le temps. Une mise en garde toutefois : elle n'est valable que dans un
+    repère <strong>orthonormé</strong>. Si le repère ne l'est pas, le calcul donne un résultat faux —
+    mais au lycée, les repères de l'espace sont systématiquement orthonormés.</p>
+
+    <h2 id="c4">4. Norme et distance</h2>
+    <div class="box prop">
+      <span class="box-t">Norme d'un vecteur</span>
+      Comme \(\vec u\cdot\vec u = \|\vec u\|^{2}\), dans un repère orthonormé :
+      \[ \|\vec u\| = \sqrt{x^{2} + y^{2} + z^{2}}. \]
+    </div>
+    <div class="box prop">
+      <span class="box-t">Distance entre deux points</span>
+      \[ AB = \|\overrightarrow{AB}\| = \sqrt{(x_B-x_A)^{2} + (y_B-y_A)^{2} + (z_B-z_A)^{2}}. \]
+    </div>
+
+    <h2 id="c5">5. Propriétés de calcul</h2>
+    <div class="box prop">
+      <span class="box-t">Règles de calcul</span>
+      Le produit scalaire est :<br>
+      • <strong>symétrique</strong> : \(\vec u\cdot\vec v = \vec v\cdot\vec u\) ;<br>
+      • <strong>bilinéaire</strong> : \(\vec u\cdot(\vec v + \vec w) = \vec u\cdot\vec v
+      + \vec u\cdot\vec w\) et \((k\vec u)\cdot\vec v = k(\vec u\cdot\vec v)\).<br>
+      Identités remarquables :
+      \(\|\vec u + \vec v\|^{2} = \|\vec u\|^{2} + 2\,\vec u\cdot\vec v + \|\vec v\|^{2}\).
+    </div>
+
+    <h2 id="c6">6. Orthogonalité</h2>
+    <div class="box prop">
+      <span class="box-t">Caractérisation de l'orthogonalité</span>
+      Deux vecteurs \(\vec u\) et \(\vec v\) sont <strong>orthogonaux</strong> si et seulement si
+      \[ \vec u\cdot\vec v = 0. \]
+      (Le vecteur nul est orthogonal à tout vecteur.)
+    </div>
+    <p>C'est <em>la</em> caractérisation à retenir : tout le maniement de l'orthogonalité dans
+    l'espace passe par « un produit scalaire nul ». Elle est bien plus maniable que la définition
+    avec l'angle — on n'a besoin ni de calculer une norme, ni de connaître \(\theta\) : un simple
+    calcul \(xx'+yy'+zz' = 0\) suffit à prouver que deux vecteurs sont perpendiculaires.</p>
+    <div class="box note">
+      <span class="box-t">Orthogonalité de droites</span>
+      Deux droites sont <strong>orthogonales</strong> si leurs vecteurs directeurs sont orthogonaux.
+      Dans l'espace, deux droites peuvent être orthogonales <em>sans se couper</em> : on parle de
+      droites <strong>perpendiculaires</strong> uniquement lorsqu'elles sont en plus sécantes.
+    </div>
+
+    <h2 id="c7">7. Vecteur normal à un plan</h2>
+    <div class="box def">
+      <span class="box-t">Vecteur normal</span>
+      Un vecteur \(\vec n\) non nul est <strong>normal</strong> à un plan \(\mathcal P\) s'il est
+      orthogonal à <strong>tous</strong> les vecteurs de ce plan.
+    </div>
+    <div class="box prop">
+      <span class="box-t">Propriété décisive</span>
+      Un vecteur \(\vec n\) est normal à \(\mathcal P\) s'il est orthogonal à
+      <strong>deux vecteurs non colinéaires</strong> de \(\mathcal P\). Il suffit donc de deux
+      produits scalaires nuls.
+    </div>
+    <p>Cette propriété est un vrai raccourci : a priori, être normal au plan exige d'être orthogonal
+    à une <em>infinité</em> de vecteurs (tous ceux du plan). Mais comme deux vecteurs non colinéaires
+    suffisent à décrire le plan tout entier, vérifier l'orthogonalité avec ces deux-là garantit
+    l'orthogonalité avec tous les autres. En pratique : on pose \(\vec n(a;b;c)\) et on résout le
+    système de deux équations \(\vec n\cdot\vec u = 0\) et \(\vec n\cdot\vec v = 0\).</p>
+    <p>Le vecteur normal est l'objet central du chapitre suivant : c'est lui qui permet d'écrire
+    l'<strong>équation cartésienne</strong> d'un plan.</p>
+    <div class="box method">
+      <span class="box-t">Application</span>
+      Soit \(\mathcal P\) dirigé par \(\vec u(1;0;1)\) et \(\vec v(0;1;1)\). Cherchons \(\vec n(a;b;c)\)
+      normal à \(\mathcal P\) : \(\vec n\cdot\vec u = a + c = 0\) et \(\vec n\cdot\vec v = b + c = 0\).
+      En prenant \(c = 1\) : \(a = -1\), \(b = -1\). Donc \(\vec n(-1;-1;1)\) convient.
+    </div>
+
+    <h2 id="c8">8. Projeté orthogonal</h2>
+    <div class="box def">
+      <span class="box-t">Projeté orthogonal sur un plan</span>
+      Le <strong>projeté orthogonal</strong> d'un point \(M\) sur un plan \(\mathcal P\) est le
+      point \(H\) de \(\mathcal P\) tel que \(\overrightarrow{MH}\) soit normal à \(\mathcal P\).
+      \(H\) est le point de \(\mathcal P\) le <strong>plus proche</strong> de \(M\) : la distance
+      de \(M\) à \(\mathcal P\) est \(MH\).
+    </div>
+    <p>De même, le projeté orthogonal d'un point sur une droite est le point de la droite le plus
+    proche. Ces projetés serviront aux calculs de distances du chapitre 12.</p>
+
+    <h2 id="c9">9. Erreurs fréquentes</h2>
+    <div class="box danger">
+      <span class="box-t">À éviter</span>
+      • Croire que \(\vec u\cdot\vec v\) est un vecteur : c'est un <strong>nombre</strong>.<br>
+      • Utiliser \(xx' + yy' + zz'\) dans un repère <strong>non orthonormé</strong> : la formule
+      n'y est pas valable.<br>
+      • Conclure que deux droites orthogonales sont sécantes : dans l'espace, c'est faux en
+      général.<br>
+      • Chercher un vecteur normal en n'imposant qu'<strong>un seul</strong> produit scalaire nul :
+      il en faut deux (deux vecteurs non colinéaires du plan).<br>
+      • Oublier la racine carrée dans le calcul d'une norme.
+    </div>
+
+    <h2 id="c10">10. Compléments et démonstrations</h2>
+
+    <div class="box prop">
+      <span class="box-t">Démonstration — expression analytique du produit scalaire</span>
+      Dans une base orthonormée, \(\vec u = x\vec\imath + y\vec\jmath + z\vec k\) et de même pour
+      \(\vec v\). En développant \(\vec u\cdot\vec v\) par bilinéarité et en utilisant
+      \(\vec\imath\cdot\vec\imath = \vec\jmath\cdot\vec\jmath = \vec k\cdot\vec k = 1\) et
+      \(\vec\imath\cdot\vec\jmath = \vec\imath\cdot\vec k = \vec\jmath\cdot\vec k = 0\), tous les
+      termes croisés disparaissent : \(\vec u\cdot\vec v = xx' + yy' + zz'\).
+    </div>
+
+    <div class="box prop">
+      <span class="box-t">Identités de polarisation</span>
+      \[ \|\vec u + \vec v\|^{2} = \|\vec u\|^{2} + 2\,\vec u\cdot\vec v + \|\vec v\|^{2} \]
+      \[ \|\vec u - \vec v\|^{2} = \|\vec u\|^{2} - 2\,\vec u\cdot\vec v + \|\vec v\|^{2} \]
+      \[ \vec u\cdot\vec v = \tfrac14\big(\|\vec u + \vec v\|^{2} - \|\vec u - \vec v\|^{2}\big) \]
+    </div>
+
+    <div class="box prop">
+      <span class="box-t">Inégalité de Cauchy-Schwarz</span>
+      Pour tous vecteurs \(\vec u\) et \(\vec v\) :
+      \[ |\vec u\cdot\vec v| \le \|\vec u\|\times\|\vec v\|, \]
+      avec égalité si et seulement si \(\vec u\) et \(\vec v\) sont colinéaires. Conséquence
+      directe de \(\vec u\cdot\vec v = \|\vec u\|\|\vec v\|\cos\theta\) et \(|\cos\theta| \le 1\).
+    </div>
+
+    <h3>Le produit vectoriel <span style="font-weight:400">(hors-programme)</span></h3>
+    <div class="box note">
+      <span class="box-t">Un outil pour le vecteur normal</span>
+      Le <strong>produit vectoriel</strong> \(\vec u \wedge \vec v\) est un vecteur orthogonal à la
+      fois à \(\vec u\) et à \(\vec v\). En coordonnées :
+      \[ \vec u\wedge\vec v = \big(y z' - z y'\,;\; z x' - x z'\,;\; x y' - y x'\big). \]
+      Il fournit <strong>directement</strong> un vecteur normal à un plan dirigé par \(\vec u\) et
+      \(\vec v\). Sa norme \(\|\vec u\wedge\vec v\| = \|\vec u\|\|\vec v\|\sin\theta\) est l'aire
+      du parallélogramme construit sur \(\vec u\) et \(\vec v\).
+    </div>
+
+    <div class="box prop">
+      <span class="box-t">Théorème de la médiane et applications</span>
+      Le produit scalaire permet de démontrer des relations métriques, par exemple le théorème
+      d'Al-Kashi : dans un triangle \(ABC\),
+      \(BC^{2} = AB^{2} + AC^{2} - 2\,AB\cdot AC\cdot\cos\widehat A\).
+    </div>
+
+  </section>
+
+  <!-- ================= FICHE ================= -->
+  <section id="fiche" class="panel">
+    <div class="fiche">
+      <h2>Fiche résumé — Produit scalaire dans l'espace</h2>
+      <ul class="keypoints">
+        <li><strong>Définition</strong> : \(\vec u\cdot\vec v = \|\vec u\|\|\vec v\|\cos\theta\)
+        — c'est un réel.</li>
+        <li><strong>Analytique</strong> (repère orthonormé) :
+        \(\vec u\cdot\vec v = xx'+yy'+zz'\).</li>
+        <li><strong>Norme</strong> : \(\|\vec u\| = \sqrt{x^2+y^2+z^2}\).</li>
+        <li><strong>Distance</strong> : \(AB = \sqrt{(\Delta x)^2+(\Delta y)^2+(\Delta z)^2}\).</li>
+        <li><strong>Orthogonalité</strong> : \(\vec u\perp\vec v \iff \vec u\cdot\vec v = 0\).</li>
+        <li><strong>Vecteur normal</strong> à \(\mathcal P\) : orthogonal à 2 vecteurs non
+        colinéaires de \(\mathcal P\).</li>
+        <li><strong>Projeté orthogonal</strong> : point le plus proche → donne les distances.</li>
+        <li>Symétrie + bilinéarité ; \(\|\vec u+\vec v\|^2 = \|\vec u\|^2 + 2\vec u\cdot\vec v
+        + \|\vec v\|^2\).</li>
+      </ul>
+      <div class="formule">
+        \[ \vec u\cdot\vec v = xx'+yy'+zz' \qquad \vec u\perp\vec v \iff \vec u\cdot\vec v = 0 \]
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= EXERCICES ================= -->
+  <section id="exos" class="panel">
+
+    <div class="exo">
+      <div class="exo-tag">Exercice 1 · Calculs</div>
+      <h3>Produit scalaire et orthogonalité</h3>
+      <p>Dans un repère orthonormé, on donne \(\vec u(3;-2;1)\), \(\vec v(2;1;-4)\) et
+      \(\vec w(1;1;1)\).</p>
+      <p>1. Calculer \(\vec u\cdot\vec v\). Que peut-on en déduire ?<br>
+      2. Calculer \(\|\vec w\|\).</p>
+      <details class="corrige">
+        <summary>Voir le corrigé</summary>
+        <div class="sol">
+          <p><strong>1.</strong> \(\vec u\cdot\vec v = 3\times2 + (-2)\times1 + 1\times(-4)
+          = 6 - 2 - 4 = 0\). Le produit scalaire est nul : \(\vec u\) et \(\vec v\) sont
+          <strong>orthogonaux</strong>.</p>
+          <p><strong>2.</strong> \(\|\vec w\| = \sqrt{1^2 + 1^2 + 1^2} = \sqrt 3\).</p>
+        </div>
+      </details>
+    </div>
+
+    <div class="exo">
+      <div class="exo-tag">Exercice 2 · Vecteur normal</div>
+      <h3>Recherche d'un vecteur normal</h3>
+      <p>Soit \(A(1;0;0)\), \(B(0;1;0)\), \(C(0;0;1)\). Déterminer un vecteur normal au plan
+      \((ABC)\).</p>
+      <details class="corrige">
+        <summary>Voir le corrigé</summary>
+        <div class="sol">
+          <p>Le plan est dirigé par \(\overrightarrow{AB}(-1;1;0)\) et
+          \(\overrightarrow{AC}(-1;0;1)\), qui ne sont pas colinéaires.</p>
+          <p>On cherche \(\vec n(a;b;c)\) tel que :</p>
+          <p>\(\vec n\cdot\overrightarrow{AB} = -a + b = 0\) ⇒ \(b = a\).<br>
+          \(\vec n\cdot\overrightarrow{AC} = -a + c = 0\) ⇒ \(c = a\).</p>
+          <p>En prenant \(a = 1\) : \(\vec n(1;1;1)\) est un vecteur normal au plan \((ABC)\).</p>
+        </div>
+      </details>
+    </div>
+
+    <div class="exo">
+      <div class="exo-tag">Exercice 3 · Angle</div>
+      <h3>Mesure d'un angle</h3>
+      <p>On donne \(\vec u(1;1;0)\) et \(\vec v(1;0;1)\). Calculer une valeur approchée de l'angle
+      \(\theta\) entre ces deux vecteurs.</p>
+      <details class="corrige">
+        <summary>Voir le corrigé</summary>
+        <div class="sol">
+          <p>\(\vec u\cdot\vec v = 1\times1 + 1\times0 + 0\times1 = 1\).</p>
+          <p>\(\|\vec u\| = \sqrt{1+1+0} = \sqrt2\) ; \(\|\vec v\| = \sqrt{1+0+1} = \sqrt2\).</p>
+          <p>Or \(\vec u\cdot\vec v = \|\vec u\|\|\vec v\|\cos\theta\), donc
+          \(\cos\theta = \dfrac{\vec u\cdot\vec v}{\|\vec u\|\|\vec v\|}
+          = \dfrac{1}{\sqrt2\times\sqrt2} = \dfrac12\).</p>
+          <p>Ainsi \(\theta = \dfrac\pi3\), soit \(60°\).</p>
+        </div>
+      </details>
+    </div>
+
+  </section>
+
+  <nav class="chap-nav">
+    <a href="ch10.html">← Chapitre 10 — Vecteurs de l'espace</a>
+    <a href="ch12.html">Chapitre 12 — Droites et plans : équations →</a>
+  </nav>
+
+</main>
+
+<footer>Bac Mathématiques · Terminale spécialité — Chapitre 11</footer>
+<script src="assets/script.js"></script>
+</body>
+</html>

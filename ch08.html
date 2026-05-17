@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ch.8 — Primitives et équations différentielles</title>
+<link rel="stylesheet" href="assets/style.css">
+<script>
+MathJax = {
+  tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="assets/mathjax/tex-svg.js" id="MathJax-script" async></script>
+</head>
+<body>
+
+<header class="topbar">
+  <a class="brand" href="index.html">Bac <span>Mathématiques</span> · Terminale</a>
+  <nav><a href="index.html">Sommaire</a></nav>
+</header>
+
+<main class="wrap reading" data-theme="analyse">
+
+  <div class="chapter-head">
+    <div class="kicker">Thème 1 · Analyse — Chapitre 8</div>
+    <h1>Primitives et équations différentielles</h1>
+  </div>
+
+  <nav class="tabs">
+    <button class="tab active" data-target="cours">Cours complet</button>
+    <button class="tab" data-target="fiche">Fiche résumé</button>
+    <button class="tab" data-target="exos">Exercices</button>
+  </nav>
+
+  <!-- ================= COURS ================= -->
+  <section id="cours" class="panel active">
+
+    <div class="toc">
+      <b>Plan du cours</b>
+      <ol>
+        <li><a href="#c1">Notion de primitive</a></li>
+        <li><a href="#c2">L'ensemble des primitives</a></li>
+        <li><a href="#c3">Primitive vérifiant une condition</a></li>
+        <li><a href="#c4">Primitives des fonctions usuelles</a></li>
+        <li><a href="#c5">Primitives et formes composées</a></li>
+        <li><a href="#c6">Équations différentielles</a></li>
+        <li><a href="#c7">L'équation \(y' = ay\)</a></li>
+        <li><a href="#c8">L'équation \(y' = ay + b\)</a></li>
+        <li><a href="#c9">Erreurs fréquentes</a></li>
+        <li><a href="#c10">Compléments et démonstrations</a></li>
+      </ol>
+    </div>
+
+    <h2 id="c1">1. Notion de primitive</h2>
+    <p>Dériver, c'est passer de \(F\) à \(F'\). La question inverse — retrouver une fonction à partir
+    de sa dérivée — est celle de la <strong>primitivation</strong>. C'est un changement de point de
+    vue important : jusqu'ici on connaissait la fonction et on cherchait sa pente ; désormais on
+    connaît la pente en tout point et on veut reconstituer la fonction. Cette opération est au cœur
+    du calcul intégral (chapitre 9) et de la résolution des équations différentielles.</p>
+    <div class="box def">
+      <span class="box-t">Définition</span>
+      Soit \(f\) une fonction définie sur un intervalle \(I\). Une fonction \(F\) est une
+      <strong>primitive</strong> de \(f\) sur \(I\) si \(F\) est dérivable sur \(I\) et
+      \[ F' = f \quad\text{sur } I. \]
+    </div>
+    <div class="box prop">
+      <span class="box-t">Existence</span>
+      Toute fonction <strong>continue</strong> sur un intervalle \(I\) y admet des primitives.
+    </div>
+    <div class="box method">
+      <span class="box-t">Application</span>
+      \(F(x) = x^{2}\) est une primitive de \(f(x) = 2x\), car \(F'(x) = 2x = f(x)\).
+      \(G(x) = x^{2} + 7\) en est une autre, car \(G' = 2x\) également.
+    </div>
+
+    <h2 id="c2">2. L'ensemble des primitives</h2>
+    <div class="box prop">
+      <span class="box-t">Primitives à une constante près</span>
+      Si \(F\) est une primitive de \(f\) sur \(I\), alors <strong>toutes</strong> les primitives de
+      \(f\) sont les fonctions de la forme
+      \[ x \mapsto F(x) + C, \qquad C \in \mathbb R. \]
+      Deux primitives d'une même fonction diffèrent donc d'une <strong>constante</strong>.
+    </div>
+    <p>C'est logique : ajouter une constante à une fonction ne change pas sa pente, donc pas sa
+    dérivée. Une fonction n'a donc jamais <em>une</em> primitive, mais une <strong>famille
+    infinie</strong> de primitives, toutes parallèles entre elles, décalées verticalement. C'est
+    pour cela qu'on écrit toujours « \(+\,C\) ». Pour fixer une primitive précise dans cette
+    famille, il faut une information supplémentaire — c'est l'objet de la section suivante.</p>
+
+    <h2 id="c3">3. Primitive vérifiant une condition</h2>
+    <div class="box prop">
+      <span class="box-t">Unicité sous condition initiale</span>
+      Soit \(f\) continue sur \(I\), \(x_{0}\in I\) et \(y_{0}\) un réel. Il existe une
+      <strong>unique</strong> primitive \(F\) de \(f\) sur \(I\) telle que \(F(x_{0}) = y_{0}\).
+    </div>
+    <div class="box method">
+      <span class="box-t">Méthode</span>
+      1. Déterminer la forme générale \(F(x) = F_{0}(x) + C\).<br>
+      2. Écrire la condition \(F(x_{0}) = y_{0}\) et en déduire la valeur de \(C\).
+    </div>
+    <div class="box method">
+      <span class="box-t">Application</span>
+      Primitive de \(f(x) = 2x\) telle que \(F(1) = 5\). On a \(F(x) = x^{2} + C\). La condition
+      donne \(1 + C = 5\), donc \(C = 4\) : \(F(x) = x^{2} + 4\).
+    </div>
+
+    <h2 id="c4">4. Primitives des fonctions usuelles</h2>
+    <table>
+      <caption>Primitives de référence (\(C\) constante quelconque)</caption>
+      <tr><th>\(f(x)\)</th><th>Une primitive \(F(x)\)</th><th>Intervalle</th></tr>
+      <tr><td>\(a\) (constante)</td><td>\(ax + C\)</td><td>\(\mathbb R\)</td></tr>
+      <tr><td>\(x^{n}\) (\(n\ne-1\))</td><td>\(\dfrac{x^{n+1}}{n+1} + C\)</td><td>\(\mathbb R\)</td></tr>
+      <tr><td>\(\dfrac{1}{x^{2}}\)</td><td>\(-\dfrac{1}{x} + C\)</td><td>\(]0\,;+\infty[\) ou \(]-\infty\,;0[\)</td></tr>
+      <tr><td>\(\dfrac{1}{\sqrt x}\)</td><td>\(2\sqrt x + C\)</td><td>\(]0\,;+\infty[\)</td></tr>
+      <tr><td>\(\dfrac1x\)</td><td>\(\ln x + C\)</td><td>\(]0\,;+\infty[\)</td></tr>
+      <tr><td>\(e^{x}\)</td><td>\(e^{x} + C\)</td><td>\(\mathbb R\)</td></tr>
+      <tr><td>\(\cos x\)</td><td>\(\sin x + C\)</td><td>\(\mathbb R\)</td></tr>
+      <tr><td>\(\sin x\)</td><td>\(-\cos x + C\)</td><td>\(\mathbb R\)</td></tr>
+    </table>
+
+    <h2 id="c5">5. Primitives et formes composées</h2>
+    <p>En lisant « à l'envers » les formules de dérivation des composées, on obtient des primitives
+    de formes très utiles. Il n'y a rien de nouveau à apprendre : chaque ligne ci-dessous est une
+    formule de dérivation du chapitre 4 lue de droite à gauche. Tout le savoir-faire consiste à
+    <strong>reconnaître la forme</strong> — repérer un \(u\) et vérifier que son \(u'\) apparaît bien
+    en facteur. C'est l'entraînement le plus rentable pour le calcul intégral.</p>
+    <div class="box prop">
+      <span class="box-t">Formes à reconnaître</span>
+      \[ u'\,u^{n}\;\to\;\frac{u^{n+1}}{n+1} \qquad \frac{u'}{u}\;\to\;\ln u\;\;(u>0) \qquad
+      u'\,e^{u}\;\to\;e^{u} \]
+      \[ \frac{u'}{2\sqrt u}\;\to\;\sqrt u \qquad u'\cos u\;\to\;\sin u \qquad
+      u'\sin u\;\to\;-\cos u \]
+    </div>
+    <div class="box method">
+      <span class="box-t">Application</span>
+      Primitive de \(f(x) = 2x\,e^{x^{2}}\) : on reconnaît \(u'e^{u}\) avec \(u = x^2\),
+      \(u'=2x\). Donc \(F(x) = e^{x^{2}} + C\).<br>
+      Primitive de \(g(x) = \dfrac{2x}{x^{2}+1}\) : forme \(\dfrac{u'}{u}\) avec \(u = x^2+1>0\).
+      Donc \(G(x) = \ln(x^{2}+1) + C\).
+    </div>
+
+    <h2 id="c6">6. Équations différentielles</h2>
+    <div class="box def">
+      <span class="box-t">Définition</span>
+      Une <strong>équation différentielle</strong> est une équation dont l'inconnue est une
+      <strong>fonction</strong> \(y\), et qui fait intervenir cette fonction et ses dérivées
+      (\(y'\), \(y''\)…). <strong>Résoudre</strong> l'équation, c'est trouver toutes les fonctions
+      \(y\) qui la vérifient.
+    </div>
+    <p>Ces équations modélisent une foule de phénomènes : décroissance radioactive, refroidissement,
+    charge d'un condensateur, croissance de populations… La différence avec une équation classique
+    est de taille : l'inconnue n'est plus un <em>nombre</em> mais une <strong>fonction tout
+    entière</strong>. Et « résoudre » ne donne pas une réponse unique : une équation différentielle
+    a en général une <em>infinité</em> de solutions, qu'une condition initiale permet ensuite de
+    départager.</p>
+
+    <h2 id="c7">7. L'équation \(y' = ay\)</h2>
+    <div class="box prop">
+      <span class="box-t">Solutions de \(y' = ay\)</span>
+      Soit \(a\) un réel. Les solutions sur \(\mathbb R\) de l'équation différentielle \(y' = ay\)
+      sont exactement les fonctions
+      \[ y(x) = C\,e^{ax}, \qquad C \in \mathbb R. \]
+    </div>
+    <div class="box prop">
+      <span class="box-t">Solution avec condition initiale</span>
+      Pour une condition \(y(x_{0}) = y_{0}\), il existe une <strong>unique</strong> solution : on
+      détermine \(C\) en reportant la condition dans \(y(x) = C\,e^{ax}\).
+    </div>
+    <div class="box method">
+      <span class="box-t">Application</span>
+      Résoudre \(y' = 3y\) avec \(y(0) = 5\). La forme générale est \(y(x) = C\,e^{3x}\). La
+      condition donne \(y(0) = C\,e^{0} = C = 5\). Solution : \(y(x) = 5\,e^{3x}\).
+    </div>
+
+    <h2 id="c8">8. L'équation \(y' = ay + b\)</h2>
+    <div class="box prop">
+      <span class="box-t">Solutions de \(y' = ay + b\)</span>
+      Soit \(a \ne 0\) et \(b\) deux réels. Les solutions de \(y' = ay + b\) sont les fonctions
+      \[ y(x) = C\,e^{ax} - \frac{b}{a}, \qquad C \in \mathbb R. \]
+      Le terme constant \(-\dfrac ba\) est la <strong>solution particulière constante</strong> :
+      c'est la valeur \(y\) pour laquelle \(y' = 0\).
+    </div>
+    <div class="box method">
+      <span class="box-t">Méthode</span>
+      1. Identifier \(a\) et \(b\).<br>
+      2. Écrire la solution générale \(y(x) = C\,e^{ax} - \dfrac ba\).<br>
+      3. S'il y a une condition initiale, déterminer \(C\).
+    </div>
+    <div class="box method">
+      <span class="box-t">Application</span>
+      Résoudre \(y' = -2y + 6\) avec \(y(0) = 1\). Ici \(a = -2\), \(b = 6\), donc
+      \(-\dfrac ba = 3\). Solution générale : \(y(x) = C\,e^{-2x} + 3\). Condition :
+      \(y(0) = C + 3 = 1\), donc \(C = -2\). Solution : \(y(x) = -2\,e^{-2x} + 3\).
+    </div>
+
+    <h2 id="c9">9. Erreurs fréquentes</h2>
+    <div class="box danger">
+      <span class="box-t">À éviter</span>
+      • Oublier la <strong>constante \(+C\)</strong> dans une primitive.<br>
+      • Diviser par \(n+1\) avec \(n = -1\) : la primitive de \(\dfrac1x\) est \(\ln x\), pas une
+      puissance.<br>
+      • Confondre la primitive d'une composée et celle d'une fonction simple : vérifier la présence
+      du facteur \(u'\).<br>
+      • Pour \(y' = ay\), écrire \(y = e^{ax}\) sans la constante \(C\).<br>
+      • Pour \(y' = ay+b\), oublier le terme constant \(-\dfrac ba\).<br>
+      • <strong>Toujours vérifier</strong> : la dérivée du résultat doit redonner la fonction de
+      départ.
+    </div>
+
+    <h2 id="c10">10. Compléments et démonstrations</h2>
+
+    <div class="box prop">
+      <span class="box-t">Démonstration — deux primitives diffèrent d'une constante</span>
+      Si \(F\) et \(G\) sont deux primitives de \(f\) sur \(I\), alors \((G - F)' = f - f = 0\).
+      Une fonction de dérivée nulle sur un intervalle est constante, donc \(G - F = C\) :
+      \(G = F + C\).
+    </div>
+
+    <div class="box prop">
+      <span class="box-t">Démonstration — solutions de \(y' = ay\)</span>
+      Soit \(y\) une solution. Posons \(z(x) = y(x)\,e^{-ax}\). Alors
+      \(z' = y'e^{-ax} - a\,y\,e^{-ax} = (y' - ay)\,e^{-ax} = 0\). Donc \(z\) est constante,
+      \(z = C\), d'où \(y(x) = C\,e^{ax}\). Réciproquement ces fonctions conviennent.
+    </div>
+
+    <div class="box prop">
+      <span class="box-t">Pourquoi le terme \(-\dfrac ba\) dans \(y' = ay + b\)</span>
+      La fonction constante \(y_0 = -\dfrac ba\) vérifie \(y_0' = 0 = a\!\left(-\tfrac ba\right)+b\)
+      : c'est une solution particulière. Si \(y\) est une autre solution, \(y - y_0\) vérifie
+      \((y - y_0)' = a(y - y_0)\), donc \(y - y_0 = C e^{ax}\), d'où
+      \(y = C e^{ax} - \dfrac ba\).
+    </div>
+
+    <h3>Primitives composées — formulaire complet</h3>
+    <table>
+      <caption>Formes \(u'\times(\ldots)\) et leurs primitives</caption>
+      <tr><th>Fonction</th><th>Primitive</th></tr>
+      <tr><td>\(u'\,u^{n}\) (\(n \ne -1\))</td><td>\(\dfrac{u^{n+1}}{n+1}\)</td></tr>
+      <tr><td>\(\dfrac{u'}{u}\) (\(u > 0\))</td><td>\(\ln u\)</td></tr>
+      <tr><td>\(\dfrac{u'}{u^{2}}\)</td><td>\(-\dfrac1u\)</td></tr>
+      <tr><td>\(\dfrac{u'}{2\sqrt u}\)</td><td>\(\sqrt u\)</td></tr>
+      <tr><td>\(u'\,e^{u}\)</td><td>\(e^{u}\)</td></tr>
+      <tr><td>\(u'\cos u\)</td><td>\(\sin u\)</td></tr>
+      <tr><td>\(u'\sin u\)</td><td>\(-\cos u\)</td></tr>
+    </table>
+
+    <h3>Équations différentielles plus générales <span style="font-weight:400">(hors-programme)</span></h3>
+    <div class="box note">
+      <span class="box-t">Pour aller plus loin</span>
+      • L'équation \(y' = a(x)\,y\) (coefficient variable) a pour solutions \(y = C\,e^{A(x)}\),
+      où \(A\) est une primitive de \(a\).<br>
+      • L'équation \(y' = f(x)\) se résout directement : \(y\) est une primitive de \(f\).<br>
+      • Les équations du second ordre \(y'' + \omega^{2} y = 0\) (oscillateur) ont pour solutions
+      les \(y = A\cos(\omega x) + B\sin(\omega x)\).
+    </div>
+
+    <div class="box note">
+      <span class="box-t">Interprétation : demi-vie</span>
+      Pour la décroissance \(y' = -\lambda y\) (radioactivité), la solution \(y = y_0 e^{-\lambda t}\)
+      a une <strong>demi-vie</strong> \(t_{1/2} = \dfrac{\ln 2}{\lambda}\) : durée au bout de
+      laquelle la quantité est divisée par 2.
+    </div>
+
+  </section>
+
+  <!-- ================= FICHE ================= -->
+  <section id="fiche" class="panel">
+    <div class="fiche">
+      <h2>Fiche résumé — Primitives et équations différentielles</h2>
+      <ul class="keypoints">
+        <li><strong>Primitive</strong> de \(f\) : fonction \(F\) telle que \(F'=f\).</li>
+        <li>Toute fonction continue admet des primitives ; elles diffèrent d'une constante \(C\).</li>
+        <li><strong>Condition initiale</strong> \(F(x_0)=y_0\) ⇒ primitive <strong>unique</strong>.</li>
+        <li><strong>Usuelles</strong> : \(x^n \to \frac{x^{n+1}}{n+1}\) ; \(\frac1x \to \ln x\) ;
+        \(e^x \to e^x\).</li>
+        <li><strong>Composées</strong> : \(u'u^n \to \frac{u^{n+1}}{n+1}\) ;
+        \(\frac{u'}{u}\to\ln u\) ; \(u'e^u\to e^u\).</li>
+        <li><strong>\(y'=ay\)</strong> : solutions \(y(x)=Ce^{ax}\).</li>
+        <li><strong>\(y'=ay+b\)</strong> : solutions \(y(x)=Ce^{ax}-\frac ba\).</li>
+        <li>Condition initiale ⇒ détermine \(C\) ⇒ solution unique.</li>
+      </ul>
+      <div class="formule">
+        \[ y' = ay+b \;\Longrightarrow\; y(x) = C\,e^{ax} - \frac{b}{a} \]
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= EXERCICES ================= -->
+  <section id="exos" class="panel">
+
+    <div class="exo">
+      <div class="exo-tag">Exercice 1 · Primitives</div>
+      <h3>Recherche de primitives</h3>
+      <p>Déterminer une primitive de : 1. \(f(x) = 3x^{2} - 4x + 1\) — 2.
+      \(g(x) = \dfrac{3x^{2}}{x^{3}+1}\) sur \(]0\,;+\infty[\) — 3. \(h(x) = 4x\,e^{x^{2}}\).</p>
+      <details class="corrige">
+        <summary>Voir le corrigé</summary>
+        <div class="sol">
+          <p><strong>1.</strong> \(F(x) = x^{3} - 2x^{2} + x + C\). (Vérification : \(F' = 3x^2-4x+1\).)</p>
+          <p><strong>2.</strong> Forme \(\dfrac{u'}{u}\) avec \(u = x^3+1>0\), \(u' = 3x^2\) :
+          \(G(x) = \ln(x^{3}+1) + C\).</p>
+          <p><strong>3.</strong> Forme \(u'e^u\) avec \(u = x^2\), \(u' = 2x\). On a
+          \(h(x) = 2\times(2x\,e^{x^2})\), donc \(H(x) = 2\,e^{x^{2}} + C\).</p>
+        </div>
+      </details>
+    </div>
+
+    <div class="exo">
+      <div class="exo-tag">Exercice 2 · Condition initiale</div>
+      <h3>Primitive imposée</h3>
+      <p>Soit \(f(x) = \cos x + 2x\). Déterminer la primitive \(F\) de \(f\) telle que
+      \(F(0) = 3\).</p>
+      <details class="corrige">
+        <summary>Voir le corrigé</summary>
+        <div class="sol">
+          <p>Forme générale : \(F(x) = \sin x + x^{2} + C\).</p>
+          <p>Condition : \(F(0) = \sin 0 + 0 + C = C = 3\).</p>
+          <p>Donc \(F(x) = \sin x + x^{2} + 3\).</p>
+        </div>
+      </details>
+    </div>
+
+    <div class="exo">
+      <div class="exo-tag">Exercice 3 · Équation différentielle</div>
+      <h3>Modèle de refroidissement</h3>
+      <p>La température \(T(t)\) (en °C) d'un objet vérifie \(T' = -0{,}5\,(T - 20)\), avec
+      \(T(0) = 80\). On pose \(y = T - 20\).</p>
+      <p>1. Montrer que \(y\) vérifie \(y' = -0{,}5\,y\). Résoudre.<br>
+      2. En déduire \(T(t)\), puis la limite de \(T\) quand \(t\to+\infty\).</p>
+      <details class="corrige">
+        <summary>Voir le corrigé</summary>
+        <div class="sol">
+          <p><strong>1.</strong> \(y = T - 20\) donne \(y' = T' = -0{,}5(T-20) = -0{,}5\,y\). C'est
+          l'équation \(y' = ay\) avec \(a = -0{,}5\). Solutions : \(y(t) = C\,e^{-0{,}5t}\).</p>
+          <p><strong>2.</strong> \(T(t) = y(t) + 20 = C\,e^{-0{,}5t} + 20\). Condition :
+          \(T(0) = C + 20 = 80\), donc \(C = 60\). Ainsi
+          \(\boxed{T(t) = 60\,e^{-0{,}5t} + 20}\).</p>
+          <p>Quand \(t\to+\infty\), \(e^{-0{,}5t}\to0\), donc \(\lim T = 20\) : l'objet se
+          refroidit jusqu'à la température ambiante de 20 °C.</p>
+        </div>
+      </details>
+    </div>
+
+  </section>
+
+  <nav class="chap-nav">
+    <a href="ch07.html">← Chapitre 7 — Fonctions trigonométriques</a>
+    <a href="ch09.html">Chapitre 9 — Calcul intégral →</a>
+  </nav>
+
+</main>
+
+<footer>Bac Mathématiques · Terminale spécialité — Chapitre 8</footer>
+<script src="assets/script.js"></script>
+</body>
+</html>

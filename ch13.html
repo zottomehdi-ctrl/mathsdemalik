@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ch.13 — Combinatoire et dénombrement</title>
+<link rel="stylesheet" href="assets/style.css">
+<script>
+MathJax = {
+  tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="assets/mathjax/tex-svg.js" id="MathJax-script" async></script>
+</head>
+<body>
+
+<header class="topbar">
+  <a class="brand" href="index.html">Bac <span>Mathématiques</span> · Terminale</a>
+  <nav><a href="index.html">Sommaire</a></nav>
+</header>
+
+<main class="wrap reading" data-theme="proba">
+
+  <div class="chapter-head">
+    <div class="kicker">Thème 3 · Probabilités — Chapitre 13</div>
+    <h1>Combinatoire et dénombrement</h1>
+  </div>
+
+  <nav class="tabs">
+    <button class="tab active" data-target="cours">Cours complet</button>
+    <button class="tab" data-target="fiche">Fiche résumé</button>
+    <button class="tab" data-target="exos">Exercices</button>
+  </nav>
+
+  <!-- ================= COURS ================= -->
+  <section id="cours" class="panel active">
+
+    <div class="toc">
+      <b>Plan du cours</b>
+      <ol>
+        <li><a href="#c1">Dénombrer : de quoi parle-t-on ?</a></li>
+        <li><a href="#c2">Cardinal et opérations sur les ensembles</a></li>
+        <li><a href="#c3">Le principe multiplicatif</a></li>
+        <li><a href="#c4">\(k\)-listes</a></li>
+        <li><a href="#c5">Permutations et factorielle</a></li>
+        <li><a href="#c6">Combinaisons</a></li>
+        <li><a href="#c7">Propriétés des combinaisons</a></li>
+        <li><a href="#c8">Triangle de Pascal et binôme</a></li>
+        <li><a href="#c9">Erreurs fréquentes</a></li>
+        <li><a href="#c10">Compléments et démonstrations</a></li>
+      </ol>
+    </div>
+
+    <h2 id="c1">1. Dénombrer : de quoi parle-t-on ?</h2>
+    <p><strong>Dénombrer</strong>, c'est compter le nombre d'éléments d'un ensemble fini, sans les
+    énumérer un à un. C'est l'outil de base pour calculer des probabilités dans une situation
+    d'<strong>équiprobabilité</strong> : \(P(A) = \dfrac{\text{nb de cas favorables}}{\text{nb de
+    cas possibles}}\).</p>
+    <p>La difficulté est toujours la même : selon que l'<strong>ordre compte</strong> ou non, et
+    selon qu'il y a <strong>répétition</strong> ou non, le modèle de comptage change. Avant tout
+    calcul, le bon réflexe est donc de se poser deux questions : « est-ce que l'ordre des éléments
+    a de l'importance ? » et « peut-on prendre deux fois le même élément ? ». Les réponses
+    déterminent à elles seules la formule à employer — c'est la clé de tout le chapitre.</p>
+
+    <h2 id="c2">2. Cardinal et opérations sur les ensembles</h2>
+    <div class="box def">
+      <span class="box-t">Cardinal</span>
+      Le <strong>cardinal</strong> d'un ensemble fini \(E\), noté \(\mathrm{Card}(E)\), est son
+      nombre d'éléments.
+    </div>
+    <div class="box prop">
+      <span class="box-t">Formules de comptage</span>
+      • <strong>Réunion</strong> : \(\mathrm{Card}(A\cup B) = \mathrm{Card}(A) + \mathrm{Card}(B)
+      - \mathrm{Card}(A\cap B)\).<br>
+      • <strong>Complémentaire</strong> : \(\mathrm{Card}(\bar A) = \mathrm{Card}(E)
+      - \mathrm{Card}(A)\).<br>
+      • <strong>Produit cartésien</strong> : \(\mathrm{Card}(A\times B) = \mathrm{Card}(A)
+      \times\mathrm{Card}(B)\).
+    </div>
+    <div class="box prop">
+      <span class="box-t">Principe additif</span>
+      Si \(A_1, A_2, \ldots, A_p\) sont des ensembles finis <strong>deux à deux disjoints</strong>
+      (sans élément commun), alors le cardinal de leur réunion est la <strong>somme</strong> des
+      cardinaux :
+      \[ \mathrm{Card}(A_1\cup A_2\cup\cdots\cup A_p) = \mathrm{Card}(A_1) + \cdots
+      + \mathrm{Card}(A_p). \]
+      C'est le principe du <strong>comptage par cas disjoints</strong> : on partage la situation en
+      catégories sans recouvrement, puis on additionne.
+    </div>
+
+    <h2 id="c3">3. Le principe multiplicatif</h2>
+    <div class="box prop">
+      <span class="box-t">Principe multiplicatif</span>
+      Si une situation se décompose en \(k\) étapes <strong>successives et indépendantes</strong>,
+      la première offrant \(n_1\) choix, la deuxième \(n_2\) choix, …, la \(k\)-ième \(n_k\) choix,
+      alors le nombre total de résultats est
+      \[ n_1 \times n_2 \times \cdots \times n_k. \]
+    </div>
+    <div class="box method">
+      <span class="box-t">Application</span>
+      Un menu propose 3 entrées, 4 plats et 2 desserts. Le nombre de repas complets possibles est
+      \(3\times4\times2 = 24\).
+    </div>
+    <p>Il faut bien distinguer les deux principes. On <strong>additionne</strong> quand on a affaire
+    à des cas <em>séparés</em> (« soit ceci, soit cela ») ; on <strong>multiplie</strong> quand on
+    enchaîne des choix <em>successifs</em> (« ceci, puis cela »). Le menu enchaîne trois choix
+    successifs : on multiplie. Si l'on demandait « combien de plats au total, entrées plus plats
+    plus desserts », on additionnerait \(3+4+2\). Toutes les formules de comptage du chapitre
+    reposent sur ces deux principes.</p>
+
+    <h2 id="c4">4. \(k\)-listes</h2>
+    <div class="box def">
+      <span class="box-t">\(k\)-liste (ou \(k\)-uplet)</span>
+      Une <strong>\(k\)-liste</strong> d'un ensemble à \(n\) éléments est une suite ordonnée de
+      \(k\) éléments, <strong>avec répétition possible</strong>. L'<strong>ordre compte</strong>.
+    </div>
+    <div class="box prop">
+      <span class="box-t">Nombre de \(k\)-listes</span>
+      Le nombre de \(k\)-listes d'un ensemble à \(n\) éléments est
+      \[ n^{k}. \]
+    </div>
+    <p>C'est le modèle du <strong>tirage successif avec remise</strong> : code PIN, plaque
+    d'immatriculation, etc.</p>
+
+    <h3>Nombre de parties d'un ensemble</h3>
+    <p>Choisir une partie (un sous-ensemble) d'un ensemble \(E\) à \(n\) éléments revient, pour
+    <strong>chacun</strong> des \(n\) éléments, à décider s'il est <em>dans</em> la partie ou
+    <em>hors</em> de la partie : deux possibilités par élément. Une partie correspond donc
+    exactement à une \(n\)-liste de \(\{0\,;1\}\).</p>
+    <div class="box prop">
+      <span class="box-t">Nombre de parties</span>
+      Un ensemble à \(n\) éléments possède exactement
+      \[ 2^{n} \]
+      parties (l'ensemble vide et \(E\) lui-même étant comptés). De plus, en classant ces parties
+      selon leur nombre d'éléments :
+      \[ \binom{n}{0} + \binom{n}{1} + \cdots + \binom{n}{n} = 2^{n}. \]
+    </div>
+    <div class="box method">
+      <span class="box-t">Application</span>
+      Un ensemble de 4 éléments admet \(2^{4} = 16\) parties. On vérifie :
+      \(\binom40+\binom41+\binom42+\binom43+\binom44 = 1+4+6+4+1 = 16\).
+    </div>
+
+    <h2 id="c5">5. Permutations et factorielle</h2>
+    <div class="box def">
+      <span class="box-t">Factorielle</span>
+      Pour un entier \(n \ge 1\) : \(n! = n\times(n-1)\times\cdots\times2\times1\). Par convention,
+      \(0! = 1\).
+    </div>
+    <div class="box prop">
+      <span class="box-t">Permutations et arrangements</span>
+      • Une <strong>permutation</strong> est un rangement ordonné de <strong>tous</strong> les \(n\)
+      éléments d'un ensemble : il y en a \(n!\).<br>
+      • Un <strong>\(k\)-arrangement</strong> est une liste ordonnée de \(k\) éléments distincts
+      (<strong>sans répétition</strong>) parmi \(n\) : il y en a
+      \[ \frac{n!}{(n-k)!} = n\times(n-1)\times\cdots\times(n-k+1). \]
+    </div>
+    <p>L'arrangement est le modèle du <strong>tirage successif sans remise</strong> où l'ordre
+    compte (un podium, par exemple). On peut le retrouver sans formule par le principe multiplicatif :
+    pour un podium à 3 places parmi 8 coureurs, il y a 8 choix pour la 1ʳᵉ place, puis 7 pour la
+    2ᵉ (un coureur de moins), puis 6 pour la 3ᵉ — soit \(8\times7\times6\). La factorielle n'est
+    qu'une façon compacte d'écrire ce produit qui « descend ».</p>
+
+    <h2 id="c6">6. Combinaisons</h2>
+    <div class="box def">
+      <span class="box-t">Combinaison</span>
+      Une <strong>combinaison</strong> de \(k\) éléments d'un ensemble à \(n\) éléments est un
+      <strong>sous-ensemble</strong> de \(k\) éléments : pas de répétition, et l'<strong>ordre ne
+      compte pas</strong>.
+    </div>
+    <div class="box prop">
+      <span class="box-t">Coefficient binomial</span>
+      Le nombre de combinaisons de \(k\) éléments parmi \(n\), noté \(\dbinom{n}{k}\) (« \(k\) parmi
+      \(n\) »), vaut
+      \[ \binom{n}{k} = \frac{n!}{k!\,(n-k)!}. \]
+    </div>
+    <p>C'est le modèle du <strong>tirage simultané</strong> (une main de cartes, une délégation…).
+    Comparé à l'arrangement, on divise par \(k!\) car les \(k!\) ordres d'une même combinaison sont
+    désormais comptés une seule fois.</p>
+    <div class="box method">
+      <span class="box-t">Application</span>
+      Nombre de façons de choisir 3 délégués parmi 20 élèves :
+      \(\dbinom{20}{3} = \dfrac{20!}{3!\,17!} = \dfrac{20\times19\times18}{3\times2\times1}
+      = \dfrac{6840}{6} = 1140\).
+    </div>
+
+    <h2 id="c7">7. Propriétés des combinaisons</h2>
+    <div class="box prop">
+      <span class="box-t">Propriétés à connaître</span>
+      \[ \binom{n}{0} = \binom{n}{n} = 1 \qquad \binom{n}{1} = n \qquad
+      \binom{n}{k} = \binom{n}{n-k} \;\;(\text{symétrie}) \]
+      <strong>Relation de Pascal</strong> :
+      \[ \binom{n}{k} + \binom{n}{k+1} = \binom{n+1}{k+1}. \]
+    </div>
+
+    <h2 id="c8">8. Triangle de Pascal et binôme</h2>
+    <p>La relation de Pascal permet de construire de proche en proche le <strong>triangle de
+    Pascal</strong> : chaque coefficient est la somme des deux situés au-dessus de lui.</p>
+    <table>
+      <caption>Triangle de Pascal (lignes \(n = 0\) à \(5\))</caption>
+      <tr><th>\(n\backslash k\)</th><th>0</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th></tr>
+      <tr><th>0</th><td>1</td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><th>1</th><td>1</td><td>1</td><td></td><td></td><td></td><td></td></tr>
+      <tr><th>2</th><td>1</td><td>2</td><td>1</td><td></td><td></td><td></td></tr>
+      <tr><th>3</th><td>1</td><td>3</td><td>3</td><td>1</td><td></td><td></td></tr>
+      <tr><th>4</th><td>1</td><td>4</td><td>6</td><td>4</td><td>1</td><td></td></tr>
+      <tr><th>5</th><td>1</td><td>5</td><td>10</td><td>10</td><td>5</td><td>1</td></tr>
+    </table>
+    <div class="box prop">
+      <span class="box-t">Formule du binôme de Newton</span>
+      Pour tous réels \(a\), \(b\) et tout entier \(n\) :
+      \[ (a + b)^{n} = \sum_{k=0}^{n}\binom{n}{k}a^{k}b^{\,n-k}. \]
+    </div>
+
+    <h2 id="c9">9. Erreurs fréquentes</h2>
+    <div class="box danger">
+      <span class="box-t">À éviter</span>
+      • Ne pas se demander si l'<strong>ordre compte</strong> : c'est ce qui distingue arrangement
+      (oui) et combinaison (non).<br>
+      • Confondre tirage <strong>avec remise</strong> (\(n^k\)) et <strong>sans remise</strong>
+      (arrangement ou combinaison).<br>
+      • Oublier que \(0! = 1\).<br>
+      • Utiliser un arrangement pour un tirage simultané : il faut une combinaison.<br>
+      • Mal lire \(\binom{n}{k}\) : c'est \(\dfrac{n!}{k!(n-k)!}\), pas \(\dfrac{n!}{k!}\).
+    </div>
+
+    <h2 id="c10">10. Compléments et démonstrations</h2>
+
+    <div class="box prop">
+      <span class="box-t">Démonstration — formule du coefficient binomial</span>
+      Le nombre de \(k\)-arrangements vaut \(\dfrac{n!}{(n-k)!}\). Or chaque combinaison de \(k\)
+      éléments peut être ordonnée de \(k!\) façons (autant de \(k\)-arrangements). En regroupant :
+      \(\dfrac{n!}{(n-k)!} = k! \times \dbinom nk\), d'où \(\dbinom nk = \dfrac{n!}{k!(n-k)!}\).
+    </div>
+
+    <div class="box prop">
+      <span class="box-t">Démonstration — relation de Pascal</span>
+      On compte les parties à \(k+1\) éléments d'un ensemble à \(n+1\) éléments en fixant un
+      élément \(e\). Une telle partie contient \(e\) (il reste à choisir \(k\) éléments parmi \(n\)
+      : \(\binom nk\) cas) ou ne le contient pas (\(k+1\) éléments parmi \(n\) : \(\binom n{k+1}\)
+      cas). D'où \(\dbinom nk + \dbinom n{k+1} = \dbinom{n+1}{k+1}\).
+    </div>
+
+    <div class="box prop">
+      <span class="box-t">Démonstration — formule du binôme (par récurrence)</span>
+      \((a+b)^{n+1} = (a+b)(a+b)^{n}\). En développant avec l'hypothèse de récurrence et en
+      regroupant les termes en \(a^{k}b^{\,n+1-k}\), la relation de Pascal fait apparaître
+      exactement les coefficients \(\binom{n+1}{k}\) : la formule se propage du rang \(n\) au rang
+      \(n+1\).
+    </div>
+
+    <h3>Permutations avec répétition</h3>
+    <div class="box prop">
+      <span class="box-t">Anagrammes</span>
+      Le nombre d'anagrammes d'un mot de \(n\) lettres, comportant un groupe de \(n_1\) lettres
+      identiques, un autre de \(n_2\), etc., est
+      \[ \frac{n!}{n_1!\,n_2!\cdots n_p!}. \]
+      Exemple : « MATHS » donne \(5! = 120\) anagrammes ; « ANANAS » en donne
+      \(\dfrac{6!}{3!\,2!} = 60\).
+    </div>
+
+    <h3>Combinaisons avec répétition <span style="font-weight:400">(hors-programme)</span></h3>
+    <div class="box note">
+      <span class="box-t">Pour aller plus loin</span>
+      Le nombre de façons de choisir \(k\) éléments parmi \(n\) <em>avec répétition et sans ordre</em>
+      (par exemple \(k\) boules dans \(n\) tiroirs) vaut \(\dbinom{n+k-1}{k}\).
+    </div>
+
+    <div class="box note">
+      <span class="box-t">Tableau de synthèse des modèles</span>
+      <table>
+        <tr><th>Ordre ?</th><th>Répétition ?</th><th>Modèle</th><th>Nombre</th></tr>
+        <tr><td>oui</td><td>oui</td><td>\(k\)-liste</td><td>\(n^{k}\)</td></tr>
+        <tr><td>oui</td><td>non</td><td>arrangement</td><td>\(\frac{n!}{(n-k)!}\)</td></tr>
+        <tr><td>non</td><td>non</td><td>combinaison</td><td>\(\binom nk\)</td></tr>
+        <tr><td>oui</td><td>tous</td><td>permutation (\(k=n\))</td><td>\(n!\)</td></tr>
+      </table>
+    </div>
+
+  </section>
+
+  <!-- ================= FICHE ================= -->
+  <section id="fiche" class="panel">
+    <div class="fiche">
+      <h2>Fiche résumé — Combinatoire et dénombrement</h2>
+      <ul class="keypoints">
+        <li><strong>Principe additif</strong> : cardinaux additionnés sur des ensembles
+        disjoints.</li>
+        <li><strong>Principe multiplicatif</strong> : \(k\) étapes ⇒
+        \(n_1\times\cdots\times n_k\).</li>
+        <li><strong>\(k\)-liste</strong> (ordre + répétition) : \(n^k\) — tirage avec remise.</li>
+        <li><strong>Nombre de parties</strong> d'un ensemble à \(n\) éléments : \(2^n\).</li>
+        <li><strong>Permutation</strong> de \(n\) éléments : \(n!\).</li>
+        <li><strong>\(k\)-arrangement</strong> (ordre, sans répétition) :
+        \(\frac{n!}{(n-k)!}\).</li>
+        <li><strong>Combinaison</strong> (sans ordre, sans répétition) :
+        \(\binom nk = \frac{n!}{k!(n-k)!}\).</li>
+        <li><strong>Propriétés</strong> : \(\binom n0=\binom nn=1\) ;
+        \(\binom nk=\binom n{n-k}\).</li>
+        <li><strong>Pascal</strong> : \(\binom nk+\binom n{k+1}=\binom{n+1}{k+1}\).</li>
+        <li><strong>Binôme</strong> : \((a+b)^n=\sum_k\binom nk a^k b^{n-k}\).</li>
+      </ul>
+      <div class="formule">
+        \[ \binom{n}{k} = \frac{n!}{k!\,(n-k)!} \qquad (a+b)^n = \sum_{k=0}^n\binom nk a^k b^{n-k} \]
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= EXERCICES ================= -->
+  <section id="exos" class="panel">
+
+    <div class="exo">
+      <div class="exo-tag">Exercice 1 · Modèles de comptage</div>
+      <h3>Avec ou sans remise</h3>
+      <p>Un sac contient 10 jetons numérotés de 1 à 10.</p>
+      <p>1. On tire 3 jetons successivement <em>avec remise</em>. Combien de résultats ?<br>
+      2. On tire 3 jetons successivement <em>sans remise</em>. Combien de résultats ?<br>
+      3. On tire 3 jetons <em>simultanément</em>. Combien de résultats ?</p>
+      <details class="corrige">
+        <summary>Voir le corrigé</summary>
+        <div class="sol">
+          <p><strong>1.</strong> Ordre + répétition : \(k\)-listes, soit \(10^{3} = 1000\)
+          résultats.</p>
+          <p><strong>2.</strong> Ordre, sans répétition : arrangements,
+          \(\dfrac{10!}{7!} = 10\times9\times8 = 720\) résultats.</p>
+          <p><strong>3.</strong> Sans ordre, sans répétition : combinaisons,
+          \(\dbinom{10}{3} = \dfrac{10\times9\times8}{3!} = \dfrac{720}{6} = 120\) résultats.</p>
+        </div>
+      </details>
+    </div>
+
+    <div class="exo">
+      <div class="exo-tag">Exercice 2 · Combinaisons et probabilité</div>
+      <h3>Une main de cartes</h3>
+      <p>On tire au hasard 5 cartes simultanément d'un jeu de 32 cartes (dont 4 as).</p>
+      <p>1. Combien de mains de 5 cartes au total ?<br>
+      2. Combien de mains contiennent exactement 2 as ?<br>
+      3. En déduire la probabilité d'obtenir exactement 2 as.</p>
+      <details class="corrige">
+        <summary>Voir le corrigé</summary>
+        <div class="sol">
+          <p><strong>1.</strong> \(\dbinom{32}{5} = \dfrac{32\times31\times30\times29\times28}{5!}
+          = 201\,376\) mains.</p>
+          <p><strong>2.</strong> On choisit 2 as parmi 4 : \(\dbinom42\) ; puis 3 cartes parmi les
+          28 non-as : \(\dbinom{28}{3}\). Par le principe multiplicatif :
+          \(\dbinom42\times\dbinom{28}{3} = 6\times3276 = 19\,656\) mains.</p>
+          <p><strong>3.</strong> \(P = \dfrac{19\,656}{201\,376} \approx 0{,}0976\), soit environ
+          9,8 %.</p>
+        </div>
+      </details>
+    </div>
+
+    <div class="exo">
+      <div class="exo-tag">Exercice 3 · Binôme et Pascal</div>
+      <h3>Développement et identité</h3>
+      <p>1. Développer \((a+b)^{4}\) à l'aide de la formule du binôme.<br>
+      2. Vérifier la relation de Pascal \(\dbinom42 + \dbinom43 = \dbinom53\).</p>
+      <details class="corrige">
+        <summary>Voir le corrigé</summary>
+        <div class="sol">
+          <p><strong>1.</strong> Les coefficients de la ligne 4 sont \(1, 4, 6, 4, 1\) :</p>
+          <p>\((a+b)^{4} = a^{4} + 4a^{3}b + 6a^{2}b^{2} + 4ab^{3} + b^{4}\).</p>
+          <p><strong>2.</strong> \(\dbinom42 = 6\) et \(\dbinom43 = 4\), donc
+          \(\dbinom42 + \dbinom43 = 10\).</p>
+          <p>Par ailleurs \(\dbinom53 = \dfrac{5\times4\times3}{3!} = 10\). L'égalité
+          \(6 + 4 = 10\) est bien vérifiée.</p>
+        </div>
+      </details>
+    </div>
+
+  </section>
+
+  <nav class="chap-nav">
+    <a href="ch12.html">← Chapitre 12 — Droites et plans</a>
+    <a href="ch14.html">Chapitre 14 — Probabilités conditionnelles →</a>
+  </nav>
+
+</main>
+
+<footer>Bac Mathématiques · Terminale spécialité — Chapitre 13</footer>
+<script src="assets/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ch.5 — Fonction exponentielle</title>
+<link rel="stylesheet" href="assets/style.css">
+<script>
+MathJax = {
+  tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="assets/mathjax/tex-svg.js" id="MathJax-script" async></script>
+</head>
+<body>
+
+<header class="topbar">
+  <a class="brand" href="index.html">Bac <span>Mathématiques</span> · Terminale</a>
+  <nav><a href="index.html">Sommaire</a></nav>
+</header>
+
+<main class="wrap reading" data-theme="analyse">
+
+  <div class="chapter-head">
+    <div class="kicker">Thème 1 · Analyse — Chapitre 5</div>
+    <h1>Fonction exponentielle</h1>
+  </div>
+
+  <nav class="tabs">
+    <button class="tab active" data-target="cours">Cours complet</button>
+    <button class="tab" data-target="fiche">Fiche résumé</button>
+    <button class="tab" data-target="exos">Exercices</button>
+  </nav>
+
+  <!-- ================= COURS ================= -->
+  <section id="cours" class="panel active">
+
+    <div class="toc">
+      <b>Plan du cours</b>
+      <ol>
+        <li><a href="#c1">Définition de l'exponentielle</a></li>
+        <li><a href="#c2">Le nombre \(e\) et la notation \(e^x\)</a></li>
+        <li><a href="#c3">Propriétés algébriques</a></li>
+        <li><a href="#c4">Signe, variations, dérivée</a></li>
+        <li><a href="#c5">Limites de l'exponentielle</a></li>
+        <li><a href="#c6">Croissances comparées</a></li>
+        <li><a href="#c7">Dérivée de \(e^{u}\)</a></li>
+        <li><a href="#c8">Équations et inéquations</a></li>
+        <li><a href="#c9">Erreurs fréquentes</a></li>
+        <li><a href="#c10">Compléments et démonstrations</a></li>
+      </ol>
+    </div>
+
+    <h2 id="c1">1. Définition de l'exponentielle</h2>
+    <p>De nombreux phénomènes (radioactivité, intérêts composés, populations) varient
+    <strong>proportionnellement à eux-mêmes</strong> : leur vitesse de variation est proportionnelle
+    à leur valeur. Mathématiquement, cela revient à chercher une fonction égale à sa propre dérivée.</p>
+    <div class="box def">
+      <span class="box-t">Définition</span>
+      Il existe une unique fonction \(f\) dérivable sur \(\mathbb R\) telle que
+      \[ f' = f \qquad\text{et}\qquad f(0) = 1. \]
+      Cette fonction est la <strong>fonction exponentielle</strong>, notée \(\exp\).
+    </div>
+    <p>L'exponentielle est donc l'unique fonction qui est <strong>égale à sa propre dérivée</strong>
+    et vaut 1 en 0. Cette condition \(f' = f\) est très forte : elle dit que, à chaque instant, la
+    <em>vitesse de croissance</em> de la fonction est égale à sa <em>valeur</em>. Plus la fonction
+    est grande, plus elle grandit vite — d'où une croissance qui s'emballe, caractéristique de
+    l'exponentielle. On démontre par ailleurs qu'elle est strictement positive sur \(\mathbb R\).</p>
+
+    <h2 id="c2">2. Le nombre \(e\) et la notation \(e^x\)</h2>
+    <p>On note \(e = \exp(1) \approx 2{,}718\). Grâce à la propriété fondamentale (ci-dessous), on
+    montre que pour tout entier \(n\), \(\exp(n) = e^{\,n}\). On généralise cette écriture à tout
+    réel :</p>
+    <div class="formule">
+      <span class="nom">Notation puissance</span>
+      \[ \exp(x) = e^{\,x} \quad\text{pour tout } x \in \mathbb R \]
+    </div>
+    <p>On utilisera désormais la notation \(e^x\), qui rend les propriétés algébriques très
+    naturelles.</p>
+
+    <h2 id="c3">3. Propriétés algébriques</h2>
+    <div class="box prop">
+      <span class="box-t">Relation fonctionnelle</span>
+      Pour tous réels \(a\) et \(b\) :
+      \[ e^{a+b} = e^{a}\times e^{b}. \]
+      L'exponentielle <strong>transforme les sommes en produits</strong>.
+    </div>
+    <p>C'est la propriété la plus importante du chapitre : elle explique à elle seule la notation
+    puissance. Avec \(e^{a+b} = e^a e^b\), l'écriture \(e^x\) se comporte exactement comme une vraie
+    puissance — toutes les règles de calcul des puissances (produit, quotient, exposant négatif…)
+    s'appliquent. Les « conséquences » ci-dessous ne sont rien d'autre que cette unique relation,
+    relue de différentes façons.</p>
+    <div class="box prop">
+      <span class="box-t">Conséquences</span>
+      \[ e^{0} = 1 \qquad e^{-a} = \frac{1}{e^{a}} \qquad e^{a-b} = \frac{e^{a}}{e^{b}} \qquad
+      \big(e^{a}\big)^{n} = e^{na} \]
+    </div>
+    <div class="box method">
+      <span class="box-t">Application</span>
+      \(e^{3}\times e^{-1} = e^{3-1} = e^{2}\) ; \(\dfrac{e^{5}}{e^{2}} = e^{3}\) ;
+      \(\big(e^{x}\big)^{2}\times e^{-x} = e^{2x}\times e^{-x} = e^{x}\).
+    </div>
+
+    <h2 id="c4">4. Signe, variations, dérivée</h2>
+    <div class="box prop">
+      <span class="box-t">Propriétés essentielles</span>
+      Pour tout réel \(x\) :<br>
+      • \(e^{x} > 0\) : l'exponentielle est <strong>strictement positive</strong> ;<br>
+      • \(\exp' = \exp\), donc \((e^x)' = e^x > 0\) : l'exponentielle est <strong>strictement
+      croissante</strong> sur \(\mathbb R\).
+    </div>
+    <div class="box prop">
+      <span class="box-t">Conséquences pour les équations</span>
+      Comme l'exponentielle est strictement croissante :
+      \[ e^{a} = e^{b} \iff a = b \qquad\qquad e^{a} < e^{b} \iff a < b. \]
+    </div>
+
+    <h2 id="c5">5. Limites de l'exponentielle</h2>
+    <div class="box prop">
+      <span class="box-t">Limites aux bornes</span>
+      \[ \lim_{x\to+\infty} e^{x} = +\infty \qquad\qquad \lim_{x\to-\infty} e^{x} = 0^{+}. \]
+    </div>
+    <p>En \(-\infty\), la courbe s'approche de l'axe des abscisses : la droite \(y = 0\) est
+    <strong>asymptote horizontale</strong> à la courbe de l'exponentielle en \(-\infty\).</p>
+
+    <h2 id="c6">6. Croissances comparées</h2>
+    <p>L'exponentielle croît « plus vite que tout » : elle l'emporte sur n'importe quelle puissance
+    de \(x\). Ce résultat lève de nombreuses formes indéterminées.</p>
+    <p>Concrètement : dans une expression du type \(\dfrac{e^x}{x^{10}}\), on a bien une forme
+    \(\frac{\infty}{\infty}\), mais le « combat » n'est pas équilibré. Même \(x^{10}\), qui devient
+    pourtant gigantesque, est <strong>écrasé</strong> par \(e^x\) à l'infini : le quotient tend vers
+    \(+\infty\). De même, en \(-\infty\), \(e^x\) tend vers 0 si vite qu'il « gagne » contre
+    n'importe quelle puissance, et le produit \(x^n e^x\) tend vers 0. Ces résultats sont les outils
+    pour lever les indéterminations qui mélangent exponentielle et polynômes.</p>
+    <div class="box prop">
+      <span class="box-t">Croissances comparées</span>
+      \[ \lim_{x\to+\infty}\frac{e^{x}}{x} = +\infty, \qquad \lim_{x\to+\infty}\frac{e^{x}}{x^{n}}
+      = +\infty, \qquad \lim_{x\to-\infty} x\,e^{x} = 0, \qquad \lim_{x\to-\infty} x^{n} e^{x} = 0. \]
+      Une limite utile près de 0 : \(\displaystyle\lim_{x\to0}\frac{e^{x}-1}{x} = 1\) (c'est le
+      nombre dérivé de \(\exp\) en 0).
+    </div>
+    <div class="box method">
+      <span class="box-t">Application</span>
+      Limite de \(f(x) = e^{x} - x^{2}\) en \(+\infty\) : forme \(\infty-\infty\). On factorise par
+      \(e^x\) : \(f(x) = e^{x}\!\left(1 - \dfrac{x^2}{e^x}\right)\). Par croissances comparées,
+      \(\dfrac{x^2}{e^x}\to 0\), donc le facteur tend vers 1, et \(\lim f = +\infty\).
+    </div>
+
+    <h2 id="c7">7. Dérivée de \(e^{u}\)</h2>
+    <div class="box prop">
+      <span class="box-t">Dérivée d'une exponentielle composée</span>
+      Si \(u\) est dérivable sur \(I\), alors \(e^{u}\) est dérivable et
+      \[ \big(e^{u}\big)' = u'\,e^{u}. \]
+    </div>
+    <p>Ce n'est qu'un cas particulier de la dérivée d'une composée (chapitre 4) : la fonction
+    extérieure \(\exp\) se dérive en elle-même, et l'on multiplie par la dérivée de l'intérieur
+    \(u'\). La conséquence la plus utile est donnée juste après : comme \(e^u\) est toujours
+    strictement positif, le signe de la dérivée \(u'\,e^u\) ne dépend que de \(u'\).</p>
+    <div class="box note">
+      <span class="box-t">Conséquence sur le signe et les variations</span>
+      Comme \(e^{u} > 0\), la dérivée \(u'\,e^{u}\) a <strong>toujours le signe de \(u'\)</strong>.
+      Ainsi \(e^{u}\) a exactement les <strong>mêmes variations que \(u\)</strong>.
+    </div>
+    <div class="box method">
+      <span class="box-t">Application</span>
+      \(f(x) = e^{-x^{2}}\) : avec \(u = -x^2\), \(u' = -2x\), donc \(f'(x) = -2x\,e^{-x^{2}}\).
+      Le signe de \(f'\) est celui de \(-2x\) : \(f\) croît sur \(]-\infty\,;0]\), décroît sur
+      \([0\,;+\infty[\), avec un maximum \(f(0) = 1\).
+    </div>
+
+    <h2 id="c8">8. Équations et inéquations</h2>
+    <div class="box method">
+      <span class="box-t">Méthode</span>
+      • Une équation \(e^{A} = e^{B}\) équivaut à \(A = B\).<br>
+      • Une équation du type \(e^{2x} - 3e^{x} + 2 = 0\) se résout par <strong>changement de
+      variable</strong> : on pose \(X = e^{x}\) (avec \(X > 0\)), on résout l'équation polynomiale
+      en \(X\), puis on revient à \(x\).<br>
+      • Pour une inéquation, exploiter que l'exponentielle est <strong>strictement
+      croissante</strong>.
+    </div>
+    <div class="box method">
+      <span class="box-t">Application</span>
+      Résoudre \(e^{2x} - 3e^{x} + 2 = 0\). On pose \(X = e^{x} > 0\) : \(X^{2} - 3X + 2 = 0\), dont
+      les solutions sont \(X = 1\) et \(X = 2\). On revient : \(e^{x} = 1 \Rightarrow x = 0\) ;
+      \(e^{x} = 2 \Rightarrow x = \ln 2\) (chapitre 6). L'ensemble des solutions est
+      \(\{0\,;\ln 2\}\).
+    </div>
+
+    <h2 id="c9">9. Erreurs fréquentes</h2>
+    <div class="box danger">
+      <span class="box-t">À éviter</span>
+      • Écrire \(e^{a+b} = e^{a} + e^{b}\) : c'est faux, on a \(e^{a+b} = e^{a}\times e^{b}\).<br>
+      • Penser que \(e^{x}\) peut être négatif ou nul : \(e^{x} > 0\) toujours.<br>
+      • Oublier le facteur \(u'\) dans \((e^{u})' = u'e^{u}\).<br>
+      • Dans un changement de variable \(X = e^{x}\), oublier la contrainte \(X > 0\) (et donc
+      accepter une solution négative).<br>
+      • Conclure \((+\infty) - (+\infty) = 0\) sans utiliser les croissances comparées.
+    </div>
+
+    <h2 id="c10">10. Compléments et démonstrations</h2>
+
+    <div class="box prop">
+      <span class="box-t">Démonstration — l'exponentielle est strictement positive</span>
+      Posons \(\varphi(x) = e^{x}\,e^{-x}\). Alors
+      \(\varphi'(x) = e^{x}e^{-x} + e^{x}(-e^{-x}) = 0\), donc \(\varphi\) est constante, égale à
+      \(\varphi(0) = 1\). Ainsi \(e^{x}\,e^{-x} = 1\) : \(e^{x}\) ne s'annule jamais. Comme \(\exp\)
+      est continue et vaut \(1 > 0\) en 0, elle reste \(> 0\) partout.
+    </div>
+
+    <div class="box prop">
+      <span class="box-t">Démonstration — relation fonctionnelle</span>
+      Pour \(b\) fixé, posons \(g(x) = \dfrac{e^{x+b}}{e^{x}}\). On dérive :
+      \(g'(x) = \dfrac{e^{x+b}e^{x} - e^{x+b}e^{x}}{(e^{x})^2} = 0\). Donc \(g\) est constante,
+      égale à \(g(0) = e^{b}\). D'où \(e^{x+b} = e^{x}\,e^{b}\).
+    </div>
+
+    <div class="box prop">
+      <span class="box-t">Limite \(\dfrac{e^x-1}{x}\) et nombre dérivé</span>
+      Par définition du nombre dérivé de \(\exp\) en 0 :
+      \[ \lim_{x\to0}\frac{e^{x} - 1}{x} = \lim_{x\to0}\frac{e^{x} - e^{0}}{x - 0}
+      = \exp'(0) = e^{0} = 1. \]
+    </div>
+
+    <h3>Le nombre \(e\) comme limite</h3>
+    <div class="box note">
+      <span class="box-t">Deux écritures de \(e\)</span>
+      \[ e = \lim_{n\to+\infty}\left(1 + \frac1n\right)^{n} \approx 2{,}71828 \qquad\text{et plus
+      généralement}\qquad e^{x} = \lim_{n\to+\infty}\left(1 + \frac xn\right)^{n}. \]
+    </div>
+
+    <h3>Exponentielle de base \(a\)</h3>
+    <div class="box def">
+      <span class="box-t">Fonction \(x \mapsto a^{x}\)</span>
+      Pour un réel \(a > 0\), on définit l'exponentielle de base \(a\) par
+      \[ a^{x} = e^{x\ln a}. \]
+      Sa dérivée est \((a^{x})' = \ln(a)\,a^{x}\). Elle est croissante si \(a > 1\), décroissante
+      si \(0 < a < 1\). Le cas \(a = e\) redonne l'exponentielle usuelle.
+    </div>
+
+    <div class="box prop">
+      <span class="box-t">Démonstration — croissance comparée \(\dfrac{e^x}{x}\)</span>
+      Soit \(g(x) = e^{x} - \dfrac{x^{2}}{2}\). On a \(g'(x) = e^{x} - x\) et
+      \(g''(x) = e^{x} - 1 > 0\) pour \(x > 0\), donc \(g'\) croît ; comme \(g'(0) = 1 > 0\),
+      \(g' > 0\) et \(g\) croît. Ainsi \(e^{x} \ge \dfrac{x^{2}}{2}\) pour \(x \ge 0\), d'où
+      \(\dfrac{e^{x}}{x} \ge \dfrac{x}{2} \to +\infty\).
+    </div>
+
+    <div class="box note">
+      <span class="box-t">Lien avec les équations différentielles</span>
+      L'exponentielle est <em>par construction</em> la solution de \(y' = y\). Plus généralement,
+      les solutions de \(y' = a y\) sont les \(x \mapsto C\,e^{ax}\) : c'est l'objet du chapitre 8.
+    </div>
+
+  </section>
+
+  <!-- ================= FICHE ================= -->
+  <section id="fiche" class="panel">
+    <div class="fiche">
+      <h2>Fiche résumé — Fonction exponentielle</h2>
+      <ul class="keypoints">
+        <li><strong>Définition</strong> : unique fonction telle que \(f'=f\) et \(f(0)=1\).</li>
+        <li><strong>Relation fonctionnelle</strong> : \(e^{a+b}=e^a e^b\) ; \(e^{-a}=\frac1{e^a}\) ;
+        \((e^a)^n = e^{na}\).</li>
+        <li><strong>\(e^x > 0\)</strong> et <strong>strictement croissante</strong> sur
+        \(\mathbb R\).</li>
+        <li><strong>\(e^a=e^b \iff a=b\)</strong> ; \(e^a<e^b \iff a<b\).</li>
+        <li><strong>Limites</strong> : \(\lim_{+\infty} e^x = +\infty\) ; \(\lim_{-\infty} e^x = 0\).</li>
+        <li><strong>Croissances comparées</strong> : \(\frac{e^x}{x^n}\to+\infty\) ;
+        \(x^n e^x\to 0\) en \(-\infty\).</li>
+        <li><strong>Dérivée</strong> : \((e^u)' = u'e^u\), du signe de \(u'\) — mêmes variations
+        que \(u\).</li>
+        <li><strong>Équations</strong> : changement de variable \(X=e^x>0\).</li>
+      </ul>
+      <div class="formule">
+        \[ (e^u)' = u'\,e^u \qquad e^{a+b}=e^a e^b \qquad \lim_{x\to+\infty}\frac{e^x}{x^n}=+\infty \]
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= EXERCICES ================= -->
+  <section id="exos" class="panel">
+
+    <div class="exo">
+      <div class="exo-tag">Exercice 1 · Calculs et dérivées</div>
+      <h3>Simplifications et dérivation</h3>
+      <p>1. Simplifier \(A = \dfrac{e^{3x}\times e^{-x}}{e^{x}}\).<br>
+      2. Dériver \(f(x) = (x+1)e^{x}\) puis \(g(x) = e^{2x+3}\).</p>
+      <details class="corrige">
+        <summary>Voir le corrigé</summary>
+        <div class="sol">
+          <p><strong>1.</strong> \(A = \dfrac{e^{3x-x}}{e^{x}} = \dfrac{e^{2x}}{e^{x}}
+          = e^{2x-x} = e^{x}\).</p>
+          <p><strong>2.</strong> \(f\) est un produit : \(f' = (x+1)'e^x + (x+1)(e^x)'
+          = e^x + (x+1)e^x = (x+2)e^x\).</p>
+          <p>\(g\) est une composée : avec \(u = 2x+3\), \(u'=2\), \(g' = u'e^u = 2e^{2x+3}\).</p>
+        </div>
+      </details>
+    </div>
+
+    <div class="exo">
+      <div class="exo-tag">Exercice 2 · Équation</div>
+      <h3>Changement de variable</h3>
+      <p>Résoudre dans \(\mathbb R\) l'équation \(e^{2x} - 5e^{x} + 6 = 0\).</p>
+      <details class="corrige">
+        <summary>Voir le corrigé</summary>
+        <div class="sol">
+          <p>On pose \(X = e^{x}\), avec \(X > 0\). L'équation devient \(X^{2} - 5X + 6 = 0\).</p>
+          <p>Discriminant : \(\Delta = 25 - 24 = 1\). Racines : \(X = \dfrac{5\pm1}{2}\), soit
+          \(X = 3\) ou \(X = 2\). Les deux sont strictement positives.</p>
+          <p>Retour à \(x\) : \(e^{x} = 3 \Rightarrow x = \ln 3\) ; \(e^{x} = 2 \Rightarrow
+          x = \ln 2\).</p>
+          <p>L'ensemble des solutions est \(S = \{\ln 2\,;\ln 3\}\).</p>
+        </div>
+      </details>
+    </div>
+
+    <div class="exo">
+      <div class="exo-tag">Exercice 3 · Étude de fonction</div>
+      <h3>Variations et limites</h3>
+      <p>Soit \(f(x) = (1 - x)e^{x}\) sur \(\mathbb R\).</p>
+      <p>1. Déterminer \(\lim_{x\to-\infty} f(x)\) et \(\lim_{x\to+\infty} f(x)\).<br>
+      2. Calculer \(f'\) et dresser le tableau de variations de \(f\).</p>
+      <details class="corrige">
+        <summary>Voir le corrigé</summary>
+        <div class="sol">
+          <p><strong>1.</strong> En \(+\infty\) : \(1-x\to-\infty\) et \(e^x\to+\infty\), donc
+          \(\lim_{+\infty} f = -\infty\).</p>
+          <p>En \(-\infty\) : \(f(x) = e^x - x\,e^x\). Or \(\lim e^x = 0\) et, par croissances
+          comparées, \(\lim x e^x = 0\). Donc \(\lim_{-\infty} f = 0\).</p>
+          <p><strong>2.</strong> \(f\) est un produit : \(f'(x) = (1-x)'e^x + (1-x)(e^x)'
+          = -e^x + (1-x)e^x = -x\,e^x\).</p>
+          <p>Comme \(e^x > 0\), \(f'\) est du signe de \(-x\) : \(f'(x) > 0\) pour \(x<0\),
+          \(f'(x) < 0\) pour \(x>0\). \(f\) croît sur \(]-\infty\,;0]\), décroît sur
+          \([0\,;+\infty[\), avec un maximum \(f(0) = 1\).</p>
+        </div>
+      </details>
+    </div>
+
+  </section>
+
+  <nav class="chap-nav">
+    <a href="ch04.html">← Chapitre 4 — Dérivation et convexité</a>
+    <a href="ch06.html">Chapitre 6 — Fonction logarithme →</a>
+  </nav>
+
+</main>
+
+<footer>Bac Mathématiques · Terminale spécialité — Chapitre 5</footer>
+<script src="assets/script.js"></script>
+</body>
+</html>
