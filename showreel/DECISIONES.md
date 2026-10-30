@@ -171,13 +171,13 @@ sincronía es exacta por construcción, sin tener que ajustar nada a mano.
 
 ## 7. Tiempo total
 
-**≈ 53 minutos de reloj**, de 10:27 a 11:20 UTC (del primer comando al commit), en una sola
-sesión.
+**≈ 51 minutos de reloj**, de 10:27:35 a 11:18:57 UTC (del primer comando al push), en una
+sola sesión.
 
 | Fase | Aprox. |
 |---|---|
 | Entorno (skia-python + libEGL, numba, HarfBuzz) y pruebas de API | 13 min |
 | Música: composición, síntesis y dos pasadas de mezcla y masterización | 12 min |
 | Motor gráfico, 7 escenas y primera hoja de contactos | 12 min |
-| Revisiones: hojas de contactos, tiras, 3 renders completos de ~3,5 min y verificaciones | 13 min |
+| Revisiones: hojas de contactos, tiras, 3 renders completos de ~3,5 min y verificaciones | 11 min |
 | DECISIONES.md y entrega | 3 min |
